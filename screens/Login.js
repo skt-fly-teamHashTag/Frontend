@@ -10,6 +10,8 @@ import {
 } from 'react-native';
 
 import axios from 'axios';
+import { useDispatch, useSelector } from "react-redux";
+import { setUser } from '../slices/userSlice';
 
 const CustomButton = (props) => {
   return (
@@ -20,10 +22,8 @@ const CustomButton = (props) => {
 };
 
 const LoginModal = () => {
-  const [user, setUser] = useState({
-    nickName: '',
-    phoneNumber: ''
-  });
+  const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
 
   const onPress = async() => {
     try { // 로그인 정보 POST
@@ -39,10 +39,10 @@ const LoginModal = () => {
       <Text style={styles.textTitle}>닉네임</Text>
       <TextInput 
         style={styles.textInput}
-        onChangeText={(text) => setUser({...user, nickName: text})}></TextInput>
+        onChangeText={(text) => dispatch(setUser({...user, nickName: text}))}></TextInput>
       <Text style={styles.textTitle}>전화번호</Text>
       <TextInput 
-        onChangeText={(text) => setUser({...user, phoneNumber: text})}
+        onChangeText={(text) => dispatch(setUser({...user, phoneNumber: text}))}
         style={styles.textInput}></TextInput>
       <CustomButton title='로그인' onPress={onPress}></CustomButton>
     </View>

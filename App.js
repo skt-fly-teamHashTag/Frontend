@@ -9,10 +9,14 @@
 import React from 'react';
 import type {Node} from 'react';
 import Login from './screens/Login';
+import { Provider } from "react-redux";
+import store from "./store";
 
 const App: () => Node = () => {
   return (
-    <Login />
+    <Provider store={store}>
+      <Login />
+    </Provider>
   );
 };
 
