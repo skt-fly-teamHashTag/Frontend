@@ -12,6 +12,7 @@ import {
 import axios from 'axios';
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from '../slices/userSlice';
+import { useNavigation } from '@react-navigation/native';
 
 const CustomButton = (props) => {
   return (
@@ -21,16 +22,19 @@ const CustomButton = (props) => {
   );
 };
 
-const LoginModal = () => {
+const LoginModal = ({ navigation }) => {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
   const onPress = async() => {
     try { // 로그인 정보 POST
       const response = await axios.post('http://localhost:8080/api/v1/auth/login', user);
-      if (response.data === "로그인 성공") console.log("POST >>", user);
+      if (response.data === "로그인 성공") {
+        console.log("POST >>", user);
+        navigation.navigate("Home");
+      }
     } catch(error) {
-      console.log("Error >>", error)
+      console.log("ERROR >>", error)
     }
   };
 
@@ -49,13 +53,13 @@ const LoginModal = () => {
   );
 };
 
-const Login = () => {
+const Login = ({ navigation }) => {
   return (
     <ImageBackground 
       source={require("../images/splash.webp")} 
       style={styles.bgImage}>
       <StatusBar barStyle="dark-content"></StatusBar>
-      <LoginModal></LoginModal>
+      <LoginModal navigation={navigation}></LoginModal>
     </ImageBackground>
   );
 };
