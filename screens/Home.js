@@ -2,7 +2,6 @@ import React from 'react';
 import {
   StyleSheet, 
   View,
-  StatusBar,
   Text,
   Image,
 } from 'react-native';
@@ -10,7 +9,6 @@ import {
 const Home = () => {
   return (
     <View style={styles.main}>
-      <StatusBar barStyle="dark-content"></StatusBar>
       <Image 
         source={require("../images/mainGif.gif")}
         style={styles.mainGif} />

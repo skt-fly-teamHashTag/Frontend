@@ -4,7 +4,6 @@ import {
   TextInput, 
   View,
   ImageBackground,
-  StatusBar,
   Text,
   TouchableOpacity
 } from 'react-native';
@@ -58,7 +57,6 @@ const Login = ({ navigation }) => {
     <ImageBackground 
       source={require("../images/splash.webp")} 
       style={styles.bgImage}>
-      <StatusBar barStyle="dark-content"></StatusBar>
       <LoginModal navigation={navigation}></LoginModal>
     </ImageBackground>
   );

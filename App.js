@@ -17,6 +17,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import {
   StyleSheet,
   Image,
+  StatusBar,
 } from 'react-native';
 
 const Stack = createNativeStackNavigator();
@@ -24,6 +25,7 @@ const Stack = createNativeStackNavigator();
 const App: () => Node = () => {
   return (
     <Provider store={store}>
+      <StatusBar barStyle="dark-content" backgroundColor={'transparent'} translucent={true}></StatusBar>
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Login">
           <Stack.Screen 
