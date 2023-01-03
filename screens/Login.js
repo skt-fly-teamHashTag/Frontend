@@ -11,7 +11,6 @@ import {
 import axios from 'axios';
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from '../slices/userSlice';
-import { useNavigation } from '@react-navigation/native';
 
 const CustomButton = (props) => {
   return (

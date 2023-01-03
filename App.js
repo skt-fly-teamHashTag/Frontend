@@ -10,6 +10,7 @@ import React from 'react';
 import type {Node} from 'react';
 import Login from './screens/Login';
 import Home from './screens/Home';
+import Menu from './screens/Menu';
 import { Provider } from "react-redux";
 import store from "./store";
 import { NavigationContainer } from '@react-navigation/native';
@@ -18,6 +19,7 @@ import {
   StyleSheet,
   Image,
   StatusBar,
+  TouchableOpacity
 } from 'react-native';
 
 const Stack = createNativeStackNavigator();
@@ -37,13 +39,14 @@ const App: () => Node = () => {
           <Stack.Screen 
             name="Home" 
             component={Home}
-            options={{
-              headerShown: true,
+            options={({ navigation }) => ({
               title: '',
               headerLeft: () => (
-                <Image 
+                <TouchableOpacity onPress={()=> navigation.navigate("Menu")}>
+                  <Image 
                   style={styles.menuIcon}
                   source={require("./images/menu.png")} />
+                </TouchableOpacity>
               ),
               headerRight: () => (
                 <>
@@ -57,6 +60,12 @@ const App: () => Node = () => {
               ),
               headerStyle: {backgroundColor: '#FFFBFD'},
               headerShadowVisible: false,
+            })}/>
+            <Stack.Screen 
+            name="Menu" 
+            component={Menu} 
+            options={{
+              headerShown: false,
             }}/>
         </Stack.Navigator>
       </NavigationContainer>
