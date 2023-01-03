@@ -1,19 +1,19 @@
 import React from 'react';
 import {
   StyleSheet, 
-  TextInput, 
   View,
-  ImageBackground,
   StatusBar,
   Text,
-  TouchableOpacity
+  Image,
 } from 'react-native';
 
 const Home = () => {
   return (
     <View style={styles.main}>
       <StatusBar barStyle="dark-content"></StatusBar>
-      <Text>메인화면입니다 :)</Text>
+      <Image 
+        source={require("../images/mainGif.gif")}
+        style={styles.mainGif} />
     </View>
   );
 };
@@ -22,8 +22,17 @@ const styles = StyleSheet.create({
   main: {
     width: '100%', 
     height: '100%',
-    justifyContent: "center",
-    alignItems: "center"
+    backgroundColor: '#FFFBFD'
+  },
+  mainGif: {
+    width: '100%',
+    height: 500,
+    marginTop: '5%'
+  },
+  contents: {
+    width: '100%',
+    height: 60,
+    backgroundColor: '#F4F6F9'
   }
 });
 
