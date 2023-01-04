@@ -4,8 +4,9 @@ import {
   View,
   Text,
   Image,
-  ScrollView
+  ScrollView,
 } from 'react-native';
+import { Icon } from '@rneui/themed';
 
 const Home = () => {
   return (
@@ -36,7 +37,17 @@ const Home = () => {
           </Text>
         </View>
       </ScrollView>
+      <View style={styles.bottomBtn}>
+        <View style={styles.inputs}>
+          <Icon name="microphone" size={28} color='white' style={styles.mic} type='material-community' />
+          <Icon name="keyboard-outline" size={28} color='#081EF4' style={styles.keyboard} type='material-community' />
+        </View>
+        <View style={{position: 'absolute', right: 0}}>
+          <Icon name="refresh" size={28} color='#081EF4' style={styles.refresh} type='material-community' />
+        </View>
+      </View>
     </View>
+
   );
 };
 
@@ -78,6 +89,71 @@ const styles = StyleSheet.create({
     paddingRight: 20,
     margin: 5
   },
+  bottomBtn: {
+    flexDirection: 'row',
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  inputs: {
+    flexDirection: 'row',
+    backgroundColor: 'white',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    borderRadius: 50,
+    height: 50,
+    width: 110, 
+    ...Platform.select({
+      ios: {
+        shadowColor: "#000",
+        shadowOffset: {
+          width: 3,
+          height: 3,
+        },
+        shadowOpacity: 0.1,
+        shadowRadius: 5,
+      },
+      android: {
+        elevation: 4,
+      },
+    }),
+  },  
+  mic: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#081EF4',
+    borderRadius: 50,
+    width: 55,
+    height: 55,
+  },
+  keyboard: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 15,
+  },
+  refresh: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'white',
+    borderRadius: 50,
+    height: 45,
+    width: 45,
+    margin: 20,
+    ...Platform.select({
+      ios: {
+        shadowColor: "#000",
+        shadowOffset: {
+          width: 3,
+          height: 3,
+        },
+        shadowOpacity: 0.1,
+        shadowRadius: 5,
+      },
+      android: {
+        elevation: 4,
+      },
+    }),
+  }
 });
 
 export default Home;
