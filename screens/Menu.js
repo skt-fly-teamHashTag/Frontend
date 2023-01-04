@@ -2,13 +2,16 @@ import React from 'react';
 import {
   StyleSheet,
   View,
-  Text
+  Text,
+  TouchableOpacity
 } from 'react-native';
 
-const Menu = () => {
+const Menu = (props) => {
   return (
     <View style={styles.menu}>
-      <Text>메뉴 화면</Text>
+      <TouchableOpacity onPress={() => props.navigation.closeDrawer()}>
+        <Text>메뉴 화면</Text>
+      </TouchableOpacity>
     </View>
   );
 };
