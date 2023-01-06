@@ -33,7 +33,7 @@ const LoginModal = ({ navigation }) => {
         navigation.navigate("Home");
       }
     } catch(error) {
-      console.log("ERROR>>", error.response)
+      console.log("ERROR>>", error.data)
     }
   };
 
