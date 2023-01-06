@@ -110,11 +110,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-end',
     marginTop: 50,
+    paddingBottom: 10
   },
   menu: {
     width: '100%',
     height: '100%',
     padding: 20,
+    paddingTop: 5,
   },
   headerIcon: {
     marginRight: 20
