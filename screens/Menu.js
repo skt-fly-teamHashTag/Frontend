@@ -20,7 +20,7 @@ const Menu = (props) => {
     </View>
     <ScrollView 
       style={styles.menu}
-      showsHorizontalScrollIndicator = {false}>
+      showsVerticalScrollIndicator = {false}>
       <View style={styles.menuContents}>
         <Image 
           source={require("../images/profile.jpeg")}
@@ -55,7 +55,7 @@ const Menu = (props) => {
               <Icon name="map-marked-alt" color='#5CBDC5' type='font-awesome-5' size={20}></Icon>
               <Text style={styles.menuText}>TMAP</Text>
             </View>
-            <TouchableOpacity style={styles.detailMenu}>
+            <TouchableOpacity style={styles.detailMenu} activeOpacity={0.8}>
               <Icon name="folder-video" color='#7378FF' type='entypo' size={20}></Icon>
               <Text style={styles.menuText}>비디오닷</Text>
             </TouchableOpacity>
@@ -110,12 +110,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-end',
     marginTop: 50,
-    paddingBottom: 10
   },
   menu: {
     width: '100%',
     height: '100%',
-    paddingTop: 20
+    padding: 20,
   },
   headerIcon: {
     marginRight: 20
@@ -131,8 +130,7 @@ const styles = StyleSheet.create({
   }, 
   hello: {
     width: '100%',
-    padding: 10,
-    paddingLeft: 15
+    margin: 10,
   },
   name: {
     fontWeight: 'bold'
@@ -151,13 +149,13 @@ const styles = StyleSheet.create({
   },
   menuBox: {
     width: '100%',
-    padding: 15,
-    marginLeft: 5
+    paddingTop: 15,
   },
   detailMenuBox: {
     flexDirection: 'row',
     marginTop:10,
-    flexWrap: 'wrap'
+    flexWrap: 'wrap',
+    width: '100%'
     
   },
   detailMenu: {
@@ -169,7 +167,7 @@ const styles = StyleSheet.create({
   },
   menuTitle: {
     fontWeight: 'bold',
-    fontSize: 16
+    fontSize: 16,
   },
   menuText: {
     marginLeft: 5,
