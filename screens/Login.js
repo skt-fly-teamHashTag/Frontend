@@ -11,7 +11,7 @@ import {
 import axios from 'axios';
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from '../slices/userSlice';
-import DrawerNavigator from '../DrawerNavigator';
+import DrawerNavigator from '../navigators/DrawerNavigator';
 
 const CustomButton = (props) => {
   return (
@@ -27,7 +27,7 @@ const LoginModal = ({ navigation }) => {
 
   const onPress = async() => {
     try { // 로그인 정보 POST
-      const response = await axios.post('http://172.23.255.72:8080/api/v1/auth/login', user);
+      const response = await axios.post('http://localhost:8080/api/v1/auth/login', user);
       if (response.data === "로그인 성공") {
         console.log("POST >>", user);
         navigation.navigate("Home");

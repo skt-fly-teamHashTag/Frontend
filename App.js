@@ -12,7 +12,7 @@ import type {Node} from 'react';
 import { Provider } from "react-redux";
 import store from "./store";
 import { NavigationContainer } from '@react-navigation/native';
-import { StackNavigator } from "./StackNavigator";
+import { StackNavigator } from "./navigators/StackNavigator";
 import { StatusBar } from 'react-native';
 
 const App: () => Node = () => {

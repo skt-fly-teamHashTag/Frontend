@@ -1,8 +1,8 @@
 import React from "react";
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import Login from "./screens/Login";
-import Home from "./screens/Home";
-import Menu from './screens/Menu';
+import Login from "../screens/Login";
+import Home from "../screens/Home";
+import Menu from '../screens/Menu';
 import {
   StyleSheet,
   Image,
@@ -38,17 +38,17 @@ const DrawerNavigator = () => {
             <TouchableOpacity onPress={() => navigation.openDrawer()}>
               <Image 
                 style={styles.leftIcon}
-                source={require("./images/menu.png")} />
+                source={require("../images/menu.png")} />
             </TouchableOpacity>
           ),
           headerRight: () => (
             <View style={styles.rightMenu}>
               <Image 
                 style={styles.rightIcon}
-                source={require("./images/more.png")} />
+                source={require("../images/more.png")} />
               <Image 
                 style={styles.rightIcon}
-                source={require("./images/notice.png")} />
+                source={require("../images/notice.png")} />
             </View>
           ),
           headerStyle: {backgroundColor: '#FFFBFD'},
