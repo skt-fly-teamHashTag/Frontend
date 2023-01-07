@@ -10,13 +10,27 @@ const LoginForm = ({ navigation }) => {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
+  const fillAll = () => {
+    return user.nickName !== "" && user.phoneNumber !== "";
+  };
+
+  const showAlert = () => {
+    Alert.alert(
+      "로그인 실패",
+      "로그인 정보를 다시 확인해주세요.",
+      [{text: "확인"}]
+    );
+  };
+
   const onPress = async() => {
     try {
       const response = await axios.post('http://localhost:8080/api/v1/auth/login', user);
-      if (response.data === "로그인 성공") {
+      if (fillAll() && response.data === "로그인 성공") {
         console.log("POST >>", user);
         navigation.navigate("Home");
-      } 
+      } else {
+        showAlert()
+      }
     } catch(error) {
       console.log("ERROR>>", error)
     }
