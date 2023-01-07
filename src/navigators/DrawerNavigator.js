@@ -15,22 +15,21 @@ const DrawerNavigator = () => {
 
   return (
     <Drawer.Navigator 
-      initialRouteName="Login"
+      initialRouteName='Login'
       drawerPosition='left'
       drawerContent={(props) => <Menu {...props} />}
       screenOptions={{
-        drawerStyle: {
-          width: '100%',
-        },
+        drawerStyle: {width: '100%'}
       }}>
       <Drawer.Screen 
-        name="Login" 
+        name='Login'
         component={Login} 
         options={{
           headerShown: false,
+          headerShadowVisible: false,
         }}/>
       <Drawer.Screen 
-        name="Home" 
+        name='Home'
         component={Home}
         options={({ navigation }) => ({
           title: '',
