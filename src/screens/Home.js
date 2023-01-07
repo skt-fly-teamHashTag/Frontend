@@ -19,19 +19,19 @@ const Home = () => {
         showsHorizontalScrollIndicator = {false}
         style={styles.contents}>
         <View style={styles.contentBtn}>
-          <Image source={require("../assets/game.png")} style={styles.iconStyle}/>
+          <Icon name="game-controller-sharp" size={24} color='#F3B444' style={styles.iconStyle} type='ionicon' />
           <Text style = {styles.textStyle}>
               고민 들어줘
           </Text>
         </View>
         <View style={styles.contentBtn}>
-          <Image source={require("../assets/rabbit.png")} style={styles.iconStyle}/>
+        <Icon name="rabbit" size={24} color='#FFA2C1' style={styles.iconStyle} type='material-community' />
           <Text style = {styles.textStyle}>
               95년생은 몇 살이야?
           </Text>
         </View>
         <View style={styles.contentBtn}>
-          <Image source={require("../assets/calculator.png")} style={styles.iconStyle}/>
+        <Icon name="calculate" size={24} color='#61C991' style={styles.iconStyle} type='material' />
           <Text style = {styles.textStyle}>
               102 빼기 45는?
           </Text>
@@ -69,9 +69,8 @@ const styles = StyleSheet.create({
     marginBottom: 20
   },
   iconStyle: {
-    width: 24,
-    height: 24,
-    marginRight: 10
+    marginRight: 10,
+    justifyContent: 'center',
   },
   textStyle: {
     fontSize: 16

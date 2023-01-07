@@ -25,7 +25,10 @@ const Menu = (props) => {
         <Image 
           source={require("../assets/profile.jpeg")}
           style={styles.profile} />
-        <Text style={styles.hello}>안녕하세요! <Text style={styles.name}>해시태그님</Text></Text>
+        <Text style={styles.hello}>안녕하세요!
+          <Text style={styles.name}> 해시태그님</Text>
+          <Icon name="pencil" size={16} color='lightgray' style={styles.edit} type='evilicon'></Icon>
+        </Text>
         <View style={styles.threeButton}>
           <View style={styles.three}>
             <Icon name="flag" color='#384BF5' type='ionicons'></Icon>
@@ -135,7 +138,10 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   name: {
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+  },
+  edit: {
+    marginTop: 5
   },
   threeButton: {
     flexDirection: 'row',
