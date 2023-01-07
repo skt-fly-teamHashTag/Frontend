@@ -38,17 +38,17 @@ const DrawerNavigator = () => {
             <TouchableOpacity onPress={() => navigation.openDrawer()}>
               <Image 
                 style={styles.leftIcon}
-                source={require("../images/menu.png")} />
+                source={require("../assets/menu.png")} />
             </TouchableOpacity>
           ),
           headerRight: () => (
             <View style={styles.rightMenu}>
               <Image 
                 style={styles.rightIcon}
-                source={require("../images/more.png")} />
+                source={require("../assets/more.png")} />
               <Image 
                 style={styles.rightIcon}
-                source={require("../images/notice.png")} />
+                source={require("../assets/notice.png")} />
             </View>
           ),
           headerStyle: {backgroundColor: '#FFFBFD'},

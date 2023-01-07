@@ -11,10 +11,8 @@ const StackNavigator = () => {
     <Stack.Navigator initialRouteName="Login">
       <Stack.Screen 
         name="Login" 
-        component={DrawerNavigator} 
-        options={{
-          headerShown: false,
-        }}/>
+        component={ DrawerNavigator } 
+        options={{ headerShown: false }}/>
     </Stack.Navigator>
   );
 }

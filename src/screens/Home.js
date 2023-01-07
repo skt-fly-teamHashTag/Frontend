@@ -12,26 +12,26 @@ const Home = () => {
   return (
     <View style={styles.main}>
       <Image 
-        source={require("../images/mainGif.gif")}
+        source={require("../assets/mainGif.gif")}
         style={styles.mainGif} />
       <ScrollView
         horizontal={true}
         showsHorizontalScrollIndicator = {false}
         style={styles.contents}>
         <View style={styles.contentBtn}>
-          <Image source={require("../images/game.png")} style={styles.iconStyle}/>
+          <Image source={require("../assets/game.png")} style={styles.iconStyle}/>
           <Text style = {styles.textStyle}>
               고민 들어줘
           </Text>
         </View>
         <View style={styles.contentBtn}>
-          <Image source={require("../images/rabbit.png")} style={styles.iconStyle}/>
+          <Image source={require("../assets/rabbit.png")} style={styles.iconStyle}/>
           <Text style = {styles.textStyle}>
               95년생은 몇 살이야?
           </Text>
         </View>
         <View style={styles.contentBtn}>
-          <Image source={require("../images/calculator.png")} style={styles.iconStyle}/>
+          <Image source={require("../assets/calculator.png")} style={styles.iconStyle}/>
           <Text style = {styles.textStyle}>
               102 빼기 45는?
           </Text>

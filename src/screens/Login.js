@@ -55,7 +55,7 @@ const LoginModal = ({ navigation }) => {
 const Login = ({ navigation }) => {
   return (
     <ImageBackground 
-      source={require("../images/splash.webp")} 
+      source={require("../assets/splash.webp")} 
       style={styles.bgImage}>
       <LoginModal navigation={navigation}></LoginModal>
     </ImageBackground>

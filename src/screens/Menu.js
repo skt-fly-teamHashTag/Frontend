@@ -23,7 +23,7 @@ const Menu = (props) => {
       showsVerticalScrollIndicator = {false}>
       <View style={styles.menuContents}>
         <Image 
-          source={require("../images/profile.jpeg")}
+          source={require("../assets/profile.jpeg")}
           style={styles.profile} />
         <Text style={styles.hello}>안녕하세요! <Text style={styles.name}>해시태그님</Text></Text>
         <View style={styles.threeButton}>
