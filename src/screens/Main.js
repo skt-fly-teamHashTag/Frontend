@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, View, Text, Image, TouchableOpacity } from "react-native";
 
-const Main = () => {
+const Main = ({ navigation }) => {
   return(
     <View style={styles.main}>
       <View style={styles.noticeBox}>
@@ -9,7 +9,7 @@ const Main = () => {
           {`편집하고 싶은 \n영상을 앨범에서 \n선택해줘!`}</Text>
         <Image source={require('../assets/videoGif.gif')} style={styles.noticeGif} />
       </View>
-      <TouchableOpacity style={styles.gallery}>
+      <TouchableOpacity style={styles.gallery} onPress={()=>navigation.navigate('Loading')}>
         <Image source={require('../assets/gallery.jpeg')} style={styles.galleryImage} />
         <Text style={styles.galleryText}>앨범에서 선택하기</Text>
       </TouchableOpacity>

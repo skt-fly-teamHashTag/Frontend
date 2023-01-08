@@ -1,17 +1,19 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import DrawerNavigator from './DrawerNavigator';
+import Main from '../screens/Main';
 
 
 const StackNavigator = () => {
   const Stack = createNativeStackNavigator();
   
   return (
-    <Stack.Navigator initialRouteName="Login">
+    <Stack.Navigator initialRouteName="Main">
       <Stack.Screen 
-        name="Login" 
-        component={DrawerNavigator} 
-        options={{headerShown: false}}/>
+        name="Main" 
+        component={Main} 
+        options={{
+          headerShadowVisible: false
+        }}/>
     </Stack.Navigator>
   );
 }

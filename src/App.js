@@ -12,7 +12,7 @@ import type {Node} from 'react';
 import { Provider } from "react-redux";
 import store from "./store";
 import { NavigationContainer } from '@react-navigation/native';
-import { StackNavigator } from "./navigators/StackNavigator";
+import DrawerNavigator from './navigators/DrawerNavigator';
 import { StatusBar } from 'react-native';
 
 const App: () => Node = () => {
@@ -23,7 +23,7 @@ const App: () => Node = () => {
         backgroundColor={'transparent'} 
         translucent={true} />
       <NavigationContainer>
-        <StackNavigator />
+        <DrawerNavigator />
       </NavigationContainer>
     </Provider>
   );
