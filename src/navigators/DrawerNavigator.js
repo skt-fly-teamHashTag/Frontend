@@ -3,6 +3,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import Login from "../screens/Login";
 import Home from "../screens/Home";
 import Menu from '../screens/Menu';
+import Main from "../screens/Main";
 import LeftIconButton from "../components/Header/LeftIconButton";
 import RightTwoIcon from "../components/Header/RightTwoImage";
 
@@ -45,6 +46,10 @@ const DrawerNavigator = () => {
       <Drawer.Screen 
         name='Home'
         component={Home}
+        options={homeHeader} />
+      <Drawer.Screen 
+        name='Main'
+        component={Main}
         options={homeHeader} />
     </Drawer.Navigator>
   );

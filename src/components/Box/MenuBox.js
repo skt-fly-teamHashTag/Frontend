@@ -3,10 +3,10 @@ import { StyleSheet, View } from 'react-native';
 import { Icon } from '@rneui/themed';
 import MenuDetailBox from '../Box/MenuDetailBox';
 
-const MenuBox = () => {
+const MenuBox = ({ navigation }) => {
   return (
     <View style={styles.menuBox}>
-      <MenuDetailBox title='편하닷' />
+      <MenuDetailBox title='편하닷' navigation={navigation} />
       <View style={styles.line}></View>
       <MenuDetailBox title='궁금하닷' />
       <View style={styles.line}></View>

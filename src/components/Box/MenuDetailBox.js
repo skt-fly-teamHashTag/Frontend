@@ -3,7 +3,7 @@ import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { Icon } from '@rneui/themed';
 import IconTextButton from "../Button/IconTextButton";
 
-const MenuDetailBox = ({ title }) => {
+const MenuDetailBox = ({ title, navigation }) => {
   return (
     title === '편하닷' && (
     <View>
@@ -28,7 +28,8 @@ const MenuDetailBox = ({ title }) => {
           iconName='folder-video'
           iconType='entypo'
           iconColor='#7378FF'
-          text='비디오닷' />
+          text='비디오닷'
+          onPress={()=>{navigation.navigate('Main')}} />
       </View>
     </View>) ||
     title === '궁금하닷' &&  (
