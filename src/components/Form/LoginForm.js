@@ -14,7 +14,7 @@ const LoginForm = ({ navigation }) => {
     return user.nickName !== "" && user.phoneNumber !== "";
   };
 
-  const showAlert = () => {
+  const showFailAlert = () => {
     Alert.alert(
       "로그인 실패",
       "로그인 정보를 다시 확인해주세요.",
@@ -29,7 +29,7 @@ const LoginForm = ({ navigation }) => {
         console.log("POST >>", user);
         navigation.navigate("Home");
       } else {
-        showAlert()
+        showFailAlert()
       }
     } catch(error) {
       console.log("ERROR>>", error)
