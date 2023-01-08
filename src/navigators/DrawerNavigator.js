@@ -3,15 +3,32 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import Login from "../screens/Login";
 import Home from "../screens/Home";
 import Menu from '../screens/Menu';
-import {
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-  View
-} from 'react-native';
+import LeftIconButton from "../components/Header/LeftIconButton";
+import RightTwoIcon from "../components/Header/RightTwoIcon";
 
 const DrawerNavigator = () => {
   const Drawer = createDrawerNavigator();
+
+  const loginHeader = () => ({
+    headerShown: false,
+    headerShadowVisible: false,
+  });
+
+  const homeHeader = ({ navigation }) => ({
+    title: '',
+    headerLeft: () => (
+      <LeftIconButton 
+        source={require("../assets/menu.png")}
+        onPress={() => navigation.openDrawer()} />
+    ),
+    headerRight: () => (
+      <RightTwoIcon
+        leftSource={require("../assets/more.png")}
+        rightSource={require("../assets/notice.png")} />
+    ),
+    headerStyle: {backgroundColor: '#FFFBFD'},
+    headerShadowVisible: false,
+  });
 
   return (
     <Drawer.Navigator 
@@ -24,53 +41,13 @@ const DrawerNavigator = () => {
       <Drawer.Screen 
         name='Login'
         component={Login} 
-        options={{
-          headerShown: false,
-          headerShadowVisible: false,
-        }}/>
+        options={loginHeader}/>
       <Drawer.Screen 
         name='Home'
         component={Home}
-        options={({ navigation }) => ({
-          title: '',
-          headerLeft: () => (
-            <TouchableOpacity onPress={() => navigation.openDrawer()}>
-              <Image 
-                style={styles.leftIcon}
-                source={require("../assets/menu.png")} />
-            </TouchableOpacity>
-          ),
-          headerRight: () => (
-            <View style={styles.rightMenu}>
-              <Image 
-                style={styles.rightIcon}
-                source={require("../assets/more.png")} />
-              <Image 
-                style={styles.rightIcon}
-                source={require("../assets/notice.png")} />
-            </View>
-          ),
-          headerStyle: {backgroundColor: '#FFFBFD'},
-          headerShadowVisible: false,
-        })} />
+        options={homeHeader} />
     </Drawer.Navigator>
   );
 }
-
-const styles = StyleSheet.create({
-  rightMenu: {
-    flexDirection: 'row',
-  },
-  leftIcon: {
-    width: 24,
-    height: 24,
-    marginLeft: 15,
-  },
-  rightIcon: {
-    width: 24,
-    height: 24,
-    marginRight: 15
-  }
-});
 
 export default DrawerNavigator ;
