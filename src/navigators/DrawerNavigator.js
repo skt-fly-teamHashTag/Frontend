@@ -4,7 +4,7 @@ import Login from "../screens/Login";
 import Home from "../screens/Home";
 import Menu from '../screens/Menu';
 import LeftIconButton from "../components/Header/LeftIconButton";
-import RightTwoIcon from "../components/Header/RightTwoIcon";
+import RightTwoIcon from "../components/Header/RightTwoImage";
 
 const DrawerNavigator = () => {
   const Drawer = createDrawerNavigator();

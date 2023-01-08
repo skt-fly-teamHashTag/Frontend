@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, View, Image } from 'react-native';
 import { Icon } from '@rneui/themed';
 
-const InputBottom = () => {
+const BottomIconBox = () => {
   return (
     <View style={styles.bottomBtn}>
       <View style={[styles.centerIcons, styles.shadow]}>
@@ -85,4 +85,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default InputBottom;
+export default BottomIconBox;

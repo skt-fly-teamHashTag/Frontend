@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, Image } from 'react-native';
 
-const RightTwoIcon = ({ leftSource, rightSource }) => {
+const RightTwoImage = ({ leftSource, rightSource }) => {
   return (
     <View style={styles.rightMenu}>
       <Image 
@@ -25,4 +25,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default RightTwoIcon;
+export default RightTwoImage;
