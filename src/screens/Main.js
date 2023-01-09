@@ -29,7 +29,6 @@ const Main = ({ navigation }) => {
       };
 
       const response = await axios.post('http://localhost:8080/api/v1/auth/video', formData, {headers: header});
-      console.log(response);
       navigation.navigate('GenerateVideo');
     }
 

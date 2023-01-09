@@ -1,5 +1,6 @@
 import React from "react";
 import { StyleSheet, View, Text, TextInput, TouchableOpacity } from "react-native";
+import Video from "react-native-video";
 
 const GenerateVideo = () => {
   const getTags = ['V', '목적없이떠나는여행', '꼬막비빔밥'];
@@ -9,10 +10,24 @@ const GenerateVideo = () => {
     showTag += '#' + tags + ' ';
   }
 
+  const videoUri = "/Users/in-yeong/iykim/videoDot/src/assets/mainGif.mp4";
+  const posterUri = "https://avatars.githubusercontent.com/u/121754657?s=200&v=4";
+
   return (
     <View style={styles.container}>
       <Text style={styles.finishText}>해시태그님의 특별한 Vlog를 완성했어요!</Text>
-      <View style={styles.video}></View>
+      <Video
+        source={{ uri: videoUri }}
+        paused={true}
+        style={styles.video}
+        controls={true}
+        resizeMode={"cover"}
+        /* 썸네일 코드
+        audioOnly={true}
+        poster={posterUri}
+        posterResizeMode={"cover"} 
+        */
+      />
       <Text style={styles.tags}>{showTag}</Text>
       <TextInput style={styles.inputTitle} placeholder="제목을 입력해주세요."></TextInput>
       <TouchableOpacity style={styles.inputButton}>
@@ -42,6 +57,8 @@ const styles = StyleSheet.create({
     height: 200,
     backgroundColor: '#F1F4F9',
     borderRadius: 10,
+    borderWidth: 1.5,
+    borderColor: '#F1F4F9'
   },
   tags: {
     color: '#0222FE',
