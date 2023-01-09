@@ -22,6 +22,14 @@ const LoginForm = ({ navigation }) => {
     );
   };
 
+  const showNetworkAlert = () => {
+    Alert.alert(
+      "로그인 실패",
+      "네트워크를 확인해주세요.",
+      [{text: "확인"}]
+    );
+  };
+
   const onPress = async() => {
     try {
       const response = await axios.post('http://localhost:8080/api/v1/auth/login', user);
@@ -29,10 +37,11 @@ const LoginForm = ({ navigation }) => {
         console.log("POST >>", user);
         navigation.navigate("Home");
       } else {
-        showFailAlert()
+        showFailAlert();
       }
     } catch(error) {
-      console.log("ERROR>>", error)
+      console.log("ERROR>>", error);
+      showNetworkAlert();
     }
   };
   
