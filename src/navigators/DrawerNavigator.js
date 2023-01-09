@@ -67,7 +67,10 @@ const DrawerNavigator = () => {
       <Drawer.Screen 
         name='Loading'
         component={Loading}
-        options={mainHeader} />
+        options={{
+          headerShown: false,
+          headerShadowVisible: false,
+        }} />
     </Drawer.Navigator>
   );
 }

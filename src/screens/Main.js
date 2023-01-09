@@ -11,7 +11,7 @@ const Main = ({ navigation }) => {
       uri: ''
     };
 
-    const pickVideo = await launchImageLibrary({ mediaType: 'video' });
+    const pickVideo = await launchImageLibrary({ mediaType: 'image' });
     if (pickVideo.didCancel) {
       console.log('User cancelled video picker');
     } else if (pickVideo.errorCode) {
