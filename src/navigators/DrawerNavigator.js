@@ -8,6 +8,7 @@ import Loading from "../screens/Loading";
 import LeftIconButton from "../components/Header/LeftIconButton";
 import RightTwoIcon from "../components/Header/RightTwoImage";
 import MenuHeader from "../components/Header/MenuHeader";
+import { StackNavigator } from "./StackNavigator";
 
 const DrawerNavigator = () => {
   const Drawer = createDrawerNavigator();
@@ -62,8 +63,8 @@ const DrawerNavigator = () => {
         options={homeHeader} />
       <Drawer.Screen 
         name='Main'
-        component={Main}
-        options={homeHeader} />
+        component={StackNavigator}
+        options={mainHeader} />
       <Drawer.Screen 
         name='Loading'
         component={Loading}
