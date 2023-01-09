@@ -1,7 +1,41 @@
+import axios from "axios";
 import React from "react";
 import { StyleSheet, View, Text, Image, TouchableOpacity } from "react-native";
+import { launchImageLibrary } from 'react-native-image-picker';
 
 const Main = ({ navigation }) => {
+  const showCameraRoll = async() => {
+    const videoData = {
+      name: '',
+      type: '',
+      uri: ''
+    };
+
+    const pickVideo = await launchImageLibrary({ mediaType: 'video' });
+    if (pickVideo.didCancel) {
+      console.log('User cancelled video picker');
+    } else if (pickVideo.errorCode) {
+      console.log('ImagePicker Error: ', pickVideo.errorCode);
+    } else if (pickVideo) {
+      videoData.name = pickVideo.assets[0].fileName;
+      videoData.type = pickVideo.assets[0].type;
+      videoData.uri = Platform.OS === 'android'? pickVideo.assets[0].uri: pickVideo.assets[0].uri.replace('file://','');
+
+      const formData = new FormData();
+      formData.append('video', videoData);
+
+      const header = {
+        'Context-Type': 'multipart/form-data',
+      };
+
+      const response = await axios.post('http://localhost:8080/api/v1/auth/video', formData, {headers: header});
+      console.log(response);
+      navigation.navigate('Loading');
+    }
+
+    
+  };
+
   return(
     <View style={styles.main}>
       <View style={styles.noticeBox}>
@@ -9,7 +43,7 @@ const Main = ({ navigation }) => {
           {`편집하고 싶은 \n영상을 앨범에서 \n선택해줘!`}</Text>
         <Image source={require('../assets/videoGif.gif')} style={styles.noticeGif} />
       </View>
-      <TouchableOpacity style={styles.gallery} onPress={()=>navigation.navigate('Loading')}>
+      <TouchableOpacity style={styles.gallery} onPress={showCameraRoll}>
         <Image source={require('../assets/gallery.jpeg')} style={styles.galleryImage} />
         <Text style={styles.galleryText}>앨범에서 선택하기</Text>
       </TouchableOpacity>
