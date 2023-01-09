@@ -2,8 +2,10 @@ import React from "react";
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { Icon } from '@rneui/themed';
 import IconTextButton from "../Button/IconTextButton";
+import { useNavigation } from "@react-navigation/native";
 
-const MenuDetailBox = ({ title, navigation }) => {
+const MenuDetailBox = ({ title }) => {
+  const navigation = useNavigation();
   return (
     title === '편하닷' && (
     <View>

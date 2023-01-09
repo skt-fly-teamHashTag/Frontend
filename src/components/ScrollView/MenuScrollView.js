@@ -5,14 +5,14 @@ import ThreeSquareButton from "../Button/ThreeSquareButton";
 import MenuBox from "../Box/MenuBox";
 import MenuBottomTextBox from "../Box/MenuBottomTextBox";
 
-const MenuScrollView = ({ navigation }) => {
+const MenuScrollView = () => {
   return (
     <ScrollView style={styles.menu} showsVerticalScrollIndicator = {false}>
       <View style={styles.menuContents}>
         <Image source={require("../../assets/profile.jpeg")} style={styles.profile} />
         <HelloText userName='해시태그' />
         <ThreeSquareButton />
-        <MenuBox navigation={navigation} />
+        <MenuBox />
         <MenuBottomTextBox />
       </View>
     </ScrollView>

@@ -8,7 +8,7 @@ const Menu = ({ navigation }) => {
   return (
     <View>
       <MenuHeader onPress={() => navigation.closeDrawer()} />
-      <MenuScrollView navigation={navigation} />
+      <MenuScrollView />
     </View>
   );
 };
