@@ -9,7 +9,7 @@ const GenerateVideo = () => {
   const dispatch = useDispatch();
 
   const videoUri = "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4";
-  const posterUri = "https://avatars.githubusercontent.com/u/121754657?s=200&v=4";
+  const loadingUri = "/Users/in-yeong/iykim/videoDot/src/assets/videoLoadingGif.gif";
   const showTag = '#V #목적없이떠나는여행 #꼬막비빔밥';
 
   // 내 기기에 저장하기 react-native-fs 이용
@@ -19,7 +19,7 @@ const GenerateVideo = () => {
 
   // axios 이용해서 fileData, tags, title 정보 POST
   const onPressUpload = () => {
-
+    console.log('Title>> ', title)
   };
 
   return (
@@ -31,10 +31,9 @@ const GenerateVideo = () => {
         style={styles.video}
         controls={true}
         resizeMode={"cover"}
-        // 썸네일 코드
-        // audioOnly={true}
-        // poster={posterUri}
-        // posterResizeMode={"cover"} 
+        audioOnly={false} // true로 주면 비디오 로딩되어도 poster 안사라짐
+        poster={loadingUri} // 썸네일이 아니라 비디오 로딩 화면
+        posterResizeMode={"center"} 
       />
       <Text style={styles.tags}>{showTag}</Text>
       <TextInput 
