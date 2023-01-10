@@ -1,5 +1,5 @@
 import React, {useEffect} from "react";
-import { StyleSheet, View, Text, TextInput, TouchableOpacity } from "react-native";
+import { StyleSheet, View, Text, TextInput, TouchableOpacity, Alert } from "react-native";
 import Video from "react-native-video";
 import { useDispatch, useSelector } from "react-redux";
 import { setTitle } from '../slices/videoSlice';
@@ -9,18 +9,26 @@ const GenerateVideo = () => {
   const { title } = useSelector((state) => state.video);
   const dispatch = useDispatch();
 
+  // axios.get으로 모델로부터 받아올 데이터
   const videoUri = "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4";
   const loadingUri = "/Users/in-yeong/iykim/videoDot/src/assets/videoLoadingGif.gif";
   const showTag = '#V #목적없이떠나는여행 #꼬막비빔밥';
 
-  // 내 기기에 저장하기 react-native-fs 이용
   const onPressSave = () => {
-    
+    // 내 기기에 저장하기 react-native-fs 이용
   };
 
-  // axios 이용해서 fileData, tags, title 정보 POST
   const onPressUpload = () => {
-    console.log('Title>> ', title)
+    if (title.trim() === '') {
+      Alert.alert(
+        "업로드 실패",
+        "제목을 입력해주세요.",
+        [{text: "확인"}]
+      ) 
+    } else {
+      // axios 이용해서 fileData, tags, title 정보 POST
+      console.log('Title>> ', title)
+    }
   };
 
   return (
@@ -42,7 +50,7 @@ const GenerateVideo = () => {
         placeholder="제목을 입력해주세요." 
         onChangeText={(text) => dispatch(setTitle({title: text}))}></TextInput>
       <TouchableOpacity style={styles.inputButton} onPress={onPressSave}>
-        <Text style={styles.whiteText}>저장하기</Text>
+        <Text style={styles.whiteText}>내 기기에 저장하기</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.inputButton} onPress={onPressUpload}>
         <Text style={styles.whiteText}>내 피드에 업로드</Text>
