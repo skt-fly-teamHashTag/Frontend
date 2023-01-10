@@ -8,7 +8,7 @@ const LoginInput = ({ title, onChangeText }) => {
       <TextInput 
         style={styles.textInput} 
         onChangeText={onChangeText}
-        autoCapitalize={false}
+        autoCapitalize='none'
         keyboardType={title === '전화번호'? 'phone-pad': 'default'} />
     </View>
   );

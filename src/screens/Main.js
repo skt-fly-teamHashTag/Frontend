@@ -29,7 +29,7 @@ const Main = ({ navigation }) => {
       };
 
       try {
-        const response = await axios.post('http://13:8080/api/v1/auth/video', formData, {headers: header});
+        const response = await axios.post('http://localhost:8080/api/v1/auth/video', formData, {headers: header});
         navigation.navigate('GenerateVideo');
       } catch (error) {
         if (error.name === 'AxiosError') {
