@@ -1,6 +1,6 @@
 import axios from "axios";
 import React from "react";
-import { StyleSheet, View, Text, Image, TouchableOpacity } from "react-native";
+import { StyleSheet, View, Text, Image, TouchableOpacity, Alert } from "react-native";
 import { launchImageLibrary } from 'react-native-image-picker';
 
 const Main = ({ navigation }) => {
@@ -28,8 +28,19 @@ const Main = ({ navigation }) => {
         'Context-Type': 'multipart/form-data',
       };
 
-      const response = await axios.post('http://localhost:8080/api/v1/auth/video', formData, {headers: header});
-      navigation.navigate('GenerateVideo');
+      try {
+        const response = await axios.post('http://13:8080/api/v1/auth/video', formData, {headers: header});
+        navigation.navigate('GenerateVideo');
+      } catch (error) {
+        if (error.name === 'AxiosError') {
+          Alert.alert(
+            "네트워크 오류",
+            "인터넷 연결을 확인해주세요.",
+            [{text: "확인"}]
+          );
+        }
+      }
+      
     }
 
     
