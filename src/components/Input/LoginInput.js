@@ -5,7 +5,11 @@ const LoginInput = ({ title, onChangeText }) => {
   return (
     <View style={styles.inputBox}>
       <Text style={styles.textTitle}>{title}</Text>
-      <TextInput style={styles.textInput} onChangeText={onChangeText} />
+      <TextInput 
+        style={styles.textInput} 
+        onChangeText={onChangeText}
+        autoCapitalize={false}
+        keyboardType={title === '전화번호'? 'phone-pad': 'default'} />
     </View>
   );
 };
