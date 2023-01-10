@@ -62,7 +62,7 @@ const DrawerNavigator = () => {
         component={Home}
         options={homeHeader} />
       <Drawer.Screen 
-        name='Main'
+        name='MainStack'
         component={StackNavigator}
         options={mainHeader} />
       <Drawer.Screen 

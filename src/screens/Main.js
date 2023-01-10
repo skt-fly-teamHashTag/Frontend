@@ -28,7 +28,7 @@ const Main = ({ navigation }) => {
         'Context-Type': 'multipart/form-data',
       };
 
-      const response = await axios.post('http://localhost:8080/api/v1/auth/video', formData, {headers: header});
+      const response = await axios.post('http://172.23.255.72:8080/api/v1/auth/video', formData, {headers: header});
       navigation.navigate('GenerateVideo');
     }
 

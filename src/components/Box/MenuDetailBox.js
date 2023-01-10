@@ -31,7 +31,7 @@ const MenuDetailBox = ({ title }) => {
           iconType='entypo'
           iconColor='#7378FF'
           text='비디오닷'
-          onPress={()=>{navigation.navigate('Main')}} />
+          onPress={()=>{navigation.navigate('MainStack')}} />
       </View>
     </View>) ||
     title === '궁금하닷' &&  (

@@ -1,17 +1,26 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { StyleSheet, View, Text, TextInput, TouchableOpacity } from "react-native";
 import Video from "react-native-video";
+import { useDispatch, useSelector } from "react-redux";
+import { setTitle } from '../slices/videoSlice';
 
 const GenerateVideo = () => {
-  const getTags = ['V', '목적없이떠나는여행', '꼬막비빔밥'];
-  let showTag = '';
+  const { title } = useSelector((state) => state.video);
+  const dispatch = useDispatch();
 
-  for (const tags of getTags) {
-    showTag += '#' + tags + ' ';
-  }
-
-  const videoUri = "/Users/in-yeong/iykim/videoDot/src/assets/mainGif.mp4";
+  const videoUri = "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4";
   const posterUri = "https://avatars.githubusercontent.com/u/121754657?s=200&v=4";
+  const showTag = '#V #목적없이떠나는여행 #꼬막비빔밥';
+
+  // 내 기기에 저장하기 react-native-fs 이용
+  const onPressSave = () => {
+    
+  };
+
+  // axios 이용해서 fileData, tags, title 정보 POST
+  const onPressUpload = () => {
+
+  };
 
   return (
     <View style={styles.container}>
@@ -22,18 +31,20 @@ const GenerateVideo = () => {
         style={styles.video}
         controls={true}
         resizeMode={"cover"}
-        /* 썸네일 코드
-        audioOnly={true}
-        poster={posterUri}
-        posterResizeMode={"cover"} 
-        */
+        // 썸네일 코드
+        // audioOnly={true}
+        // poster={posterUri}
+        // posterResizeMode={"cover"} 
       />
       <Text style={styles.tags}>{showTag}</Text>
-      <TextInput style={styles.inputTitle} placeholder="제목을 입력해주세요."></TextInput>
-      <TouchableOpacity style={styles.inputButton}>
+      <TextInput 
+        style={styles.inputTitle} 
+        placeholder="제목을 입력해주세요." 
+        onChangeText={(text) => dispatch(setTitle({title: text}))}></TextInput>
+      <TouchableOpacity style={styles.inputButton} onPress={onPressSave}>
         <Text style={styles.whiteText}>저장하기</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.inputButton}>
+      <TouchableOpacity style={styles.inputButton} onPress={onPressUpload}>
         <Text style={styles.whiteText}>내 피드에 업로드</Text>
       </TouchableOpacity>
     </View>
