@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setTitle } from '../slices/videoSlice';
 
 const GenerateVideo = () => {
+  const { nickName } = useSelector((state) => state.user);
   const { title } = useSelector((state) => state.video);
   const dispatch = useDispatch();
 
@@ -24,7 +25,7 @@ const GenerateVideo = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.finishText}>해시태그님의 특별한 Vlog를 완성했어요!</Text>
+      <Text style={styles.finishText}>{nickName}님의 특별한 Vlog를 완성했어요!</Text>
       <Video
         source={{ uri: videoUri }}
         paused={true}
