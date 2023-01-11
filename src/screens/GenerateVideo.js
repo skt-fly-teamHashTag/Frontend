@@ -3,6 +3,8 @@ import { StyleSheet, View, Text, TextInput, TouchableOpacity, Alert } from "reac
 import Video from "react-native-video";
 import { useDispatch, useSelector } from "react-redux";
 import { setTitle } from '../slices/videoSlice';
+import RNFS from 'react-native-fs';
+import RNFetchBlob from 'rn-fetch-blob';
 
 const GenerateVideo = () => {
   const { nickName } = useSelector((state) => state.user);
@@ -12,13 +14,25 @@ const GenerateVideo = () => {
   // axios.get으로 모델로부터 받아올 데이터
   const videoUri = "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4";
   const loadingUri = "/Users/in-yeong/iykim/videoDot/src/assets/videoLoadingGif.gif";
-  const showTag = '#V #목적없이떠나는여행 #꼬막비빔밥';
+  const hashTags = '#V #목적없이떠나는여행 #꼬막비빔밥';
 
-  const onPressSave = () => {
-    // 내 기기에 저장하기 react-native-fs 이용
+  // 비디오 다운로드 경로
+  const path = RNFetchBlob.fs.dirs.DownloadDir;
+  const LOCAL_PATH_TO_VIDEO = Platform.OS === 'ios' ? `${RNFS.DocumentDirectoryPath}/videoDot.mp4` : `${path}/videoDot.mp4`;
+
+  const onPressSave = async() => {
+    // 내 기기에 저장하기 react-native-fs 이용: Error 발생
+    RNFS.downloadFile({
+      fromUrl: videoUri,
+      toFile: LOCAL_PATH_TO_VIDEO,
+    }).then((res)=>{
+      console.log('success!!!,', res);
+    }).catch((err)=>{
+      console.error(err.message)
+    })
   };
 
-  const onPressUpload = () => {
+  const onPressUpload = async() => {
     if (title.trim() === '') {
       Alert.alert(
         "업로드 실패",
@@ -26,8 +40,32 @@ const GenerateVideo = () => {
         [{text: "확인"}]
       ) 
     } else {
-      // axios 이용해서 fileData, tags, title 정보 POST
-      console.log('Title>> ', title)
+      // axios 이용해서 fileData, tags, title 정보 POST: 전송 오류 발생
+      const uploadData = {
+        name: 'uploadData',
+        title: title,
+        tags: hashTags,
+        uri: videoUri,
+      };
+
+      const formData = new FormData();
+      formData.append('video', uploadData);
+
+      const header = {
+        'Context-Type': 'multipart/form-data',
+      };
+
+      try { 
+        const response = await axios.post('http://localhost:8080/api/v1/auth/video', formData, {headers: header});
+      } catch (error) {
+        if (error.name === 'AxiosError') {
+          Alert.alert(
+            "네트워크 오류",
+            "인터넷 연결을 확인해주세요.",
+            [{text: "확인"}]
+          );
+        }
+      }
     }
   };
 
@@ -44,7 +82,7 @@ const GenerateVideo = () => {
         poster={loadingUri} // 썸네일이 아니라 비디오 로딩 화면
         posterResizeMode={"center"} 
       />
-      <Text style={styles.tags}>{showTag}</Text>
+      <Text style={styles.tags}>{hashTags}</Text>
       <TextInput 
         style={styles.inputTitle} 
         placeholder="제목을 입력해주세요." 
