@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setTitle } from '../slices/videoSlice';
 import RNFS from 'react-native-fs';
 import RNFetchBlob from 'rn-fetch-blob';
+import axios from "axios";
 
 const GenerateVideo = () => {
   const { nickName } = useSelector((state) => state.user);
@@ -40,7 +41,6 @@ const GenerateVideo = () => {
         [{text: "확인"}]
       ) 
     } else {
-      // axios 이용해서 fileData, tags, title 정보 POST: 전송 오류 발생
       const uploadData = {
         name: 'uploadData',
         title: title,
@@ -58,6 +58,7 @@ const GenerateVideo = () => {
       try { 
         const response = await axios.post('http://localhost:8080/api/v1/auth/video', formData, {headers: header});
       } catch (error) {
+        console.log(error)
         if (error.name === 'AxiosError') {
           Alert.alert(
             "네트워크 오류",
