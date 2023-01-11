@@ -1,10 +1,10 @@
 import React from 'react';
 import { StyleSheet, TouchableOpacity, Image } from 'react-native';
 
-const LeftIconButton = ({ source, onPress }) => {
+const LeftIconButton = ({ source, onPress, style }) => {
   return (
     <TouchableOpacity onPress={onPress}>
-      <Image style={styles.leftIcon} source={source} />
+      <Image style={[styles.leftIcon, style]} source={source} />
     </TouchableOpacity>
   );
 };

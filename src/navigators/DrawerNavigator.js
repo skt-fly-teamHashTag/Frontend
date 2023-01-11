@@ -33,18 +33,7 @@ const DrawerNavigator = () => {
     headerStyle: {backgroundColor: '#FFFBFD'},
     headerShadowVisible: false,
   });
-
-  const mainHeader = ({ navigation }) => ({
-    title: 'A. Video',
-    headerLeft: () => (
-      <LeftIconButton 
-        source={require("../assets/menu.png")}
-        onPress={() => navigation.openDrawer()} />
-    ),
-    headerStyle: {backgroundColor: '#FFFBFD'},
-    headerShadowVisible: false,
-  });
-
+  
   return (
     <Drawer.Navigator 
       initialRouteName='Login'
@@ -64,7 +53,10 @@ const DrawerNavigator = () => {
       <Drawer.Screen 
         name='MainStack'
         component={StackNavigator}
-        options={mainHeader} />
+        options={{
+          headerShown: false,
+          headerShadowVisible: false,
+        }} />
       <Drawer.Screen 
         name='Loading'
         component={Loading}
