@@ -7,7 +7,7 @@ import RNFS from 'react-native-fs';
 import RNFetchBlob from 'rn-fetch-blob';
 import axios from "axios";
 
-const GenerateVideo = () => {
+const GenerateVideo = ({ navigation }) => {
   const { nickName } = useSelector((state) => state.user);
   const { title } = useSelector((state) => state.video);
   const dispatch = useDispatch();
@@ -57,6 +57,7 @@ const GenerateVideo = () => {
 
       try { 
         const response = await axios.post('http://localhost:8080/api/v1/auth/video', formData, {headers: header});
+        navigation.navigate('FeedHome');
       } catch (error) {
         console.log(error)
         if (error.name === 'AxiosError') {

@@ -266,6 +266,9 @@ dependencies {
     implementation 'com.facebook.fresco:fresco:2.5.0'
     implementation fileTree(dir: "libs", include: ["*.jar"])
 
+    // react-native-fs
+    implementation project(':react-native-fs')
+
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules
 
