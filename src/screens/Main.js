@@ -61,7 +61,7 @@ const Main = ({ navigation }) => {
         <TouchableOpacity style={styles.feedButton}>
           <Text style={styles.feedText}>My 피드</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.feedButton}>
+        <TouchableOpacity style={styles.feedButton} onPress={()=>navigation.navigate('FeedHome')}>
           <Text style={styles.feedText}>피드 구경하기</Text>
         </TouchableOpacity>
       </View>
