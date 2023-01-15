@@ -2,6 +2,7 @@ import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Main from '../screens/Main';
 import FeedHome from '../screens/FeedHome';
+import FeedDetail from '../screens/FeedDetail';
 import GenerateVideo from '../screens/GenerateVideo';
 import LeftIconButton from "../components/Header/LeftIconButton";
 import { TouchableOpacity } from 'react-native';
@@ -48,6 +49,10 @@ const StackNavigator = () => {
       <Stack.Screen 
         name="FeedHome" 
         component={FeedHome} 
+        options={videoHeader}/>
+      <Stack.Screen 
+        name="FeedDetail" 
+        component={FeedDetail} 
         options={videoHeader}/>
     </Stack.Navigator>
   );

@@ -5,10 +5,14 @@ import { Icon } from "@rneui/themed";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import Video from "react-native-video";
 
-const FeedHome = () => {
+const FeedHome = ({ navigation }) => {
   const videoUri = "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4";
   const loadingUri = "/Users/in-yeong/iykim/videoDot/src/assets/videoLoadingGif.gif";
   const hashTags = '#V #목적없이떠나는여행 #꼬막비빔밥';
+
+  const onPress = () => {
+    navigation.navigate('FeedDetail');
+  }
 
   return (  
     <ScrollView
@@ -30,7 +34,7 @@ const FeedHome = () => {
         showsHorizontalScrollIndicator = {false}
         pagingEnabled
         style={styles.horizontalScrollView}>
-        <View style={styles.hotBox}>
+        <TouchableOpacity style={styles.hotBox} onPress={onPress}>
           <Text style={styles.contentTitle}>인기 급상승 영상 Top 1</Text>
           <Video
             source={{ uri: videoUri }}
@@ -49,8 +53,8 @@ const FeedHome = () => {
               <Text style={styles.heartText}>22</Text>
             </View>
           </View>
-        </View>
-        <View style={styles.hotBox}>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.hotBox} onPress={onPress}>
           <Text style={styles.contentTitle}>인기 급상승 영상 Top 2</Text>
           <Video
             source={{ uri: videoUri }}
@@ -69,8 +73,8 @@ const FeedHome = () => {
               <Text style={styles.heartText}>22</Text>
             </View>
           </View>
-        </View>
-        <View style={styles.hotBox}>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.hotBox} onPress={onPress}>
           <Text style={styles.contentTitle}>인기 급상승 영상 Top 3</Text>
           <Video
             source={{ uri: videoUri }}
@@ -89,7 +93,7 @@ const FeedHome = () => {
               <Text style={styles.heartText}>22</Text>
             </View>
           </View>
-        </View>
+        </TouchableOpacity>
       </ScrollView>
       <View style={styles.scrollCircle}>
         <Icon name='circle' type="font-awesome" color='#384BF5' size={9} style={styles.circle} />
@@ -99,7 +103,7 @@ const FeedHome = () => {
       <View style={styles.newContainer}>
         <Text style={styles.newText}>최신 영상을 확인해보세요!</Text>
         <View style={styles.center}>
-          <View style={styles.newBox}>
+          <TouchableOpacity style={styles.newBox} onPress={onPress}>
             <View style={styles.userInfo}>
               <Image source={require('../assets/userPhoto.png')} style={styles.userImage}></Image>
               <View>
@@ -125,8 +129,8 @@ const FeedHome = () => {
               </View>
             </View>
             <Text style={styles.videoTitle}>목적없이 떠나는 드라이브 VLOG</Text>
-          </View>
-          <View style={styles.newBox}>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.newBox} onPress={onPress}>
             <View style={styles.userInfo}>
               <Image source={require('../assets/userPhoto.png')} style={styles.userImage}></Image>
               <View>
@@ -152,8 +156,8 @@ const FeedHome = () => {
               </View>
             </View>
             <Text style={styles.videoTitle}>목적없이 떠나는 드라이브 VLOG</Text>
-          </View>
-          <View style={styles.newBox}>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.newBox} onPress={onPress}>
             <View style={styles.userInfo}>
               <Image source={require('../assets/userPhoto.png')} style={styles.userImage}></Image>
               <View>
@@ -179,8 +183,8 @@ const FeedHome = () => {
               </View>
             </View>
             <Text style={styles.videoTitle}>목적없이 떠나는 드라이브 VLOG</Text>
-          </View>
-          <View style={styles.newBox}>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.newBox} onPress={onPress}>
             <View style={styles.userInfo}>
               <Image source={require('../assets/userPhoto.png')} style={styles.userImage}></Image>
               <View>
@@ -206,7 +210,7 @@ const FeedHome = () => {
               </View>
             </View>
             <Text style={styles.videoTitle}>목적없이 떠나는 드라이브 VLOG</Text>
-          </View>
+          </TouchableOpacity>
         </View>
       </View>
     </ScrollView>
