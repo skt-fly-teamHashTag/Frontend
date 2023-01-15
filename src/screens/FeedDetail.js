@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
   },
   back: {
     position: 'absolute',
-    left: 25,
+    left: 15,
     top: 17
   },
   headerText: {
@@ -117,6 +117,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     margin: 5,
+    marginTop: 10
   },
   userImage: {
     width: 50,
