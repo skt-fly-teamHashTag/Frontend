@@ -5,13 +5,17 @@ import FeedHome from '../screens/FeedHome';
 import FeedDetail from '../screens/FeedDetail';
 import GenerateVideo from '../screens/GenerateVideo';
 import Search from '../screens/Search';
+import SearchResult from '../screens/SearchResult';
 import LeftIconButton from "../components/Header/LeftIconButton";
 import { TouchableOpacity } from 'react-native';
 import { Icon } from '@rneui/themed';
+import { useDispatch } from "react-redux";
+import { setSearch } from '../slices/searchSlice';
 
 
 const StackNavigator = () => {
   const Stack = createNativeStackNavigator();
+  const dispatch = useDispatch();
 
   const mainHeader = ({ navigation }) => ({
     title: 'A. Video',
@@ -25,11 +29,16 @@ const StackNavigator = () => {
     headerShadowVisible: false,
   });
 
+  const onPressClose = (navigation) => {
+    dispatch(setSearch({inputText: ''}));
+    navigation.navigate('Main');
+  };
+
   const videoHeader = ({ navigation }) => ({
     title: 'A. Video',
     headerLeft: () => (<></>),
     headerRight: () => (
-      <TouchableOpacity onPress={() => navigation.navigate('Main')}>
+      <TouchableOpacity onPress={() => onPressClose(navigation)}>
         <Icon  name='close' type='ant-design' size={24} style={{ marginRight: 5,  }} />
       </TouchableOpacity>
     ),
@@ -58,6 +67,10 @@ const StackNavigator = () => {
       <Stack.Screen 
         name="Search" 
         component={Search} 
+        options={videoHeader}/>
+      <Stack.Screen 
+        name="SearchResult" 
+        component={SearchResult} 
         options={videoHeader}/>
     </Stack.Navigator>
   );
