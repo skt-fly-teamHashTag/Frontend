@@ -4,6 +4,7 @@ import Main from '../screens/Main';
 import FeedHome from '../screens/FeedHome';
 import FeedDetail from '../screens/FeedDetail';
 import GenerateVideo from '../screens/GenerateVideo';
+import Search from '../screens/Search';
 import LeftIconButton from "../components/Header/LeftIconButton";
 import { TouchableOpacity } from 'react-native';
 import { Icon } from '@rneui/themed';
@@ -53,6 +54,10 @@ const StackNavigator = () => {
       <Stack.Screen 
         name="FeedDetail" 
         component={FeedDetail} 
+        options={videoHeader}/>
+      <Stack.Screen 
+        name="Search" 
+        component={Search} 
         options={videoHeader}/>
     </Stack.Navigator>
   );
