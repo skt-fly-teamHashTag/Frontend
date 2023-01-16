@@ -58,7 +58,7 @@ const Main = ({ navigation }) => {
         <Text style={styles.galleryText}>앨범에서 선택하기</Text>
       </TouchableOpacity>
       <View style={styles.feedBox}>
-        <TouchableOpacity style={styles.feedButton}>
+        <TouchableOpacity style={styles.feedButton} onPress={()=>navigation.navigate('MyFeed')}>
           <Text style={styles.feedText}>My 피드</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.feedButton} onPress={()=>navigation.navigate('FeedHome')}>
