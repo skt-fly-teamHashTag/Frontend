@@ -1,23 +1,24 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { StyleSheet, View, Text, ScrollView, TouchableOpacity, Image } from "react-native";
 import { Icon } from "@rneui/themed";
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import Video from "react-native-video";
 import Carousel from '../components/Carousel/Carousel';
 import Feed from '../components/Feed/Feed';
 import { dummyData } from '../datas/Data';
 
 const FeedHome = ({ navigation }) => {
+  const [data, setData] = useState([]);
 
-  const videoUri = "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4";
-  const loadingUri = "/Users/in-yeong/iykim/videoDot/src/assets/videoLoadingGif.gif";
-  const hashTags = '#V #목적없이떠나는여행 #꼬막비빔밥';
-
-  const onPress = () => {
-    navigation.navigate('FeedDetail');
-  }
-
+  // useEffect(() => {
+  //   try {
+  //     const response = axios.get('http://localhost:8080/api/v1/auth/login');
+  //     setData(response);
+  //     console.log(response);
+  //   } catch(error) {
+  //     console.log("ERROR>>", error);
+  //   }
+  // }, [])
+  
   return (  
     <ScrollView
       showsVerticalScrollIndicator = {false}
@@ -64,112 +65,6 @@ const styles = StyleSheet.create({
     marginLeft: 30,
     fontSize: 20,
   },
-  hotBox: {
-    marginHorizontal: wp('6%'),
-    marginVertical: 20,
-    backgroundColor: '#F4F6F9',
-    borderRadius: 10,
-    padding: 5,
-    paddingBottom: 10,
-    ...Platform.select({
-      ios: {
-        shadowColor: "#000",
-        shadowOffset: {
-          width: 2,
-          height: 2,
-        },
-        shadowOpacity: 0.3,
-        shadowRadius: 5,
-      },
-      android: {
-        elevation: 4,
-      },
-    }),
-  },
-  hotBottomText: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingHorizontal: 15,
-    paddingBottom: 5,
-    alignItems: 'center'
-  },
-  heartBox: {
-    flexDirection: 'row'
-  },
-  heartText: {
-    color: '#FE646F',
-    marginLeft: 5
-  },
-  scrollCircle: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    marginBottom: 15
-  },
-  circle: {
-    marginLeft: 5,
-    marginRight: 5
-  },
-  newContainer: {
-    backgroundColor: '#E5F0FF',
-    paddingBottom: 30,
-  },
-  newBox: {
-    borderRadius: 10,
-    backgroundColor: '#FFFBFD',
-    marginBottom: 20,
-    padding: 5
-  },
-  newText: {
-    fontWeight: 'bold',
-    fontSize: 20,
-    color: '#3A4563',
-    margin: 25,
-    marginBottom: 15
-  },
-  center: {
-    alignItems: 'center'
-  },
-  contentTitle: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    margin: 10,
-    marginBottom: 0
-  },
-  userInfo: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    margin: 5,
-    marginBottom: 0
-  },
-  userImage: {
-    width: 50,
-    height: 50
-  },
-  userUploadTime: {
-    color: 'gray',
-    marginLeft: 10,
-    marginTop: 3,
-    fontSize: 12
-  },
-  video: {
-    width: 300,
-    height: 200,
-    backgroundColor: '#F1F4F9',
-    borderRadius: 10,
-    borderWidth: 1.5,
-    borderColor: '#F1F4F9',
-    margin: 10
-  },
-  newHashTag: {
-    color: '#384BF5',
-    fontWeight: 'bold'
-  },
-  videoTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginHorizontal: 15,
-    marginBottom: 10
-  }
 });
 
 export default FeedHome;

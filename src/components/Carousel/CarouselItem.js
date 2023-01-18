@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { View, StyleSheet, Text, Image, Dimensions, TouchableOpacity } from 'react-native'
 import { Icon } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
@@ -8,6 +8,13 @@ const { width, height } = Dimensions.get('window')
 
 const CarouselItem = ({ item, index }) => {
   const navigation = useNavigation();
+  const [isLiked, setLiked] = useState(false);
+  const [likeCount, setLikeCount] = useState(item.heart);
+
+  const onPressLike = () => {
+    setLiked(!isLiked);
+    setLikeCount(isLiked ? item.heart : item.heart + 1);
+  };
 
   return (
     <TouchableOpacity style={styles.cardView} activeOpacity={0.8} onPress={() => navigation.navigate('FeedDetail', item)}>
@@ -16,8 +23,15 @@ const CarouselItem = ({ item, index }) => {
       <View style={styles.hotBottomText}>
         <Text style={styles.hashTag}>{ item.tags }</Text>
         <View style={styles.heartBox}>
-          <Icon name='heart' type='font-awesome' color='#FE646F' size={16}></Icon>
-          <Text style={styles.heartText}>{ item.heart }</Text>
+          <TouchableOpacity onPress={onPressLike}>
+            <Icon 
+              name={isLiked ? 'heart': 'heart-o'} 
+              type='font-awesome' 
+              color='#FE646F' 
+              size={16}
+            />
+          </TouchableOpacity>
+          <Text style={styles.heartText}>{ likeCount }</Text>
         </View>
       </View>
       <Text style={styles.hotTitle}>{ item.title }</Text>

@@ -1,10 +1,18 @@
-import React from "react";
-import { StyleSheet, TouchableOpacity, View, Image, Text } from "react-native";
+import React, { useState } from "react";
+import { StyleSheet, TouchableOpacity, View, Image, Text, Dimensions } from "react-native";
 import { Icon } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
 
 const FeedItem = ({ item }) => {
   const navigation = useNavigation();
+  const [isLiked, setLiked] = useState(false);
+  const [likeCount, setLikeCount] = useState(item.heart);
+  const height = Dimensions.get('window').height;
+
+  const onPressLike = () => {
+    setLiked(!isLiked);
+    setLikeCount(isLiked ? item.heart : item.heart + 1);
+  };
 
   return (
     <TouchableOpacity style={styles.newBox} activeOpacity={0.8} onPress={() => navigation.navigate('FeedDetail', item)}>
@@ -19,8 +27,15 @@ const FeedItem = ({ item }) => {
       <View style={styles.hotBottomText}>
         <Text style={styles.newHashTag}>{ item.tags }</Text>
         <View style={styles.heartBox}>
-          <Icon name='heart' type='font-awesome' color='#FE646F' size={16}></Icon>
-          <Text style={styles.heartText}>{ item.heart }</Text>
+          <TouchableOpacity onPress={onPressLike}>
+            <Icon 
+              name={isLiked ? 'heart': 'heart-o'} 
+              type='font-awesome' 
+              color='#FE646F' 
+              size={16}
+            />
+          </TouchableOpacity>
+          <Text style={styles.heartText}>{ likeCount }</Text>
         </View>
       </View>
       <Text style={styles.videoTitle}>{ item.title }</Text>

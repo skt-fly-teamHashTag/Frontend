@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView } from "react-native";
 import { Icon } from "@rneui/themed";
 import Video from "react-native-video";
@@ -8,6 +8,13 @@ const FeedDetail = ({ navigation, route }) => {
   const loadingUri = "/Users/in-yeong/iykim/videoDot/src/assets/videoLoadingGif.gif";
   const videoUri = data.video;
   const hashTags = data.tags;
+  const [isLiked, setLiked] = useState(false);
+  const [likeCount, setLikeCount] = useState(data.heart);
+
+  const onPressLike = () => {
+    setLiked(!isLiked);
+    setLikeCount(isLiked ? data.heart : data.heart + 1);
+  };
 
   return (
     <View style={styles.container}>
@@ -36,8 +43,15 @@ const FeedDetail = ({ navigation, route }) => {
       <View style={styles.hotBottomText}>
         <Text style={styles.newHashTag}>{hashTags}</Text>
         <View style={styles.heartBox}>
-          <Text style={styles.heartText}>좋아요 22개 </Text>
-          <Icon name='heart' type='font-awesome' color='#FE646F' size={16}></Icon>
+          <Text style={styles.heartText}>좋아요 {likeCount}개 </Text>
+          <TouchableOpacity onPress={onPressLike}>
+            <Icon 
+              name={isLiked ? 'heart': 'heart-o'} 
+              type='font-awesome' 
+              color='#FE646F' 
+              size={16}
+            />
+          </TouchableOpacity>
         </View>
       </View>
       <Text style={styles.videoTitle}>목적없이 떠나는 드라이브 VLOG</Text>
