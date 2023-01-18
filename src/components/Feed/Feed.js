@@ -10,13 +10,7 @@ const Feed = ({ data }) => {
     <View style={styles.newContainer}>
       <Text style={styles.newText}>최신 영상을 확인해보세요!</Text>
       <View style={styles.center}>
-        <FlatList data={data}
-          ref = {(flatList) => {this.flatList = flatList}}
-            keyExtractor={(item, index) => 'key' + index}
-            renderItem={({ item }) => {
-                return <FeedItem item={item} />
-            }}
-        />
+        {data.map((item, index) => <FeedItem key={'key' + index} item={item} />)}
       </View>
     </View>
   )
