@@ -4,8 +4,11 @@ import { StyleSheet, View, Text, ScrollView, TouchableOpacity, Image } from "rea
 import { Icon } from "@rneui/themed";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import Video from "react-native-video";
+import Carousel from '../components/Carousel/Carousel';
+import { dummyData } from '../datas/Data';
 
 const FeedHome = ({ navigation }) => {
+
   const videoUri = "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4";
   const loadingUri = "/Users/in-yeong/iykim/videoDot/src/assets/videoLoadingGif.gif";
   const hashTags = '#V #목적없이떠나는여행 #꼬막비빔밥';
@@ -24,82 +27,13 @@ const FeedHome = ({ navigation }) => {
           <Text style={styles.screenTitle}>나만의 Vlog</Text>
           <Icon name='play-circle' type='font-awesome' size={24} color='#FE6788'></Icon>
         </View>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={()=>navigation.navigate('Search')}>
           <Icon name='search' type='feather' size={24} style={{justifyContent:'flex-end'}}></Icon>
         </TouchableOpacity>
       </View>
       <Text style={styles.hotText}>이번주 Hot 랭킹을 확인해보세요!!</Text>
-      <ScrollView
-        horizontal={true}
-        showsHorizontalScrollIndicator = {false}
-        pagingEnabled
-        style={styles.horizontalScrollView}>
-        <TouchableOpacity style={styles.hotBox} onPress={onPress}>
-          <Text style={styles.contentTitle}>인기 급상승 영상 Top 1</Text>
-          <Video
-            source={{ uri: videoUri }}
-            paused={true}
-            style={styles.video}
-            controls={true}
-            resizeMode={"cover"}
-            audioOnly={false} // true로 주면 비디오 로딩되어도 poster 안사라짐
-            poster={loadingUri} // 썸네일이 아니라 비디오 로딩 화면
-            posterResizeMode={"center"} 
-          />
-          <View style={styles.hotBottomText}>
-            <Text style={styles.hashTag}>{hashTags}</Text>
-            <View style={styles.heartBox}>
-            <Icon name='heart' type='font-awesome' color='#FE646F' size={16}></Icon>
-              <Text style={styles.heartText}>22</Text>
-            </View>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.hotBox} onPress={onPress}>
-          <Text style={styles.contentTitle}>인기 급상승 영상 Top 2</Text>
-          <Video
-            source={{ uri: videoUri }}
-            paused={true}
-            style={styles.video}
-            controls={true}
-            resizeMode={"cover"}
-            audioOnly={false} // true로 주면 비디오 로딩되어도 poster 안사라짐
-            poster={loadingUri} // 썸네일이 아니라 비디오 로딩 화면
-            posterResizeMode={"center"} 
-          />
-          <View style={styles.hotBottomText}>
-            <Text style={styles.hashTag}>{hashTags}</Text>
-            <View style={styles.heartBox}>
-              <Icon name='heart' type='font-awesome' color='#FE646F' size={16}></Icon>
-              <Text style={styles.heartText}>22</Text>
-            </View>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.hotBox} onPress={onPress}>
-          <Text style={styles.contentTitle}>인기 급상승 영상 Top 3</Text>
-          <Video
-            source={{ uri: videoUri }}
-            paused={true}
-            style={styles.video}
-            controls={true}
-            resizeMode={"cover"}
-            audioOnly={false} 
-            poster={loadingUri}
-            posterResizeMode={"center"} 
-          />
-          <View style={styles.hotBottomText}>
-            <Text style={styles.hashTag}>{hashTags}</Text>
-            <View style={styles.heartBox}>
-              <Icon name='heart' type='font-awesome' color='#FE646F' size={16}></Icon>
-              <Text style={styles.heartText}>22</Text>
-            </View>
-          </View>
-        </TouchableOpacity>
-      </ScrollView>
-      <View style={styles.scrollCircle}>
-        <Icon name='circle' type="font-awesome" color='#384BF5' size={9} style={styles.circle} />
-        <Icon name='circle' type="font-awesome" color='#D9D9D9' size={9} style={styles.circle} />
-        <Icon name='circle' type="font-awesome" color='#D9D9D9' size={9} style={styles.circle} />
-      </View>
+      <Carousel data={dummyData} />
+    
       <View style={styles.newContainer}>
         <Text style={styles.newText}>최신 영상을 확인해보세요!</Text>
         <View style={styles.center}>

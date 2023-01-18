@@ -3,10 +3,11 @@ import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView } from "rea
 import { Icon } from "@rneui/themed";
 import Video from "react-native-video";
 
-const FeedDetail = ({ navigation }) => {
-  const videoUri = "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4";
+const FeedDetail = ({ navigation, route }) => {
+  const data = route.params
   const loadingUri = "/Users/in-yeong/iykim/videoDot/src/assets/videoLoadingGif.gif";
-  const hashTags = '#V #목적없이떠나는여행 #꼬막비빔밥';
+  const videoUri = data.video;
+  const hashTags = data.tags;
 
   return (
     <View style={styles.container}>
@@ -14,20 +15,17 @@ const FeedDetail = ({ navigation }) => {
         <TouchableOpacity onPress={()=>navigation.goBack()} style={styles.back}>
           <Icon name='arrow-back-ios' type='material-icons' size={20}></Icon>
         </TouchableOpacity>
-        <Text style={styles.headerText}>해시태그닷님의 영상</Text>
+        <Text style={styles.headerText}>{ data.userName }님의 영상</Text>
       </View>
-
-
       <View style={styles.userInfo}>
         <Image source={require('../assets/userPhoto.png')} style={styles.userImage}></Image>
         <View>
-          <Text style={styles.contentTitle}>해시태그닷</Text>
-          <Text style={styles.userUploadTime}>1분 전・을지로</Text>
+          <Text style={styles.contentTitle}>{ data.userName }</Text>
+          <Text style={styles.userUploadTime}>{ data.uploadTime }</Text>
         </View>
       </View>
       <Video
         source={{ uri: videoUri }}
-        paused={true}
         style={styles.video}
         controls={true}
         resizeMode={"cover"}
