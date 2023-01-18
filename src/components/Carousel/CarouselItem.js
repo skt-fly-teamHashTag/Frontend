@@ -10,7 +10,7 @@ const CarouselItem = ({ item, index }) => {
   const navigation = useNavigation();
 
   return (
-    <TouchableOpacity style={styles.cardView} onPress={() => navigation.navigate('FeedDetail', item)}>
+    <TouchableOpacity style={styles.cardView} activeOpacity={0.8} onPress={() => navigation.navigate('FeedDetail', item)}>
       <Text style={styles.contentTitle}>인기 급상승 영상 Top { item.index }</Text>
       <Image style={styles.image} source={{ uri: item.thumbnail }} />
       <View style={styles.hotBottomText}>
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width: 300,
-    height: 200,
+    height: 180,
     backgroundColor: '#F1F4F9',
     borderRadius: 10,
     borderWidth: 1.5,

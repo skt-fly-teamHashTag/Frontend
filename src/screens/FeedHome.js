@@ -5,6 +5,7 @@ import { Icon } from "@rneui/themed";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import Video from "react-native-video";
 import Carousel from '../components/Carousel/Carousel';
+import Feed from '../components/Feed/Feed';
 import { dummyData } from '../datas/Data';
 
 const FeedHome = ({ navigation }) => {
@@ -27,126 +28,13 @@ const FeedHome = ({ navigation }) => {
           <Text style={styles.screenTitle}>나만의 Vlog</Text>
           <Icon name='play-circle' type='font-awesome' size={24} color='#FE6788'></Icon>
         </View>
-        <TouchableOpacity onPress={()=>navigation.navigate('Search')}>
+        <TouchableOpacity activeOpacity={0.8} onPress={()=>navigation.navigate('Search')}>
           <Icon name='search' type='feather' size={24} style={{justifyContent:'flex-end'}}></Icon>
         </TouchableOpacity>
       </View>
       <Text style={styles.hotText}>이번주 Hot 랭킹을 확인해보세요!!</Text>
-      <Carousel data={dummyData} />
-    
-      <View style={styles.newContainer}>
-        <Text style={styles.newText}>최신 영상을 확인해보세요!</Text>
-        <View style={styles.center}>
-          <TouchableOpacity style={styles.newBox} onPress={onPress}>
-            <View style={styles.userInfo}>
-              <Image source={require('../assets/userPhoto.png')} style={styles.userImage}></Image>
-              <View>
-                <Text style={styles.contentTitle}>해시태그닷</Text>
-                <Text style={styles.userUploadTime}>1분 전・을지로</Text>
-              </View>
-            </View>
-            <Video
-              source={{ uri: videoUri }}
-              paused={true}
-              style={styles.video}
-              controls={true}
-              resizeMode={"cover"}
-              audioOnly={false} 
-              poster={loadingUri}
-              posterResizeMode={"center"} 
-            />
-            <View style={styles.hotBottomText}>
-              <Text style={styles.newHashTag}>{hashTags}</Text>
-              <View style={styles.heartBox}>
-                <Icon name='heart' type='font-awesome' color='#FE646F' size={16}></Icon>
-                <Text style={styles.heartText}>22</Text>
-              </View>
-            </View>
-            <Text style={styles.videoTitle}>목적없이 떠나는 드라이브 VLOG</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.newBox} onPress={onPress}>
-            <View style={styles.userInfo}>
-              <Image source={require('../assets/userPhoto.png')} style={styles.userImage}></Image>
-              <View>
-                <Text style={styles.contentTitle}>해시태그닷</Text>
-                <Text style={styles.userUploadTime}>1분 전・을지로</Text>
-              </View>
-            </View>
-            <Video
-              source={{ uri: videoUri }}
-              paused={true}
-              style={styles.video}
-              controls={true}
-              resizeMode={"cover"}
-              audioOnly={false} 
-              poster={loadingUri}
-              posterResizeMode={"center"} 
-            />
-            <View style={styles.hotBottomText}>
-              <Text style={styles.newHashTag}>{hashTags}</Text>
-              <View style={styles.heartBox}>
-                <Icon name='heart' type='font-awesome' color='#FE646F' size={16}></Icon>
-                <Text style={styles.heartText}>22</Text>
-              </View>
-            </View>
-            <Text style={styles.videoTitle}>목적없이 떠나는 드라이브 VLOG</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.newBox} onPress={onPress}>
-            <View style={styles.userInfo}>
-              <Image source={require('../assets/userPhoto.png')} style={styles.userImage}></Image>
-              <View>
-                <Text style={styles.contentTitle}>해시태그닷</Text>
-                <Text style={styles.userUploadTime}>1분 전・을지로</Text>
-              </View>
-            </View>
-            <Video
-              source={{ uri: videoUri }}
-              paused={true}
-              style={styles.video}
-              controls={true}
-              resizeMode={"cover"}
-              audioOnly={false} 
-              poster={loadingUri}
-              posterResizeMode={"center"} 
-            />
-            <View style={styles.hotBottomText}>
-              <Text style={styles.newHashTag}>{hashTags}</Text>
-              <View style={styles.heartBox}>
-                <Icon name='heart' type='font-awesome' color='#FE646F' size={16}></Icon>
-                <Text style={styles.heartText}>22</Text>
-              </View>
-            </View>
-            <Text style={styles.videoTitle}>목적없이 떠나는 드라이브 VLOG</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.newBox} onPress={onPress}>
-            <View style={styles.userInfo}>
-              <Image source={require('../assets/userPhoto.png')} style={styles.userImage}></Image>
-              <View>
-                <Text style={styles.contentTitle}>해시태그닷</Text>
-                <Text style={styles.userUploadTime}>1분 전・을지로</Text>
-              </View>
-            </View>
-            <Video
-              source={{ uri: videoUri }}
-              paused={true}
-              style={styles.video}
-              controls={true}
-              resizeMode={"cover"}
-              audioOnly={false} 
-              poster={loadingUri}
-              posterResizeMode={"center"} 
-            />
-            <View style={styles.hotBottomText}>
-              <Text style={styles.newHashTag}>{hashTags}</Text>
-              <View style={styles.heartBox}>
-                <Icon name='heart' type='font-awesome' color='#FE646F' size={16}></Icon>
-                <Text style={styles.heartText}>22</Text>
-              </View>
-            </View>
-            <Text style={styles.videoTitle}>목적없이 떠나는 드라이브 VLOG</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
+      <Carousel data={dummyData.slice(0, 3)} />
+      <Feed data={dummyData} />
     </ScrollView>
   );
 };
