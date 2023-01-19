@@ -10,3 +10,4 @@
 7. Cocoapods v1.11.3
 8. Xcode v14.0.1
 9. VS Code v1.74.2
+10. Java v11.0.17
