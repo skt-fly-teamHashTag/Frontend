@@ -13,13 +13,14 @@ const FeedHome = ({ navigation }) => {
   const showToast = (isLiked) => {
     Toast.show({
       type: "info",
-      text1: isLiked ? "좋아요를 취소했습니다." : "좋아요를 눌렀습니다."
+      text1: isLiked ? "좋아요를 취소했습니다." : "좋아요를 눌렀습니다.",
+      position: "bottom"
     })
   }
 
   useEffect(() => {
     try {
-      const response = axios.get('http://localhost:8900/api/v1/video');
+      const response = axios.get('http://192.168.191.48:8900/api/v1/video');
       setData(response);
       console.log(response);
     } catch(error) {

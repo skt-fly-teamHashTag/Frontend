@@ -18,25 +18,25 @@ const CarouselItem = ({ item, index, showToast }) => {
   };
 
   return (
-    <TouchableOpacity style={styles.cardView} activeOpacity={0.8} onPress={() => navigation.navigate('FeedDetail', {...item, showToast: showToast})}>
+    <View style={styles.cardView}>
       <Text style={styles.contentTitle}>인기 급상승 영상 Top { item.index }</Text>
-      <Image style={styles.image} source={{ uri: item.thumbnail }} />
+      <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.navigate('FeedDetail', item)}>
+        <Image style={styles.image} source={{ uri: item.thumbnail }} />
+      </TouchableOpacity>
       <View style={styles.hotBottomText}>
         <Text style={styles.hashTag}>{ item.tags }</Text>
-        <View style={styles.heartBox}>
-          <TouchableOpacity onPress={onPressLike}>
-            <Icon 
-              name={isLiked ? 'heart': 'heart-o'} 
-              type='font-awesome' 
-              color='#FE646F' 
-              size={16}
-            />
-          </TouchableOpacity>
+        <TouchableOpacity onPress={onPressLike} style={styles.heartBox}>
+          <Icon 
+            name={isLiked ? 'heart': 'heart-o'} 
+            type='font-awesome' 
+            color='#FE646F' 
+            size={16}
+          />
           <Text style={styles.heartText}>{ likeCount }</Text>
-        </View>
+        </TouchableOpacity>
       </View>
       <Text style={styles.hotTitle}>{ item.title }</Text>
-    </TouchableOpacity>
+    </View>
   )
 }
 

@@ -32,7 +32,7 @@ const LoginForm = ({ navigation }) => {
 
   const onPress = async() => {
     try {
-      const response = await axios.post('http://localhost:8080/api/v1/auth/login', user);
+      const response = await axios.post('http://192.168.191.48:8080/api/v1/auth/login', user);
       if (fillAll() && response.data === "로그인 성공") {
         console.log("POST >>", user);
         navigation.navigate("Home");

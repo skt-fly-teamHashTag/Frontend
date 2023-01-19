@@ -2,21 +2,30 @@ import React, { useState } from "react";
 import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView } from "react-native";
 import { Icon } from "@rneui/themed";
 import Video from "react-native-video";
+import Toast from 'react-native-toast-message';
 
 const FeedDetail = ({ navigation, route }) => {
   const data = route.params
   const loadingUri = "/Users/in-yeong/iykim/videoDot/src/assets/videoLoadingGif.gif";
-  // const videoUri = data.video;
-  const videoUri = data.videoUri;
+  const videoUri = data.video;
+  // const videoUri = data.videoUri;
   const hashTags = data.tags;
   const [isLiked, setLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(data.heart);
-  console.log(videoUri)
+  // console.log(videoUri)
+
+  const showToast = (isLiked) => {
+    Toast.show({
+      type: "info",
+      text1: isLiked ? "좋아요를 취소했습니다." : "좋아요를 눌렀습니다.",
+      position: 'bottom'
+    })
+  }
 
   const onPressLike = () => {
     setLiked(!isLiked);
     setLikeCount(isLiked ? data.heart : data.heart + 1);
-    data.showToast(isLiked);
+    showToast(isLiked);
   };
 
   return (
@@ -45,17 +54,15 @@ const FeedDetail = ({ navigation, route }) => {
       />
       <View style={styles.hotBottomText}>
         <Text style={styles.newHashTag}>{hashTags}</Text>
-        <View style={styles.heartBox}>
+        <TouchableOpacity onPress={onPressLike} style={styles.heartBox}>
           <Text style={styles.heartText}>좋아요 {likeCount}개 </Text>
-          <TouchableOpacity onPress={onPressLike}>
-            <Icon 
-              name={isLiked ? 'heart': 'heart-o'} 
-              type='font-awesome' 
-              color='#FE646F' 
-              size={16}
-            />
-          </TouchableOpacity>
-        </View>
+          <Icon 
+            name={isLiked ? 'heart': 'heart-o'} 
+            type='font-awesome' 
+            color='#FE646F' 
+            size={16}
+          />
+        </TouchableOpacity>
       </View>
       <Text style={styles.videoTitle}>목적없이 떠나는 드라이브 VLOG</Text>
       <View style={styles.line}></View>
@@ -102,6 +109,7 @@ const FeedDetail = ({ navigation, route }) => {
         </View>
         <View style={{height: 50}}></View>
       </ScrollView>
+      <Toast />
     </View>
   );  
 };
@@ -123,10 +131,10 @@ const styles = StyleSheet.create({
   back: {
     position: 'absolute',
     left: 15,
-    top: 17
+    top: 15
   },
   headerText: {
-    fontSize: 20
+    fontSize: 18
   },
   userInfo: {
     flexDirection: 'row',

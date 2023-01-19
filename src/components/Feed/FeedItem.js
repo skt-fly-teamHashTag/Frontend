@@ -11,23 +11,24 @@ const FeedItem = ({ item, showToast }) => {
   const height = Dimensions.get('window').height;
 
   const onPressFeed = async () => {
-    const baseURL = 'http://localhost:8900/api/v1/video';
-    const id = '63c7e9af8f429307d2f874c8';
-    try {
-      const response = await axios.get(`${baseURL}/${id}`, {
-        responseType: 'blob'
-      });
-      // const blob = new Blob([response.data])
-      const blob = new Blob([response.data._data], {
-        type: 'video/mp4'
-      });
-      console.log(response.data)
-      // console.log(response.config.env);
-      const fileName = response.data._data.name; // 63c7e9af8f429307d2f874c8.mp4
-      navigation.navigate('FeedDetail', {...item, videoUri: `${baseURL}/${fileName}`, showToast: showToast });
-    } catch(error) {
-      console.log("ERROR>>", error); //fighting!!
-    }
+    // const baseURL = 'http://localhost:8900/api/v1/video';
+    // const id = '63c7e9af8f429307d2f874c8';
+    // try {
+    //   const response = await axios.get(`${baseURL}/${id}`, {
+    //     responseType: 'blob'
+    //   });
+    //   // const blob = new Blob([response.data])
+    //   const blob = new Blob([response.data._data], {
+    //     type: 'video/mp4'
+    //   });
+    //   console.log(response.data)
+    //   // console.log(response.config.env);
+    //   const fileName = response.data._data.name; // 63c7e9af8f429307d2f874c8.mp4
+    //   navigation.navigate('FeedDetail', {...item, videoUri: `${baseURL}/${fileName}`, showToast: showToast });
+    // } catch(error) {
+    //   console.log("ERROR>>", error); //fighting!!
+    // }
+    navigation.navigate('FeedDetail', item);
   }
 
   const onPressLike = () => {
@@ -37,7 +38,7 @@ const FeedItem = ({ item, showToast }) => {
   };
 
   return (
-    <TouchableOpacity style={styles.newBox} activeOpacity={0.8} onPress={onPressFeed}>
+    <View style={styles.newBox}>
       <View style={styles.userInfo}>
         <Image source={require('../../assets/userPhoto.png')} style={styles.userImage}></Image>
         <View>
@@ -45,23 +46,23 @@ const FeedItem = ({ item, showToast }) => {
           <Text style={styles.userUploadTime}>{ item.uploadTime }</Text>
         </View>
       </View>
-      <Image style={styles.video} source={{ uri: item.thumbnail }} />
+      <TouchableOpacity activeOpacity={0.8} onPress={onPressFeed}>
+        <Image style={styles.video} source={{ uri: item.thumbnail }} />
+      </TouchableOpacity>
       <View style={styles.hotBottomText}>
         <Text style={styles.newHashTag}>{ item.tags }</Text>
-        <View style={styles.heartBox}>
-          <TouchableOpacity onPress={onPressLike}>
-            <Icon 
-              name={isLiked ? 'heart': 'heart-o'} 
-              type='font-awesome' 
-              color='#FE646F' 
-              size={16}
-            />
-          </TouchableOpacity>
+        <TouchableOpacity onPress={onPressLike} style={styles.heartBox}>
+          <Icon 
+            name={isLiked ? 'heart': 'heart-o'} 
+            type='font-awesome' 
+            color='#FE646F' 
+            size={16}
+          />
           <Text style={styles.heartText}>{ likeCount }</Text>
-        </View>
+        </TouchableOpacity>
       </View>
       <Text style={styles.videoTitle}>{ item.title }</Text>
-    </TouchableOpacity>
+    </View>
   )
 }
 
