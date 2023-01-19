@@ -11,11 +11,20 @@ const SearchResult = ({ navigation }) => {
   const search = useSelector((state) => state.search);
   const dispatch = useDispatch();
 
+  const toastConfig = {
+    likeToast: ({ text1, props }) => (
+      <View style={styles.toastBox}>
+        <Text style={styles.toastText}>{text1}</Text>
+      </View>
+    )
+  };
+
   const showToast = (isLiked) => {
     Toast.show({
-      type: "info",
+      type: "likeToast",
       text1: isLiked ? "좋아요를 취소했습니다." : "좋아요를 눌렀습니다.",
-      position: 'bottom'
+      position: "bottom",
+      visibilityTime: 2000
     })
   }
 
@@ -60,7 +69,7 @@ const SearchResult = ({ navigation }) => {
         bounces={false}>
         {dummyData.map((item, index) => <SearchItem key={'key' + index} item={item} showToast={showToast} />)}
       </ScrollView>
-      <Toast />
+      <Toast config={toastConfig} />
     </View>
   );
 };
@@ -112,6 +121,19 @@ const styles = StyleSheet.create({
     height: '80%',
     marginBottom: 10
   },
+  toastBox: { 
+    height: 45, 
+    width: '80%', 
+    backgroundColor: '#384BF5',
+    borderRadius: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    opacity: 0.9
+  },
+  toastText: {
+    fontSize: 16,
+    color: 'white'
+  }
 });
 
 export default SearchResult;

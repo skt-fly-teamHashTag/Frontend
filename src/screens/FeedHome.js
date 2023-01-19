@@ -10,11 +10,20 @@ import Toast from 'react-native-toast-message';
 const FeedHome = ({ navigation }) => {
   const [data, setData] = useState([]);
 
+  const toastConfig = {
+    likeToast: ({ text1, props }) => (
+      <View style={styles.toastBox}>
+        <Text style={styles.toastText}>{text1}</Text>
+      </View>
+    )
+  };
+
   const showToast = (isLiked) => {
     Toast.show({
-      type: "info",
+      type: "likeToast",
       text1: isLiked ? "좋아요를 취소했습니다." : "좋아요를 눌렀습니다.",
-      position: "bottom"
+      position: "bottom",
+      visibilityTime: 2000
     })
   }
 
@@ -47,7 +56,7 @@ const FeedHome = ({ navigation }) => {
         <Carousel data={dummyData.slice(0, 3)} showToast={showToast} />
         <Feed data={dummyData} showToast={showToast} />
       </ScrollView>
-      <Toast />
+      <Toast config={toastConfig} />
     </>
   );
 };
@@ -77,6 +86,19 @@ const styles = StyleSheet.create({
     marginLeft: 30,
     fontSize: 20,
   },
+  toastBox: { 
+    height: 45, 
+    width: '80%', 
+    backgroundColor: '#384BF5',
+    borderRadius: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    opacity: 0.9
+  },
+  toastText: {
+    fontSize: 16,
+    color: 'white'
+  }
 });
 
 export default FeedHome;
