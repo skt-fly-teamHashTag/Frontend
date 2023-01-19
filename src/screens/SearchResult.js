@@ -3,14 +3,21 @@ import { ScrollView, StyleSheet, View, TextInput, TouchableOpacity, Text, Image 
 import { Icon } from "@rneui/themed";
 import { useDispatch, useSelector } from "react-redux";
 import { setSearch } from '../slices/searchSlice';
-import Video from "react-native-video";
+import SearchItem from "../components/Search/SearchItem";
+import Toast from 'react-native-toast-message';
+import { dummyData } from "../datas/Data";
 
 const SearchResult = ({ navigation }) => {
   const search = useSelector((state) => state.search);
   const dispatch = useDispatch();
-  const videoUri = "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4";
-  const loadingUri = "/Users/in-yeong/iykim/videoDot/src/assets/videoLoadingGif.gif";
-  const hashTags = '#V #목적없이떠나는여행 #꼬막비빔밥';
+
+  const showToast = (isLiked) => {
+    Toast.show({
+      type: "info",
+      text1: isLiked ? "좋아요를 취소했습니다." : "좋아요를 눌렀습니다.",
+      position: 'bottom'
+    })
+  }
 
   const onPressBack = () => {
     dispatch(setSearch({inputText: ''}));
@@ -51,103 +58,9 @@ const SearchResult = ({ navigation }) => {
         style={styles.resultContainer}
         showsVerticalScrollIndicator = {false}
         bounces={false}>
-        <View style={styles.videoBox}>
-          <View style={styles.userBox}>
-            <View style={styles.commentUser}>
-              <Image source={require('../assets/userPhoto.png')} style={styles.userImage}></Image>
-              <View>
-                <Text style={styles.contentTitle}>목적없이 떠나는 드라이브 VLOG</Text>
-                <Text style={styles.userUploadTime}>해시태그닷 ・ 2023.01.16</Text>
-              </View>
-            </View>
-            <Icon name='more-vertical' type='feather' size={20} color='gray'></Icon>
-          </View>
-          <Video
-            source={{ uri: videoUri }}
-            paused={true}
-            style={styles.video}
-            controls={true}
-            resizeMode={"cover"}
-            audioOnly={false}
-            poster={loadingUri}
-            posterResizeMode={"center"} 
-          />
-        </View>
-        <View style={styles.hotBottomText}>
-          <View style={styles.hashTagBox}>
-            <Text style={styles.hashTag}>{hashTags}</Text>
-            <Text style={[styles.hashTag, styles.searchTag]}> #남자친구</Text>
-          </View>
-          <View style={styles.heartBox}>
-            <Icon name='heart' type='font-awesome' color='#FE646F' size={16}></Icon>
-            <Text style={styles.heartText}>22</Text>
-          </View>
-        </View>
-        <View style={styles.videoBox}>
-          <View style={styles.userBox}>
-            <View style={styles.commentUser}>
-              <Image source={require('../assets/userPhoto.png')} style={styles.userImage}></Image>
-              <View>
-                <Text style={styles.contentTitle}>목적없이 떠나는 드라이브 VLOG</Text>
-                <Text style={styles.userUploadTime}>해시태그닷 ・ 2023.01.16</Text>
-              </View>
-            </View>
-            <Icon name='more-vertical' type='feather' size={20} color='gray'></Icon>
-          </View>
-          <Video
-            source={{ uri: videoUri }}
-            paused={true}
-            style={styles.video}
-            controls={true}
-            resizeMode={"cover"}
-            audioOnly={false}
-            poster={loadingUri}
-            posterResizeMode={"center"} 
-          />
-        </View>
-        <View style={styles.hotBottomText}>
-          <View style={styles.hashTagBox}>
-            <Text style={styles.hashTag}>{hashTags}</Text>
-            <Text style={[styles.hashTag, styles.searchTag]}> #남자친구</Text>
-          </View>
-          <View style={styles.heartBox}>
-            <Icon name='heart' type='font-awesome' color='#FE646F' size={16}></Icon>
-            <Text style={styles.heartText}>22</Text>
-          </View>
-        </View>
-        <View style={styles.videoBox}>
-          <View style={styles.userBox}>
-            <View style={styles.commentUser}>
-              <Image source={require('../assets/userPhoto.png')} style={styles.userImage}></Image>
-              <View>
-                <Text style={styles.contentTitle}>목적없이 떠나는 드라이브 VLOG</Text>
-                <Text style={styles.userUploadTime}>해시태그닷 ・ 2023.01.16</Text>
-              </View>
-            </View>
-            <Icon name='more-vertical' type='feather' size={20} color='gray'></Icon>
-          </View>
-          <Video
-            source={{ uri: videoUri }}
-            paused={true}
-            style={styles.video}
-            controls={true}
-            resizeMode={"cover"}
-            audioOnly={false}
-            poster={loadingUri}
-            posterResizeMode={"center"} 
-          />
-        </View>
-        <View style={styles.hotBottomText}>
-          <View style={styles.hashTagBox}>
-            <Text style={styles.hashTag}>{hashTags}</Text>
-            <Text style={[styles.hashTag, styles.searchTag]}> #남자친구</Text>
-          </View>
-          <View style={styles.heartBox}>
-            <Icon name='heart' type='font-awesome' color='#FE646F' size={16}></Icon>
-            <Text style={styles.heartText}>22</Text>
-          </View>
-        </View>
+        {dummyData.map((item, index) => <SearchItem key={'key' + index} item={item} showToast={showToast} />)}
       </ScrollView>
+      <Toast />
     </View>
   );
 };
@@ -198,70 +111,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFBFD',
     height: '80%',
     marginBottom: 10
-  },
-  videoBox: {
-    padding: 10
-  },
-  userBox: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 5,
-  },
-  commentUser: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  comment: {
-    marginLeft: 60,
-    fontSize: 15
-  },
-  userImage: {
-    width: 50,
-    height: 50
-  },
-  contentTitle: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    marginLeft: 10,
-    marginBottom: 0
-  },
-  userUploadTime: {
-    color: 'gray',
-    marginLeft: 10,
-    marginTop: 3,
-    fontSize: 12
-  },
-  video: {
-    width: '100%',
-    height: 230,
-    backgroundColor: '#F1F4F9',
-    borderRadius: 10,
-  },
-  hotBottomText: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingHorizontal: 15,
-    paddingBottom: 20,
-    borderBottomColor: 'lightgray',
-    borderBottomWidth: 1
-  },
-  hashTagBox: {
-    flexDirection: 'row'
-  },
-  hashTag: {
-    fontWeight: 'bold'
-  },
-  searchTag: {
-    color: '#384BF5'
-  },
-  heartBox: {
-    flexDirection: 'row'
-  },
-  heartText: {
-    color: '#FE646F',
-    marginLeft: 5
   },
 });
 

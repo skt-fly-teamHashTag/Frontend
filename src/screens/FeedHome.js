@@ -20,7 +20,7 @@ const FeedHome = ({ navigation }) => {
 
   useEffect(() => {
     try {
-      const response = axios.get('http://192.168.191.48:8900/api/v1/video');
+      const response = axios.get('http://localhost:8900/api/v1/video');
       setData(response);
       console.log(response);
     } catch(error) {
