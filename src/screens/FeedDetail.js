@@ -228,7 +228,7 @@ const styles = StyleSheet.create({
   },
   toastBox: { 
     height: 45, 
-    width: '80%', 
+    width: '85%', 
     backgroundColor: '#384BF5',
     borderRadius: 50,
     alignItems: 'center',
@@ -236,8 +236,9 @@ const styles = StyleSheet.create({
     opacity: 0.9
   },
   toastText: {
-    fontSize: 16,
-    color: 'white'
+    fontSize: 15,
+    color: 'white',
+    fontWeight: 'bold'
   }
 });
 
