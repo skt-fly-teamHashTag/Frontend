@@ -9,7 +9,7 @@ const LoginInput = ({ title, onChangeText }) => {
         style={styles.textInput} 
         onChangeText={onChangeText}
         autoCapitalize='none'
-        keyboardType={title === '전화번호'? 'phone-pad': 'default'} />
+        keyboardType='default' />
     </View>
   );
 };

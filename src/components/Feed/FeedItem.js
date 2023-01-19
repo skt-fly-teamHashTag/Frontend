@@ -2,20 +2,42 @@ import React, { useState } from "react";
 import { StyleSheet, TouchableOpacity, View, Image, Text, Dimensions } from "react-native";
 import { Icon } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
+import axios from "axios";
 
-const FeedItem = ({ item }) => {
+const FeedItem = ({ item, showToast }) => {
   const navigation = useNavigation();
   const [isLiked, setLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(item.heart);
   const height = Dimensions.get('window').height;
 
+  const onPressFeed = async () => {
+    const baseURL = 'http://localhost:8900/api/v1/video';
+    const id = '63c7e9af8f429307d2f874c8';
+    try {
+      const response = await axios.get(`${baseURL}/${id}`, {
+        responseType: 'blob'
+      });
+      // const blob = new Blob([response.data])
+      const blob = new Blob([response.data._data], {
+        type: 'video/mp4'
+      });
+      console.log(response.data)
+      // console.log(response.config.env);
+      const fileName = response.data._data.name; // 63c7e9af8f429307d2f874c8.mp4
+      navigation.navigate('FeedDetail', {...item, videoUri: `${baseURL}/${fileName}`, showToast: showToast });
+    } catch(error) {
+      console.log("ERROR>>", error); //fighting!!
+    }
+  }
+
   const onPressLike = () => {
     setLiked(!isLiked);
     setLikeCount(isLiked ? item.heart : item.heart + 1);
+    showToast(isLiked);
   };
 
   return (
-    <TouchableOpacity style={styles.newBox} activeOpacity={0.8} onPress={() => navigation.navigate('FeedDetail', item)}>
+    <TouchableOpacity style={styles.newBox} activeOpacity={0.8} onPress={onPressFeed}>
       <View style={styles.userInfo}>
         <Image source={require('../../assets/userPhoto.png')} style={styles.userImage}></Image>
         <View>

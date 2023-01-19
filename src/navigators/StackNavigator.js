@@ -46,6 +46,8 @@ const StackNavigator = () => {
     headerStyle: {backgroundColor: '#FFFBFD'},
     headerShadowVisible: false,
   });
+
+
   
   return (
     <Stack.Navigator initialRouteName="Main">

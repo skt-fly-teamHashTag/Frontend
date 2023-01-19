@@ -6,7 +6,7 @@ import { useNavigation } from "@react-navigation/native";
 const { width, height } = Dimensions.get('window')
 
 
-const CarouselItem = ({ item, index }) => {
+const CarouselItem = ({ item, index, showToast }) => {
   const navigation = useNavigation();
   const [isLiked, setLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(item.heart);
@@ -14,10 +14,11 @@ const CarouselItem = ({ item, index }) => {
   const onPressLike = () => {
     setLiked(!isLiked);
     setLikeCount(isLiked ? item.heart : item.heart + 1);
+    showToast(isLiked);
   };
 
   return (
-    <TouchableOpacity style={styles.cardView} activeOpacity={0.8} onPress={() => navigation.navigate('FeedDetail', item)}>
+    <TouchableOpacity style={styles.cardView} activeOpacity={0.8} onPress={() => navigation.navigate('FeedDetail', {...item, showToast: showToast})}>
       <Text style={styles.contentTitle}>인기 급상승 영상 Top { item.index }</Text>
       <Image style={styles.image} source={{ uri: item.thumbnail }} />
       <View style={styles.hotBottomText}>

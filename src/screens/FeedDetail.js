@@ -6,14 +6,17 @@ import Video from "react-native-video";
 const FeedDetail = ({ navigation, route }) => {
   const data = route.params
   const loadingUri = "/Users/in-yeong/iykim/videoDot/src/assets/videoLoadingGif.gif";
-  const videoUri = data.video;
+  // const videoUri = data.video;
+  const videoUri = data.videoUri;
   const hashTags = data.tags;
   const [isLiked, setLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(data.heart);
+  console.log(videoUri)
 
   const onPressLike = () => {
     setLiked(!isLiked);
     setLikeCount(isLiked ? data.heart : data.heart + 1);
+    data.showToast(isLiked);
   };
 
   return (
@@ -38,7 +41,7 @@ const FeedDetail = ({ navigation, route }) => {
         resizeMode={"cover"}
         audioOnly={false} 
         poster={loadingUri}
-        posterResizeMode={"center"} 
+        posterResizeMode={"center"}
       />
       <View style={styles.hotBottomText}>
         <Text style={styles.newHashTag}>{hashTags}</Text>

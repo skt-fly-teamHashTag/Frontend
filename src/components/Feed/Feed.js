@@ -1,16 +1,13 @@
 import React from 'react';
-import { View, Text, StyleSheet, Dimensions, FlatList } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import FeedItem from './FeedItem';
 
-const { width, heigth } = Dimensions.get('window')
-let flatList
-
-const Feed = ({ data }) => {
+const Feed = ({ data, showToast }) => {
   return (
     <View style={styles.newContainer}>
       <Text style={styles.newText}>최신 영상을 확인해보세요!</Text>
       <View style={styles.center}>
-        {data.map((item, index) => <FeedItem key={'key' + index} item={item} />)}
+        {data.map((item, index) => <FeedItem key={'key' + index} item={item} showToast={showToast} />)}
       </View>
     </View>
   )
