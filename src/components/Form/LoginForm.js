@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from '../../slices/userSlice';
-import { StyleSheet, View, Alert } from 'react-native';
+import { StyleSheet, KeyboardAvoidingView, Alert, View } from 'react-native';
 import LoginInput from '../Input/LoginInput';
 import SubmitButton from '../Button/SubmitButton';
 
@@ -46,17 +46,19 @@ const LoginForm = ({ navigation }) => {
   };
   
   return (
-    <View style={styles.loginForm}>
-      <LoginInput 
-        title='닉네임'
-        onChangeText={(text) => dispatch(setUser({...user, nickName: text}))} />
-      <LoginInput 
-        title='전화번호'
-        onChangeText={(text) => dispatch(setUser({...user, phoneNumber: text}))} />
-      <SubmitButton 
-        title='로그인'
-        onPress={onPress} />
-    </View>
+    <KeyboardAvoidingView behavior="padding" style={{width: '100%', alignItems: 'center'}}>
+      <View style={styles.loginForm}>
+        <LoginInput 
+          title='닉네임'
+          onChangeText={(text) => dispatch(setUser({...user, nickName: text}))} />
+        <LoginInput 
+          title='전화번호'
+          onChangeText={(text) => dispatch(setUser({...user, phoneNumber: text}))} />
+        <SubmitButton 
+          title='로그인'
+          onPress={onPress} />
+      </View>
+    </KeyboardAvoidingView>
   );
 };
 

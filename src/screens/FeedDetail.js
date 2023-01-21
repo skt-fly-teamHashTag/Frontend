@@ -1,18 +1,27 @@
-import React, { useState } from "react";
-import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView, TextInput } from "react-native";
+import React, { useState, useEffect } from "react";
+import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView, TextInput, KeyboardAvoidingView, NativeModules } from "react-native";
 import { Icon } from "@rneui/themed";
 import Video from "react-native-video";
 import Toast from 'react-native-toast-message';
 
+const { StatusBarManager } = NativeModules;
+
 const FeedDetail = ({ navigation, route }) => {
   const data = route.params
   const loadingUri = "/Users/in-yeong/iykim/videoDot/src/assets/videoLoadingGif.gif";
-  // const videoUri = data.video;
-  const videoUri = data.videoUri;
+  const videoUri = data.video;
+  // const videoUri = data.videoUri;
   const hashTags = data.tags;
   const [isLiked, setLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(data.heart);
   console.log(videoUri)
+
+  useEffect(()=>{
+    Platform.OS == 'ios' ? StatusBarManager.getHeight((statusBarFrameData) => {
+        setStatusBarHeight(statusBarFrameData.height)
+      }) : null
+  }, []);
+  const [statusBarHeight, setStatusBarHeight] = useState(0);
 
   const toastConfig = {
     likeToast: ({ text1, props }) => (
@@ -45,7 +54,7 @@ const FeedDetail = ({ navigation, route }) => {
         </TouchableOpacity>
         <Text style={styles.headerText}>{ data.userName }님의 영상</Text>
       </View>
-      <ScrollView style={styles.commentContainer} showsVerticalScrollIndicator={false}>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.userInfo}>
           <Image source={require('../assets/userPhoto.png')} style={styles.userImage}></Image>
           <View>
@@ -54,7 +63,7 @@ const FeedDetail = ({ navigation, route }) => {
           </View>
         </View>
         <Video
-          source={{ uri: 'http://localhost:8900/api/v1/video/63c7e9af8f429307d2f874c8.mp4' }}
+          source={{ uri: videoUri }}
           ref={(ref) => {
             this.player = ref
           }}
@@ -121,12 +130,15 @@ const FeedDetail = ({ navigation, route }) => {
         </View>
         <View style={{height: 50}}></View>
       </ScrollView>
-      <View style={styles.commentWriteBox}>
-        <TextInput style={styles.commentInput} placeholder='댓글 달기...' />
+      <KeyboardAvoidingView 
+        behavior="padding" style={styles.commentWriteBox}
+        keyboardVerticalOffset={statusBarHeight+44}>
+        <TextInput style={styles.commentInput} placeholder='댓글 달기...' placeholderTextColor='#C8CACD' />
         <TouchableOpacity opacity='0.9' style={styles.commentSend}>
           <Icon name='send' type='feather' color='#384BF5' />
         </TouchableOpacity>
-      </View>
+      </KeyboardAvoidingView>
+      <View style={styles.bottomEmpty}></View>
       <Toast config={toastConfig} />
     </View>
   );  
@@ -236,13 +248,11 @@ const styles = StyleSheet.create({
     fontSize: 15
   },
   commentWriteBox: {
-    position: 'static',
-    bottom: 0,
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     borderTopColor: '#F4F6F9',
-    borderTopWidth: 2,
-    
+    borderTopWidth: 1.5,
+    backgroundColor: '#FFFBFD'
   },
   commentInput: {
     backgroundColor: '#F4F6F9',
@@ -250,12 +260,15 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     paddingHorizontal: 20,
     borderRadius: 50,
-    marginTop: 10,
-    marginBottom: 30,
+    marginVertical: 5,
   },
   commentSend: {
-    marginTop: 20,
+    justifyContent: 'center'
   }, 
+  bottomEmpty: {
+    backgroundColor: '#FFFBFD',
+    height: 20
+  },
   toastBox: { 
     height: 45, 
     width: '85%', 
