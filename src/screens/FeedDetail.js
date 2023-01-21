@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView, TextInput } from "react-native";
 import { Icon } from "@rneui/themed";
 import Video from "react-native-video";
 import Toast from 'react-native-toast-message';
@@ -7,12 +7,12 @@ import Toast from 'react-native-toast-message';
 const FeedDetail = ({ navigation, route }) => {
   const data = route.params
   const loadingUri = "/Users/in-yeong/iykim/videoDot/src/assets/videoLoadingGif.gif";
-  const videoUri = data.video;
-  // const videoUri = data.videoUri;
+  // const videoUri = data.video;
+  const videoUri = data.videoUri;
   const hashTags = data.tags;
   const [isLiked, setLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(data.heart);
-  // console.log(videoUri)
+  console.log(videoUri)
 
   const toastConfig = {
     likeToast: ({ text1, props }) => (
@@ -45,37 +45,40 @@ const FeedDetail = ({ navigation, route }) => {
         </TouchableOpacity>
         <Text style={styles.headerText}>{ data.userName }님의 영상</Text>
       </View>
-      <View style={styles.userInfo}>
-        <Image source={require('../assets/userPhoto.png')} style={styles.userImage}></Image>
-        <View>
-          <Text style={styles.contentTitle}>{ data.userName }</Text>
-          <Text style={styles.userUploadTime}>{ data.uploadTime }</Text>
+      <ScrollView style={styles.commentContainer} showsVerticalScrollIndicator={false}>
+        <View style={styles.userInfo}>
+          <Image source={require('../assets/userPhoto.png')} style={styles.userImage}></Image>
+          <View>
+            <Text style={styles.contentTitle}>{ data.userName }</Text>
+            <Text style={styles.userUploadTime}>{ data.uploadTime }</Text>
+          </View>
         </View>
-      </View>
-      <Video
-        source={{ uri: videoUri }}
-        style={styles.video}
-        controls={true}
-        resizeMode={"cover"}
-        audioOnly={false} 
-        poster={loadingUri}
-        posterResizeMode={"center"}
-      />
-      <View style={styles.hotBottomText}>
-        <Text style={styles.newHashTag}>{hashTags}</Text>
-        <TouchableOpacity onPress={onPressLike} style={styles.heartBox}>
-          <Text style={styles.heartText}>좋아요 {likeCount}개 </Text>
-          <Icon 
-            name={isLiked ? 'heart': 'heart-o'} 
-            type='font-awesome' 
-            color='#FE646F' 
-            size={16}
-          />
-        </TouchableOpacity>
-      </View>
-      <Text style={styles.videoTitle}>목적없이 떠나는 드라이브 VLOG</Text>
-      <View style={styles.line}></View>
-      <ScrollView style={styles.commentContainer}>
+        <Video
+          source={{ uri: 'http://localhost:8900/api/v1/video/63c7e9af8f429307d2f874c8.mp4' }}
+          ref={(ref) => {
+            this.player = ref
+          }}
+          style={styles.video}
+          controls={true}
+          resizeMode={"cover"}
+          audioOnly={false} 
+          poster={loadingUri}
+          posterResizeMode={"center"}
+        />
+        <View style={styles.hotBottomText}>
+          <Text style={styles.newHashTag}>{hashTags}</Text>
+          <TouchableOpacity onPress={onPressLike} style={styles.heartBox}>
+            <Text style={styles.heartText}>좋아요 {likeCount}개 </Text>
+            <Icon 
+              name={isLiked ? 'heart': 'heart-o'} 
+              type='font-awesome' 
+              color='#FE646F' 
+              size={16}
+            />
+          </TouchableOpacity>
+        </View>
+        <Text style={styles.videoTitle}>목적없이 떠나는 드라이브 VLOG</Text>
+        <View style={styles.line}></View>
         <Text style={styles.commentCount}>댓글 3개</Text>
         <View style={styles.commentBox}>
           <View style={styles.userBox}>
@@ -118,6 +121,12 @@ const FeedDetail = ({ navigation, route }) => {
         </View>
         <View style={{height: 50}}></View>
       </ScrollView>
+      <View style={styles.commentWriteBox}>
+        <TextInput style={styles.commentInput} placeholder='댓글 달기...' />
+        <TouchableOpacity opacity='0.9' style={styles.commentSend}>
+          <Icon name='send' type='feather' color='#384BF5' />
+        </TouchableOpacity>
+      </View>
       <Toast config={toastConfig} />
     </View>
   );  
@@ -202,33 +211,54 @@ const styles = StyleSheet.create({
     borderBottomColor: '#F4F6F9',
     borderBottomWidth: 5,
   },
-  commentContainer: {
-    padding: 20,
-  },
   commentBox: {
     marginBottom: 10
   },
   commentCount: {
     fontSize: 16,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    marginTop: 15,
+    marginLeft: 15
   },
   userBox: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginTop: 10,
+    margin: 10,
+    marginBottom: 0
   },
   commentUser: {
     flexDirection: 'row',
     alignItems: 'center',
   },
   comment: {
-    marginLeft: 60,
+    marginLeft: 70,
     fontSize: 15
   },
+  commentWriteBox: {
+    position: 'static',
+    bottom: 0,
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    borderTopColor: '#F4F6F9',
+    borderTopWidth: 2,
+    
+  },
+  commentInput: {
+    backgroundColor: '#F4F6F9',
+    width: '80%',
+    paddingVertical: 15,
+    paddingHorizontal: 20,
+    borderRadius: 50,
+    marginTop: 10,
+    marginBottom: 30,
+  },
+  commentSend: {
+    marginTop: 20,
+  }, 
   toastBox: { 
     height: 45, 
-    width: '85%', 
+    width: '100%', 
     backgroundColor: '#384BF5',
     borderRadius: 50,
     alignItems: 'center',
