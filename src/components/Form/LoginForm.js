@@ -5,11 +5,12 @@ import { setUser } from '../../slices/userSlice';
 import { StyleSheet, KeyboardAvoidingView, Alert, View } from 'react-native';
 import LoginInput from '../Input/LoginInput';
 import SubmitButton from '../Button/SubmitButton';
+import { postURL } from '../../api';
 
 const LoginForm = ({ navigation }) => {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
-
+  
   const fillAll = () => {
     return user.nickName !== "" && user.phoneNumber !== "";
   };
@@ -32,7 +33,7 @@ const LoginForm = ({ navigation }) => {
 
   const onPress = async() => {
     try {
-      const response = await axios.post('http://localhost:8080/api/v1/auth/login', user);
+      const response = await axios.post(postURL + '/api/v1/auth/login', user);
       if (fillAll() && response.data === "로그인 성공") {
         console.log("POST >>", user);
         navigation.navigate("Home");

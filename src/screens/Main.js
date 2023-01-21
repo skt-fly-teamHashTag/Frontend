@@ -2,6 +2,7 @@ import axios from "axios";
 import React from "react";
 import { StyleSheet, View, Text, Image, TouchableOpacity, Alert } from "react-native";
 import { launchImageLibrary } from 'react-native-image-picker';
+import { postURL } from '../api';
 
 const Main = ({ navigation }) => {
   const showCameraRoll = async() => {
@@ -29,7 +30,7 @@ const Main = ({ navigation }) => {
       };
 
       try {
-        const response = await axios.post('http://localhost:8080/api/v1/auth/video', formData, {headers: header});
+        const response = await axios.post(postURL + '/api/v1/auth/video', formData, {headers: header});
         navigation.navigate('GenerateVideo');
       } catch (error) {
         if (error.name === 'AxiosError') {

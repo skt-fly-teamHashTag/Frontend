@@ -14,14 +14,14 @@ const FeedDetail = ({ navigation, route }) => {
   const hashTags = data.tags;
   const [isLiked, setLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(data.heart);
-  console.log(videoUri)
+  const [statusBarHeight, setStatusBarHeight] = useState(0);
 
   useEffect(()=>{
+    console.log('FeedDetail>>', videoUri);
     Platform.OS == 'ios' ? StatusBarManager.getHeight((statusBarFrameData) => {
         setStatusBarHeight(statusBarFrameData.height)
       }) : null
   }, []);
-  const [statusBarHeight, setStatusBarHeight] = useState(0);
 
   const toastConfig = {
     likeToast: ({ text1, props }) => (

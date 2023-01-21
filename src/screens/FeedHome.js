@@ -6,6 +6,7 @@ import Carousel from '../components/Carousel/Carousel';
 import Feed from '../components/Feed/Feed';
 import { dummyData } from '../datas/Data';
 import Toast from 'react-native-toast-message';
+import { getURL } from '../api';
 
 const FeedHome = ({ navigation }) => {
   const [data, setData] = useState([]);
@@ -27,15 +28,15 @@ const FeedHome = ({ navigation }) => {
     })
   }
 
-  useEffect(() => {
-    try {
-      const response = axios.get('http://localhost:8900/api/v1/video');
-      setData(response);
-      console.log(response);
-    } catch(error) {
-      console.log("ERROR>>", error);
-    }
-  }, [])
+  // useEffect(() => {
+  //   try {
+  //     const response = axios.get(getURL + '/api/v1/video');
+  //     setData(response);
+  //     console.log('FeedHome>>', response);
+  //   } catch(error) {
+  //     console.log("ERROR>>", error);
+  //   }
+  // }, [])
   
   return (  
     <>

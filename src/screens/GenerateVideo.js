@@ -6,6 +6,7 @@ import { setTitle } from '../slices/videoSlice';
 import RNFS from 'react-native-fs';
 import RNFetchBlob from 'rn-fetch-blob';
 import axios from "axios";
+import { postURL } from '../api';
 
 const GenerateVideo = ({ navigation }) => {
   const { nickName } = useSelector((state) => state.user);
@@ -56,7 +57,7 @@ const GenerateVideo = ({ navigation }) => {
       };
 
       try { 
-        const response = await axios.post('http://localhost:8080/api/v1/auth/video', formData, {headers: header});
+        const response = await axios.post(postURL + '/api/v1/auth/video', formData, {headers: header});
         navigation.navigate('FeedHome');
       } catch (error) {
         console.log(error)

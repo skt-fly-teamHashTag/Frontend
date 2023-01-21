@@ -3,6 +3,7 @@ import { StyleSheet, TouchableOpacity, View, Image, Text, Dimensions } from "rea
 import { Icon } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
+import { getURL } from "../../api";
 
 const FeedItem = ({ item, showToast }) => {
   const navigation = useNavigation();
@@ -11,24 +12,23 @@ const FeedItem = ({ item, showToast }) => {
   const height = Dimensions.get('window').height;
 
   const onPressFeed = async () => {
-    // const baseURL = 'http://localhost:8900/api/v1/video';
-    // const id = '63c7e9af8f429307d2f874c8';
-    // try {
-    //   const response = await axios.get(`${baseURL}/${id}`, {
-    //     responseType: 'blob'
-    //   });
-    //   // const blob = new Blob([response.data])
-    //   const blob = new Blob([response.data._data], {
-    //     type: 'video/mp4'
-    //   });
-    //   console.log(response.data)
-    //   // console.log(response.config.env);
-    //   const fileName = response.data._data.name; // 63c7e9af8f429307d2f874c8.mp4
-    //   navigation.navigate('FeedDetail', {...item, videoUri: `${baseURL}/${fileName}`, showToast: showToast });
-    // } catch(error) {
-    //   console.log("ERROR>>", error); //fighting!!
-    // }
-    navigation.navigate('FeedDetail', item);
+    const baseURL = getURL + '/api/v1/video';
+    const id = '63c7e9af8f429307d2f874c8.mp4';
+    try {
+      // const response = await axios.get(`${baseURL}/${id}`, {
+      //   responseType: 'blob'
+      // });
+      //console.log(response)
+      // const blob = new Blob([response.data])
+      // const blob = new Blob([response.data._data], {
+      //   type: 'video/mp4'
+      // });
+      // console.log(response.data._data.name)
+      // console.log(response.config.env);
+      navigation.navigate('FeedDetail', {...item, videoUri: `${baseURL}/${id}`});
+    } catch(error) {
+      console.log("ERROR>>", error); //fighting!!
+    }
   }
 
   const onPressLike = () => {
