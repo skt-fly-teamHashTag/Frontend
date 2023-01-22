@@ -15,7 +15,7 @@ const GenerateVideo = ({ navigation }) => {
 
   // axios.get으로 모델로부터 받아올 데이터
   const videoUri = "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4";
-  const loadingUri = "/Users/in-yeong/iykim/videoDot/src/assets/videoLoadingGif.gif";
+  const loadingUri = "https://media.tenor.com/On7kvXhzml4AAAAj/loading-gif.gif";
   const hashTags = '#V #목적없이떠나는여행 #꼬막비빔밥';
 
   // 비디오 다운로드 경로

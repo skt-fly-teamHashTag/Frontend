@@ -8,7 +8,7 @@ const { StatusBarManager } = NativeModules;
 
 const FeedDetail = ({ navigation, route }) => {
   const data = route.params
-  const loadingUri = "/Users/in-yeong/iykim/videoDot/src/assets/videoLoadingGif.gif";
+  const loadingUri = "https://media.tenor.com/On7kvXhzml4AAAAj/loading-gif.gif";
   const videoUri = data.video;
   // const videoUri = data.videoUri;
   const hashTags = data.tags;

@@ -5,7 +5,7 @@ import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
 
 const MyFeed = ({ navigation }) => {
   const videoUri = "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4";
-  const loadingUri = "/Users/in-yeong/iykim/videoDot/src/assets/videoLoadingGif.gif";
+  const loadingUri = "https://media.tenor.com/On7kvXhzml4AAAAj/loading-gif.gif";
 
   return (
     <View style={styles.container}>
