@@ -2,25 +2,21 @@ import React from "react";
 import { View, StyleSheet, Image, Text, ScrollView, TouchableOpacity } from "react-native";
 import Video from "react-native-video";
 import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
+import { dummyData } from '../datas/Data';
 
 const MyFeed = ({ navigation }) => {
-  const videoUri = "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4";
-  const loadingUri = "https://media.tenor.com/On7kvXhzml4AAAAj/loading-gif.gif";
-
   return (
     <View style={styles.container}>
       <Image source={require('../assets/userPhoto.png')} style={styles.userImage} />
       <Text style={styles.userName}>해시태그닷</Text>
       <ScrollView style={styles.feedScroll} bounces={false}>
         <View style={styles.userVideoBox}>
-          <Image source={require('../assets/gallery.jpeg')} style={styles.userThumbNail} />
-          <Image source={require('../assets/gallery.jpeg')} style={styles.userThumbNail} />
-          <Image source={require('../assets/gallery.jpeg')} style={styles.userThumbNail} />
-          <Image source={require('../assets/gallery.jpeg')} style={styles.userThumbNail} />
-          <Image source={require('../assets/gallery.jpeg')} style={styles.userThumbNail} />
-          <Image source={require('../assets/gallery.jpeg')} style={styles.userThumbNail} />
-          <Image source={require('../assets/gallery.jpeg')} style={styles.userThumbNail} />
-          <Image source={require('../assets/gallery.jpeg')} style={styles.userThumbNail} />
+        { dummyData.map((item, index) => 
+          <Image 
+            key={'key' + index} 
+            source={{ uri: item.thumbnail }}
+            style={styles.userThumbNail} />)
+        }
         </View>
       </ScrollView>
       <View style={styles.feedBox}>
