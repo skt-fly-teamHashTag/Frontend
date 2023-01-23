@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, View, Text, TextInput, TouchableOpacity, Alert } from "react-native";
+import { StyleSheet, View, Text, TextInput, TouchableOpacity, Alert, Dimensions } from "react-native";
 import Video from "react-native-video";
 import { useDispatch, useSelector } from "react-redux";
 import { setTitle } from '../slices/videoSlice';
@@ -10,6 +10,8 @@ import { postURL } from '../api';
 import CameraRoll from '@react-native-community/cameraroll';
 import Toast from 'react-native-toast-message';
 import ProgressBar from 'react-native-progress/Bar';
+
+const width = Dimensions.get('window').width;
 
 const GenerateVideo = ({ navigation }) => {
   const [rate, setRate] = useState(0);
@@ -103,7 +105,7 @@ const GenerateVideo = ({ navigation }) => {
       <View style={styles.progressBox}>
         <ProgressBar
           progress={rate}
-          width={255}
+          width={width * 0.7}
           height={10}
           color='#384BF5'/> 
         <Text style={styles.progressRate}>{Math.round(rate * 100)}%</Text>
@@ -151,13 +153,13 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   finishText: {
-    margin: 40,
+    marginVertical: 40,
     fontSize: 18,
     fontWeight: 'bold'
   },
   video: {
-    width: 300,
-    height: 200,
+    width: width * 0.85,
+    height: width * 0.5,
     backgroundColor: '#F1F4F9',
     borderRadius: 10,
     borderWidth: 1.5,
@@ -167,10 +169,10 @@ const styles = StyleSheet.create({
     color: '#0222FE',
     fontWeight: 'bold',
     padding: 10,
-    width: 300
+    width: width * 0.85,
   },
   inputTitle: {
-    width: 300,
+    width: width * 0.85,
     backgroundColor: '#F1F4F9',
     borderWidth: 0.5,
     borderRadius: 10,
@@ -180,7 +182,7 @@ const styles = StyleSheet.create({
     fontSize: 16
   },
   inputButton: {
-    width: 300,
+    width: width * 0.85,
     color: 'white',
     backgroundColor: '#384BF5',
     borderWidth: 1,
@@ -211,7 +213,7 @@ const styles = StyleSheet.create({
   },
   progressBox: {
     flexDirection: 'row',
-    width: 300,
+    width: width * 0.85,
     justifyContent: 'space-evenly',
     alignItems: 'center',
     marginTop: 20
