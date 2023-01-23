@@ -51,9 +51,11 @@ const LoginForm = ({ navigation }) => {
       <View style={styles.loginForm}>
         <LoginInput 
           title='닉네임'
+          keyboardType='default'
           onChangeText={(text) => dispatch(setUser({...user, nickName: text}))} />
         <LoginInput 
           title='전화번호'
+          keyboardType='numeric'
           onChangeText={(text) => dispatch(setUser({...user, phoneNumber: text}))} />
         <SubmitButton 
           title='로그인'

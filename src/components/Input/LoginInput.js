@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, Text, TextInput } from 'react-native';
 
-const LoginInput = ({ title, onChangeText }) => {
+const LoginInput = ({ title, onChangeText, keyboardType }) => {
   return (
     <View style={styles.inputBox}>
       <Text style={styles.textTitle}>{title}</Text>
@@ -9,7 +9,7 @@ const LoginInput = ({ title, onChangeText }) => {
         style={styles.textInput} 
         onChangeText={onChangeText}
         autoCapitalize='none'
-        keyboardType='default' />
+        keyboardType={keyboardType} />
     </View>
   );
 };
