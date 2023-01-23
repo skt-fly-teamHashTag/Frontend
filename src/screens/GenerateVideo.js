@@ -7,31 +7,53 @@ import RNFS from 'react-native-fs';
 import RNFetchBlob from 'rn-fetch-blob';
 import axios from "axios";
 import { postURL } from '../api';
+import CameraRoll from '@react-native-community/cameraroll';
+import Toast from 'react-native-toast-message';
 
 const GenerateVideo = ({ navigation }) => {
   const { nickName } = useSelector((state) => state.user);
   const { title } = useSelector((state) => state.video);
   const dispatch = useDispatch();
 
+  const toastConfig = {
+    saveToast: ({ text1, props }) => (
+      <View style={styles.toastBox}>
+        <Text style={styles.toastText}>{text1}</Text>
+      </View>
+    )
+  };
+
+  const showToast = () => {
+    Toast.show({
+      type: "saveToast",
+      text1: "앨범에 저장되었습니다.",
+      position: "bottom",
+      visibilityTime: 3000
+    })
+  }
+
   // axios.get으로 모델로부터 받아올 데이터
-  const videoUri = "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4";
+  const videoUri = "http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4";
   const loadingUri = "https://media.tenor.com/On7kvXhzml4AAAAj/loading-gif.gif";
   const hashTags = '#V #목적없이떠나는여행 #꼬막비빔밥';
+  const splitURL = videoUri.split('/');
+  const videoName = splitURL[splitURL.length - 1];
 
   // 비디오 다운로드 경로
   const path = RNFetchBlob.fs.dirs.DownloadDir;
-  const LOCAL_PATH_TO_VIDEO = Platform.OS === 'ios' ? `${RNFS.DocumentDirectoryPath}/videoDot.mp4` : `${path}/videoDot.mp4`;
+  const LOCAL_PATH_TO_VIDEO = Platform.OS === 'ios' ? `${RNFS.DocumentDirectoryPath}/${videoName}` : `${path}/${videoName}`;
 
-  const onPressSave = async() => {
-    // 내 기기에 저장하기 react-native-fs 이용: Error 발생
+  const save = () => {
+    CameraRoll.save(LOCAL_PATH_TO_VIDEO, videoName);
+    showToast();
+  }
+
+  const onPressSave = () => {
     RNFS.downloadFile({
-      fromUrl: videoUri,
+      fromUrl: videoUri, 
       toFile: LOCAL_PATH_TO_VIDEO,
-    }).then((res)=>{
-      console.log('success!!!,', res);
-    }).catch((err)=>{
-      console.error(err.message)
-    })
+    }).promise.then(res => save()
+    ).catch(error => console.log(error));
   };
 
   const onPressUpload = async() => {
@@ -89,6 +111,7 @@ const GenerateVideo = ({ navigation }) => {
       <TextInput 
         style={styles.inputTitle} 
         placeholder="제목을 입력해주세요." 
+        placeholderTextColor='#C8CACD'
         onChangeText={(text) => dispatch(setTitle({title: text}))}></TextInput>
       <TouchableOpacity style={styles.inputButton} onPress={onPressSave}>
         <Text style={styles.whiteText}>내 기기에 저장하기</Text>
@@ -96,6 +119,7 @@ const GenerateVideo = ({ navigation }) => {
       <TouchableOpacity style={styles.inputButton} onPress={onPressUpload}>
         <Text style={styles.whiteText}>내 피드에 업로드</Text>
       </TouchableOpacity>
+      <Toast config={toastConfig} />
     </View>
   );
 };
@@ -151,6 +175,20 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
     fontSize: 16
+  },
+  toastBox: { 
+    height: 45, 
+    width: '85%', 
+    backgroundColor: '#384BF5',
+    borderRadius: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    opacity: 0.9
+  },
+  toastText: {
+    fontSize: 15,
+    color: 'white',
+    fontWeight: 'bold'
   }
 });
 
