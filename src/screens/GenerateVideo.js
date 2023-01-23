@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import { StyleSheet, View, Text, TextInput, TouchableOpacity, Alert, Dimensions } from "react-native";
+import { StyleSheet, View, Text, TextInput, TouchableOpacity, Alert, Dimensions, NativeModules } from "react-native";
 import Video from "react-native-video";
 import { useDispatch, useSelector } from "react-redux";
 import { setTitle } from '../slices/videoSlice';
 import RNFS from 'react-native-fs';
-import RNFetchBlob from 'rn-fetch-blob';
 import axios from "axios";
 import { postURL } from '../api';
 import CameraRoll from '@react-native-community/cameraroll';
@@ -44,7 +43,8 @@ const GenerateVideo = ({ navigation }) => {
   const videoName = splitURL[splitURL.length - 1];
 
   // 비디오 다운로드 경로
-  const path = RNFetchBlob.fs.dirs.DownloadDir;
+  const RNFetchBlob = NativeModules.RNFetchBlob;
+  const path = RNFetchBlob.DownloadDir;
   const LOCAL_PATH_TO_VIDEO = Platform.OS === 'ios' ? `${RNFS.DocumentDirectoryPath}/${videoName}` : `${path}/${videoName}`;
 
   const save = () => {
