@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, { useState } from "react";
 import { StyleSheet, View, Text, TextInput, TouchableOpacity, Alert } from "react-native";
 import Video from "react-native-video";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,8 +9,10 @@ import axios from "axios";
 import { postURL } from '../api';
 import CameraRoll from '@react-native-community/cameraroll';
 import Toast from 'react-native-toast-message';
+import ProgressBar from 'react-native-progress/Bar';
 
 const GenerateVideo = ({ navigation }) => {
+  const [rate, setRate] = useState(0);
   const { nickName } = useSelector((state) => state.user);
   const { title } = useSelector((state) => state.video);
   const dispatch = useDispatch();
@@ -52,6 +54,8 @@ const GenerateVideo = ({ navigation }) => {
     RNFS.downloadFile({
       fromUrl: videoUri, 
       toFile: LOCAL_PATH_TO_VIDEO,
+      begin: (res) => {},
+      progress: (res) => setRate((res.bytesWritten/res.contentLength))
     }).promise.then(res => save()
     ).catch(error => console.log(error));
   };
@@ -94,6 +98,19 @@ const GenerateVideo = ({ navigation }) => {
     }
   };
 
+  const Progress = () => {
+    return (
+      <View style={styles.progressBox}>
+        <ProgressBar
+          progress={rate}
+          width={255}
+          height={10}
+          color='#384BF5'/> 
+        <Text style={styles.progressRate}>{Math.round(rate * 100)}%</Text>
+      </View>
+    )
+  }
+
   return (
     <View style={styles.container}>
       <Text style={styles.finishText}>{nickName}님의 특별한 Vlog를 완성했어요!</Text>
@@ -112,13 +129,15 @@ const GenerateVideo = ({ navigation }) => {
         style={styles.inputTitle} 
         placeholder="제목을 입력해주세요." 
         placeholderTextColor='#C8CACD'
-        onChangeText={(text) => dispatch(setTitle({title: text}))}></TextInput>
-      <TouchableOpacity style={styles.inputButton} onPress={onPressSave}>
-        <Text style={styles.whiteText}>내 기기에 저장하기</Text>
-      </TouchableOpacity>
+        onChangeText={(text) => dispatch(setTitle({title: text}))}>
+      </TextInput>
       <TouchableOpacity style={styles.inputButton} onPress={onPressUpload}>
         <Text style={styles.whiteText}>내 피드에 업로드</Text>
       </TouchableOpacity>
+      <TouchableOpacity style={styles.inputButton} onPress={onPressSave}>
+        <Text style={styles.whiteText}>내 기기에 저장하기</Text>
+      </TouchableOpacity>
+      { rate !== 0 && Progress() }
       <Toast config={toastConfig} />
     </View>
   );
@@ -189,6 +208,17 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: 'white',
     fontWeight: 'bold'
+  },
+  progressBox: {
+    flexDirection: 'row',
+    width: 300,
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+    marginTop: 20
+  },
+  progressRate: {
+    color: '#384BF5',
+    marginLeft: 5
   }
 });
 
