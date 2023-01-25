@@ -121,7 +121,6 @@ const GenerateVideo = ({ navigation }) => {
         paused={true}
         style={styles.video}
         controls={true}
-        resizeMode={"cover"}
         audioOnly={false} // true로 주면 비디오 로딩되어도 poster 안사라짐
         poster={loadingUri} // 썸네일이 아니라 비디오 로딩 화면
         posterResizeMode={"center"} 
