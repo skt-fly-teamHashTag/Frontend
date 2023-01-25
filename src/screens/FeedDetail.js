@@ -10,7 +10,6 @@ const FeedDetail = ({ navigation, route }) => {
   const data = route.params
   const loadingUri = "https://media.tenor.com/On7kvXhzml4AAAAj/loading-gif.gif";
   const videoUri = data.video;
-  // const videoUri = data.videoUri;
   const hashTags = data.tags;
   const [isLiked, setLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(data.heart);
@@ -69,7 +68,6 @@ const FeedDetail = ({ navigation, route }) => {
           }}
           style={styles.video}
           controls={true}
-          resizeMode={"cover"}
           audioOnly={false} 
           poster={loadingUri}
           posterResizeMode={"center"}
