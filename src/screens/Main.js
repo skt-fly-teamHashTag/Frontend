@@ -1,50 +1,39 @@
 import axios from "axios";
 import React from "react";
-import { StyleSheet, View, Text, Image, TouchableOpacity, Alert } from "react-native";
+import { StyleSheet, View, Text, Image, TouchableOpacity, Platform } from "react-native";
 import { launchImageLibrary } from 'react-native-image-picker';
 import { postURL } from '../api';
+import { RNS3 } from 'react-native-aws3';
+import { aws } from "../Keys";
 
 const Main = ({ navigation }) => {
   const showCameraRoll = async() => {
-    const videoData = {
-      name: '',
-      type: '',
-      uri: ''
-    };
-
-    const pickVideo = await launchImageLibrary({ mediaType: 'image' });
+    const pickVideo = await launchImageLibrary({ mediaType: 'video' });
     if (pickVideo.didCancel) {
       console.log('User cancelled video picker');
     } else if (pickVideo.errorCode) {
       console.log('ImagePicker Error: ', pickVideo.errorCode);
     } else if (pickVideo) {
-      videoData.name = pickVideo.assets[0].fileName;
-      videoData.type = pickVideo.assets[0].type;
-      videoData.uri = Platform.OS === 'android'? pickVideo.assets[0].uri: pickVideo.assets[0].uri.replace('file://','');
-
-      const formData = new FormData();
-      formData.append('video', videoData);
-
-      const header = {
-        'Context-Type': 'multipart/form-data',
+      const videoData = {
+        name: pickVideo.assets[0].fileName,
+        type: pickVideo.assets[0].type,
+        uri: pickVideo.assets[0].uri
       };
 
-      try {
-        const response = await axios.post(postURL + '/api/v1/auth/video', formData, {headers: header});
-        navigation.navigate('GenerateVideo');
-      } catch (error) {
-        if (error.name === 'AxiosError') {
-          Alert.alert(
-            "네트워크 오류",
-            "인터넷 연결을 확인해주세요.",
-            [{text: "확인"}]
-          );
-        }
+      const options = {
+        // keyPrefix: 'videos/',
+        bucket: 'test-videodot-bucket',
+        region: 'ap-northeast-2',
+        accessKey: aws.accessKey,
+        secretKey: aws.secretKey,
+        successActionStatus: 201,
       }
-      
-    }
 
-    
+      RNS3.put(videoData, options).then(response => {
+        console.log(response);
+        // [axios.post] location 정보를 백엔드에 전달하는 코드
+      });
+    }
   };
 
   return(

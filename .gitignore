@@ -59,3 +59,6 @@ buck-out/
 # Ruby / CocoaPods
 /ios/Pods/
 /vendor/bundle/
+
+# Secret Key
+/src/Keys.js
