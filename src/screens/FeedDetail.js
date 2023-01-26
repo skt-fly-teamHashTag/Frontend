@@ -67,9 +67,6 @@ const FeedDetail = ({ navigation, route }) => {
         </View>
         <Video
           source={{ uri: videoUri }}
-          ref={(ref) => {
-            this.player = ref
-          }}
           style={styles.video}
           controls={true}
           audioOnly={false} 
@@ -85,6 +82,7 @@ const FeedDetail = ({ navigation, route }) => {
               type='font-awesome' 
               color='#FE646F' 
               size={16}
+              style={styles.heartIcon}
             />
           </TouchableOpacity>
         </View>
@@ -166,7 +164,8 @@ const styles = StyleSheet.create({
     top: 15
   },
   headerText: {
-    fontSize: 18
+    fontSize: 18,
+    color: '#111'
   },
   userInfo: {
     flexDirection: 'row',
@@ -182,7 +181,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     marginLeft: 10,
-    marginBottom: 0
+    marginBottom: 0,
+    color: '#111'
   },
   userUploadTime: {
     color: 'gray',
@@ -208,18 +208,23 @@ const styles = StyleSheet.create({
     fontWeight: 'bold'
   },
   heartBox: {
-    flexDirection: 'row'
+    flexDirection: 'row',
+    alignItems: 'center'
   },
   heartText: {
     color: '#FE646F',
     marginLeft: 5
+  },
+  heartIcon: {
+    alignItems: 'center',
   },
   videoTitle: {
     fontSize: 18,
     fontWeight: 'bold',
     marginHorizontal: 10,
     marginTop: 0,
-    marginBottom: 15
+    marginBottom: 15,
+    color: '#111'
   },
   line: {
     borderBottomColor: '#F4F6F9',
@@ -232,7 +237,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     marginTop: 15,
-    marginLeft: 15
+    marginLeft: 15,
+    color: '#111'
   },
   userBox: {
     flexDirection: 'row',
@@ -247,7 +253,8 @@ const styles = StyleSheet.create({
   },
   comment: {
     marginLeft: 70,
-    fontSize: 15
+    fontSize: 15,
+    color: '#111'
   },
   commentWriteBox: {
     flexDirection: 'row',

@@ -25,6 +25,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  textStyle: {
+    color: '#111'
+  }
 });
 
 export default SquareIconText;

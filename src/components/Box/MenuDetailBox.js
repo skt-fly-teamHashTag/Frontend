@@ -83,6 +83,7 @@ const styles = StyleSheet.create({
   menuTitle: {
     fontWeight: 'bold',
     fontSize: 16,
+    color: '#111'
   },
   detailMenuBox: {
     flexDirection: 'row',

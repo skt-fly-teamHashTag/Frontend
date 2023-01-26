@@ -154,7 +154,8 @@ const styles = StyleSheet.create({
   finishText: {
     marginVertical: 40,
     fontSize: 18,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    color: '#111'
   },
   video: {
     width: width * 0.85,

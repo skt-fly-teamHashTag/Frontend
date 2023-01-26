@@ -15,12 +15,15 @@ const styles = StyleSheet.create({
   hello: {
     width: '100%',
     margin: 10,
+    color: '#111'
   },
   name: {
     fontWeight: 'bold',
+    color: '#111'
   },
   edit: {
-    marginTop: 5
+    marginTop: 5,
+    color: '#111'
   }
 });
 

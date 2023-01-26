@@ -94,6 +94,7 @@ const styles = StyleSheet.create({
     fontSize: 26,
     fontWeight: 'bold',
     marginLeft: 30,
+    color: '#111'
   },
   noticeGif: {
     width: 160,

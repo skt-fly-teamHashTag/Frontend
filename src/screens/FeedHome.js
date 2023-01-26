@@ -90,6 +90,7 @@ const styles = StyleSheet.create({
   hotText: {
     marginLeft: 30,
     fontSize: 20,
+    color: '#111'
   },
   toastBox: { 
     height: 45, 

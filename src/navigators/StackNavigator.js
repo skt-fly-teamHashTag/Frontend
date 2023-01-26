@@ -20,6 +20,7 @@ const StackNavigator = () => {
 
   const mainHeader = ({ navigation }) => ({
     title: 'A. Video',
+    headerTitleAlign: 'center',
     headerLeft: () => (
       <LeftIconButton 
         source={require("../assets/menu.png")}
@@ -37,6 +38,7 @@ const StackNavigator = () => {
 
   const videoHeader = ({ navigation }) => ({
     title: 'A. Video',
+    headerTitleAlign: 'center',
     headerLeft: () => (<></>),
     headerRight: () => (
       <TouchableOpacity onPress={() => onPressClose(navigation)}>

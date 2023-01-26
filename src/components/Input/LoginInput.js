@@ -20,6 +20,7 @@ const styles = StyleSheet.create({
   },
   textTitle: {
     fontSize: 14,
+    color: '#111'
   },
   textInput: {
     width: '100%',

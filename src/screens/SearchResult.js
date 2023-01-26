@@ -92,7 +92,8 @@ const styles = StyleSheet.create({
     top: 17
   },
   headerText: {
-    fontSize: 20
+    fontSize: 20,
+    color: '#111'
   },
   searchContainer: {
     backgroundColor: '#F4F6F9',

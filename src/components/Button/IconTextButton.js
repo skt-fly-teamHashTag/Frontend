@@ -24,6 +24,7 @@ const styles = StyleSheet.create({
   },
   menuText: {
     marginLeft: 10,
+    color: '#111'
   },
 });
 

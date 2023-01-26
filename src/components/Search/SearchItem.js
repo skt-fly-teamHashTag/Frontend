@@ -69,7 +69,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     margin: 10,
-    marginBottom: 0
+    marginBottom: 0,
+    color: '#111'
   },
   userInfo: {
     flexDirection: 'row',
@@ -100,7 +101,8 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     marginHorizontal: 15,
-    marginBottom: 10
+    marginBottom: 10,
+    color: '#111'
   },
   hotBottomText: {
     flexDirection: 'row',

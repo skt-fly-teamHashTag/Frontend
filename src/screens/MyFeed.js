@@ -52,7 +52,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     margin: 10,
-    marginBottom: 15
+    marginBottom: 15,
+    color: '#111'
   },
   feedScroll: {
     height: '80%',

@@ -45,13 +45,15 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     marginTop: 70,
-    marginBottom: 20
+    marginBottom: 20,
+    color: '#111'
   },
   loadingTitle: {
     fontSize: 20,
     fontWeight: 'bold',
     textAlign: 'center',
-    margin: 50
+    margin: 50,
+    color: '#111'
   },
   loadingGif: {
     width: 150,
@@ -60,11 +62,12 @@ const styles = StyleSheet.create({
   loadingText: {
     fontSize: 16,
     fontWeight: 'bold',
-    margin: 70
+    margin: 70,
+    color: '#111'
   },
   feedBox: {
     position: 'absolute',
-    bottom: 100,
+    bottom: 80,
     flexDirection: 'row',
     justifyContent: 'center'
   },
