@@ -3,6 +3,8 @@ import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView, TextInput,
 import { Icon } from "@rneui/themed";
 import Video from "react-native-video";
 import Toast from 'react-native-toast-message';
+import { useSelector } from "react-redux";
+import SummaryText from "../components/Text/SummaryText";
 
 const { StatusBarManager } = NativeModules;
 
@@ -14,6 +16,7 @@ const FeedDetail = ({ navigation, route }) => {
   const [isLiked, setLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(data.heart);
   const [statusBarHeight, setStatusBarHeight] = useState(0);
+  const summarizing = useSelector((state) => state.summary.summary);
 
   useEffect(()=>{
     console.log('FeedDetail>>', videoUri);
@@ -53,6 +56,7 @@ const FeedDetail = ({ navigation, route }) => {
         </TouchableOpacity>
         <Text style={styles.headerText}>{ data.userName }님의 영상</Text>
       </View>
+      { summarizing && <SummaryText /> }
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.userInfo}>
           <Image source={require('../assets/userPhoto.png')} style={styles.userImage}></Image>

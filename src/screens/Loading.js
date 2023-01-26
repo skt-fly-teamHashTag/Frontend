@@ -1,13 +1,35 @@
 import React from "react";
-import { StyleSheet, Text, Image, View } from 'react-native';
+import { StyleSheet, Text, Image, View, TouchableOpacity } from 'react-native';
+import { useDispatch } from "react-redux";
+import { setSummary } from "../slices/summarySlice";
 
-const Loading = () => {
+const Loading = ({ navigation }) => {
+  const dispatch = useDispatch();
+
+  const onPressHome = () => {
+    dispatch(setSummary({summary: true}));
+    navigation.navigate('Main');
+  }
+
+  const onPressFeed = () => {
+    dispatch(setSummary({summary: true}));
+    navigation.navigate('FeedHome')
+  }
+
   return (
     <View style={styles.loadingBox}>
       <Text style={styles.headerTitle}>A. Video</Text>
       <Text style={styles.loadingTitle}>{`내가 나타날 때까지 \n 잠시만 기다려줘!`}</Text>
       <Image source={require('../assets/loadingGif.gif')} style={styles.loadingGif} />
       <Text style={styles.loadingText}>비디오 요약중</Text>
+      <View style={styles.feedBox}>
+        <TouchableOpacity style={styles.feedButton} onPress={onPressHome}>
+          <Text style={styles.feedText}>비디오 홈</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.feedButton} onPress={onPressFeed}>
+          <Text style={styles.feedText}>피드 구경하기</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -29,7 +51,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     textAlign: 'center',
-    margin: 70
+    margin: 50
   },
   loadingGif: {
     width: 150,
@@ -39,6 +61,26 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     margin: 70
+  },
+  feedBox: {
+    position: 'absolute',
+    bottom: 100,
+    flexDirection: 'row',
+    justifyContent: 'center'
+  },
+  feedButton: {
+    height: 40,
+    width: 130,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderColor: '#384BF5',
+    borderWidth: 1,
+    borderRadius: 50,
+    margin: 10,
+  }, 
+  feedText: {
+    color: '#384BF5',
+    fontWeight: 'bold'
   }
 });
 

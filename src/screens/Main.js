@@ -1,12 +1,18 @@
 import axios from "axios";
 import React from "react";
-import { StyleSheet, View, Text, Image, TouchableOpacity, Platform } from "react-native";
+import { StyleSheet, View, Text, Image, TouchableOpacity, Alert } from "react-native";
 import { launchImageLibrary } from 'react-native-image-picker';
 import { postURL } from '../api';
 import { RNS3 } from 'react-native-aws3';
 import { aws } from "../Keys";
+import { useDispatch, useSelector } from "react-redux";
+import SummaryText from "../components/Text/SummaryText";
+import { setSummary } from "../slices/summarySlice";
 
 const Main = ({ navigation }) => {
+  const dispatch = useDispatch();
+  const summarizing = useSelector((state) => state.summary.summary);
+
   const showCameraRoll = async() => {
     const pickVideo = await launchImageLibrary({ mediaType: 'video' });
     if (pickVideo.didCancel) {
@@ -21,41 +27,55 @@ const Main = ({ navigation }) => {
       };
 
       const options = {
-        // keyPrefix: 'videos/',
+        keyPrefix: 'videos/',
         bucket: 'test-videodot-bucket',
         region: 'ap-northeast-2',
         accessKey: aws.accessKey,
         secretKey: aws.secretKey,
         successActionStatus: 201,
       }
-
-      RNS3.put(videoData, options).then(response => {
-        console.log(response);
-        // [axios.post] location 정보를 백엔드에 전달하는 코드
-      });
+      
+      if (summarizing) {
+        Alert.alert(
+          "비디오 요약 실패",
+          "이미 다른 비디오를 요약중입니다.",
+          [{text: "확인"}]
+        );
+        // 요약 완료 후 코드
+        dispatch(setSummary({summary: false})); 
+      } else {
+        RNS3.put(videoData, options).then(response => {
+          console.log(response);
+          // [axios.post] location 정보를 백엔드에 전달하는 코드
+          navigation.navigate('Loading');
+        });
+      }
     }
   };
 
   return(
-    <View style={styles.main}>
-      <View style={styles.noticeBox}>
-        <Text style={styles.noticeText}>
-          {`편집하고 싶은 \n영상을 앨범에서 \n선택해줘!`}</Text>
-        <Image source={require('../assets/videoGif.gif')} style={styles.noticeGif} />
-      </View>
-      <TouchableOpacity style={styles.gallery} onPress={showCameraRoll}>
-        <Image source={require('../assets/gallery.jpeg')} style={styles.galleryImage} />
-        <Text style={styles.galleryText}>앨범에서 선택하기</Text>
-      </TouchableOpacity>
-      <View style={styles.feedBox}>
-        <TouchableOpacity style={styles.feedButton} onPress={()=>navigation.navigate('MyFeed')}>
-          <Text style={styles.feedText}>My 피드</Text>
+    <>
+      { summarizing && <SummaryText /> }
+      <View style={styles.main}>
+        <View style={styles.noticeBox}>
+          <Text style={styles.noticeText}>
+            {`편집하고 싶은 \n영상을 앨범에서 \n선택해줘!`}</Text>
+          <Image source={require('../assets/videoGif.gif')} style={styles.noticeGif} />
+        </View>
+        <TouchableOpacity style={styles.gallery} onPress={showCameraRoll}>
+          <Image source={require('../assets/gallery.jpeg')} style={styles.galleryImage} />
+          <Text style={styles.galleryText}>앨범에서 선택하기</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.feedButton} onPress={()=>navigation.navigate('FeedHome')}>
-          <Text style={styles.feedText}>피드 구경하기</Text>
-        </TouchableOpacity>
+        <View style={styles.feedBox}>
+          <TouchableOpacity style={styles.feedButton} onPress={()=>navigation.navigate('MyFeed')}>
+            <Text style={styles.feedText}>My 피드</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.feedButton} onPress={()=>navigation.navigate('FeedHome')}>
+            <Text style={styles.feedText}>피드 구경하기</Text>
+          </TouchableOpacity>
+        </View>
       </View>
-    </View>
+    </>
   );
 };
 

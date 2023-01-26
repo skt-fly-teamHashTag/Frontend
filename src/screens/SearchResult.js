@@ -6,10 +6,12 @@ import { setSearch } from '../slices/searchSlice';
 import SearchItem from "../components/Search/SearchItem";
 import Toast from 'react-native-toast-message';
 import { dummyData } from "../datas/Data";
+import SummaryText from "../components/Text/SummaryText";
 
 const SearchResult = ({ navigation }) => {
-  const search = useSelector((state) => state.search);
   const dispatch = useDispatch();
+  const search = useSelector((state) => state.search);
+  const summarizing = useSelector((state) => state.summary.summary);
 
   const toastConfig = {
     likeToast: ({ text1, props }) => (
@@ -41,7 +43,7 @@ const SearchResult = ({ navigation }) => {
         </TouchableOpacity>
         <Text style={styles.headerText}>최신 영상</Text>
       </View>
-
+      { summarizing && <SummaryText /> }
       <View style={styles.searchContainer}>
         <View style={styles.inputBox}>
           <Icon name='search' type='feather' size={20} style={styles.searchIcon}></Icon>

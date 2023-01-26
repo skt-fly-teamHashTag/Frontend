@@ -7,9 +7,12 @@ import Feed from '../components/Feed/Feed';
 import { dummyData } from '../datas/Data';
 import Toast from 'react-native-toast-message';
 import { getURL } from '../api';
+import { useSelector } from "react-redux";
+import SummaryText from "../components/Text/SummaryText";
 
 const FeedHome = ({ navigation }) => {
   const [data, setData] = useState([]);
+  const summarizing = useSelector((state) => state.summary.summary);
 
   const toastConfig = {
     likeToast: ({ text1, props }) => (
@@ -40,6 +43,7 @@ const FeedHome = ({ navigation }) => {
   
   return (  
     <>
+      { summarizing && <SummaryText /> }
       <ScrollView
         showsVerticalScrollIndicator = {false}
         bounces = {false}

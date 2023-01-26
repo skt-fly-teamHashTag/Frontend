@@ -3,13 +3,16 @@ import { View, StyleSheet, TouchableOpacity, TextInput } from "react-native";
 import { Icon } from "@rneui/themed";
 import { useDispatch, useSelector } from "react-redux";
 import { setSearch } from '../slices/searchSlice';
+import SummaryText from "../components/Text/SummaryText";
 
 const Search = ({ navigation }) => {
-  const search = useSelector((state) => state.search);
   const dispatch = useDispatch();
+  const search = useSelector((state) => state.search);
+  const summarizing = useSelector((state) => state.summary.summary);
 
   return (
     <View style={styles.container}>
+      { summarizing && <SummaryText /> }
       <View style={styles.searchHeader}>
         <TouchableOpacity onPress={() => {navigation.goBack()}}>
           <Icon name='arrow-back-ios' type='material-icons' size={20}></Icon>

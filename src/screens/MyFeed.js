@@ -3,10 +3,15 @@ import { View, StyleSheet, Image, Text, ScrollView, TouchableOpacity } from "rea
 import Video from "react-native-video";
 import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
 import { dummyData } from '../datas/Data';
+import { useSelector } from "react-redux";
+import SummaryText from "../components/Text/SummaryText";
 
 const MyFeed = ({ navigation }) => {
+  const summarizing = useSelector((state) => state.summary.summary);
+
   return (
     <View style={styles.container}>
+      { summarizing && <SummaryText />}
       <Image source={require('../assets/userPhoto.png')} style={styles.userImage} />
       <Text style={styles.userName}>해시태그닷</Text>
       <ScrollView style={styles.feedScroll} bounces={false}>
