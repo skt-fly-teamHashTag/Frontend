@@ -11,8 +11,8 @@ const { width, height } = Dimensions.get('window')
 const CarouselItem = ({ item, index, showToast }) => {
   const navigation = useNavigation();
   const [isLiked, setLiked] = useState(false);
-  const [likeCount, setLikeCount] = useState(item.heart);
-
+  const [likeCount, setLikeCount] = useState(item.likeCount);
+  
   const onPressLike = async() => {
     const putData = {
       videoId: '1120',
@@ -26,18 +26,18 @@ const CarouselItem = ({ item, index, showToast }) => {
     }
 
     setLiked(!isLiked);
-    setLikeCount(isLiked ? item.heart : item.heart + 1);
+    setLikeCount(isLiked ? item.likeCount : item.likeCount + 1);
     showToast(isLiked);
   };
 
   return (
     <View style={styles.cardView}>
-      <Text style={styles.contentTitle}>인기 급상승 영상 Top { item.index }</Text>
+      <Text style={styles.contentTitle}>인기 급상승 영상 Top { index + 1 }</Text>
       <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.navigate('FeedDetail', item)}>
-        <Image style={styles.image} source={{ uri: item.thumbnail }} />
+        <Image style={styles.image} source={{ uri: 'https://test-videodot-bucket.s3.ap-northeast-2.amazonaws.com/images/' + item.imagePaths }} />
       </TouchableOpacity>
       <View style={styles.hotBottomText}>
-        <Text style={styles.hashTag}>{ item.tags }</Text>
+        <Text style={styles.hashTag}>{ item.tags.map((item) => `#${item} `) }</Text>
         <TouchableOpacity onPress={onPressLike} style={styles.heartBox}>
           <Icon 
             name={isLiked ? 'heart': 'heart-o'} 

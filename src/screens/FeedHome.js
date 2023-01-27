@@ -1,19 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { StyleSheet, View, Text, ScrollView, TouchableOpacity, Image } from "react-native";
 import { Icon } from "@rneui/themed";
 import Carousel from '../components/Carousel/Carousel';
 import Feed from '../components/Feed/Feed';
-import { dummyData } from '../datas/Data';
 import Toast from 'react-native-toast-message';
-import { getURL } from '../api';
+import { URL } from '../api';
 import { useSelector } from "react-redux";
 import SummaryText from "../components/Text/SummaryText";
 
-const FeedHome = ({ navigation }) => {
-  const [data, setData] = useState([]);
+const FeedHome = ({ navigation, route }) => {
+  const [data, setData] = useState({...route.params});
   const summarizing = useSelector((state) => state.summary.summary);
-
+  
   const toastConfig = {
     likeToast: ({ text1, props }) => (
       <View style={styles.toastBox}>
@@ -30,16 +29,6 @@ const FeedHome = ({ navigation }) => {
       visibilityTime: 2000
     })
   }
-
-  // useEffect(() => {
-  //   try {
-  //     const response = axios.get(getURL + '/api/v1/video');
-  //     setData(response);
-  //     console.log('FeedHome>>', response);
-  //   } catch(error) {
-  //     console.log("ERROR>>", error);
-  //   }
-  // }, [])
   
   return (  
     <>
@@ -58,8 +47,8 @@ const FeedHome = ({ navigation }) => {
           </TouchableOpacity>
         </View>
         <Text style={styles.hotText}>이번주 Hot 랭킹을 확인해보세요!!</Text>
-        <Carousel data={dummyData.slice(0, 3)} showToast={showToast} />
-        <Feed data={dummyData} showToast={showToast} />
+        <Carousel data={data.hot} showToast={showToast} />
+        <Feed data={data.recent} showToast={showToast} />
       </ScrollView>
       <Toast config={toastConfig} />
     </>

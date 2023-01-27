@@ -7,6 +7,8 @@ import SearchItem from "../components/Search/SearchItem";
 import Toast from 'react-native-toast-message';
 import { dummyData } from "../datas/Data";
 import SummaryText from "../components/Text/SummaryText";
+import { URL } from "../api";
+import axios from "axios";
 
 const SearchResult = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -32,7 +34,9 @@ const SearchResult = ({ navigation }) => {
 
   const onPressBack = () => {
     dispatch(setSearch({inputText: ''}));
-    navigation.navigate('FeedHome');
+    axios.get(URL.getAllFeeds)
+    .then(response => navigation.navigate('FeedHome', response.data.body))
+    .catch(error => console.log(error));
   };
 
   return (

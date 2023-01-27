@@ -2,7 +2,7 @@ import axios from "axios";
 import React from "react";
 import { StyleSheet, View, Text, Image, TouchableOpacity, Alert } from "react-native";
 import { launchImageLibrary } from 'react-native-image-picker';
-import { postURL } from '../api';
+import { URL } from '../api';
 import { RNS3 } from 'react-native-aws3';
 import { aws } from "../Keys";
 import { useDispatch, useSelector } from "react-redux";
@@ -53,6 +53,18 @@ const Main = ({ navigation }) => {
     }
   };
 
+  const onPressMyFeed = () => {
+    axios.get(URL.getMyFeeds)
+    .then(response => navigation.navigate('MyFeed', response.data.body.imagePaths))
+    .catch(error => console.log(error));
+  };
+
+  const onPressFeedHome = () => {
+    axios.get(URL.getAllFeeds)
+    .then(response => navigation.navigate('FeedHome', response.data.body))
+    .catch(error => console.log(error));
+  };
+
   return(
     <>
       { summarizing && <SummaryText /> }
@@ -67,10 +79,10 @@ const Main = ({ navigation }) => {
           <Text style={styles.galleryText}>앨범에서 선택하기</Text>
         </TouchableOpacity>
         <View style={styles.feedBox}>
-          <TouchableOpacity style={styles.feedButton} onPress={()=>navigation.navigate('MyFeed')}>
+          <TouchableOpacity style={styles.feedButton} onPress={onPressMyFeed}>
             <Text style={styles.feedText}>My 피드</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.feedButton} onPress={()=>navigation.navigate('FeedHome')}>
+          <TouchableOpacity style={styles.feedButton} onPress={onPressFeedHome}>
             <Text style={styles.feedText}>피드 구경하기</Text>
           </TouchableOpacity>
         </View>

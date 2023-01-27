@@ -2,6 +2,8 @@ import React from "react";
 import { StyleSheet, Text, Image, View, TouchableOpacity } from 'react-native';
 import { useDispatch } from "react-redux";
 import { setSummary } from "../slices/summarySlice";
+import { URL } from "../api";
+import axios from "axios";
 
 const Loading = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -13,7 +15,9 @@ const Loading = ({ navigation }) => {
 
   const onPressFeed = () => {
     dispatch(setSummary({summary: true}));
-    navigation.navigate('FeedHome')
+    axios.get(URL.getAllFeeds)
+    .then(response => navigation.navigate('FeedHome', response.data.body))
+    .catch(error => console.log(error));
   }
 
   return (

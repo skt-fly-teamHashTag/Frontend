@@ -36,7 +36,7 @@ const Carousel = ({ data, showToast }) => {
     useEffect(()=> {
       setDataList(data)
       infiniteScroll(dataList)
-    })
+    }, []);
 
 
     if (data && data.length) {

@@ -13,10 +13,9 @@ const { StatusBarManager } = NativeModules;
 const FeedDetail = ({ navigation, route }) => {
   const data = route.params
   const loadingUri = "https://media.tenor.com/On7kvXhzml4AAAAj/loading-gif.gif";
-  const videoUri = data.video;
-  const hashTags = data.tags;
+  const videoUri = "https://test-videodot-bucket.s3.ap-northeast-2.amazonaws.com/videos/KakaoTalk_20230111_204722145-1674573573598.mp4";
   const [isLiked, setLiked] = useState(false);
-  const [likeCount, setLikeCount] = useState(data.heart);
+  const [likeCount, setLikeCount] = useState(data.likeCount);
   const [statusBarHeight, setStatusBarHeight] = useState(0);
   const summarizing = useSelector((state) => state.summary.summary);
 
@@ -57,9 +56,28 @@ const FeedDetail = ({ navigation, route }) => {
     }
     
     setLiked(!isLiked);
-    setLikeCount(isLiked ? data.heart : data.heart + 1);
+    setLikeCount(isLiked ? data.likeCount : data.likeCount + 1);
     showToast(isLiked);
   };
+  console.log(data)
+
+  const getUploadedAt = () => {
+    const milliSeconds = data.uploadedAt;
+    const seconds = milliSeconds / 1000;
+    if (seconds < 60) return `방금 전`;
+    const minutes = seconds / 60;
+    if (minutes < 60) return `${Math.floor(minutes)}분 전`;
+    const hours = minutes / 60;
+    if (hours < 24) return `${Math.floor(hours)}시간 전`;
+    const days = hours / 24;
+    if (days < 7) return `${Math.floor(days)}일 전`;
+    const weeks = days / 7;
+    if (weeks < 5) return `${Math.floor(weeks)}주 전`;
+    const months = days / 30;
+    if (months < 12) return `${Math.floor(months)}개월 전`;
+    const years = days / 365;
+    return `${Math.floor(years)}년 전`;
+  }
 
   return (
     <View style={styles.container}>
@@ -67,15 +85,15 @@ const FeedDetail = ({ navigation, route }) => {
         <TouchableOpacity onPress={()=>navigation.goBack()} style={styles.back}>
           <Icon name='arrow-back-ios' type='material-icons' size={20}></Icon>
         </TouchableOpacity>
-        <Text style={styles.headerText}>{ data.userName }님의 영상</Text>
+        <Text style={styles.headerText}>{ data.nickName }님의 영상</Text>
       </View>
       { summarizing && <SummaryText /> }
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.userInfo}>
           <Image source={require('../assets/userPhoto.png')} style={styles.userImage}></Image>
           <View>
-            <Text style={styles.contentTitle}>{ data.userName }</Text>
-            <Text style={styles.userUploadTime}>{ data.uploadTime }</Text>
+            <Text style={styles.contentTitle}>{ data.nickName }</Text>
+            <Text style={styles.userUploadTime}>{ getUploadedAt() }</Text>
           </View>
         </View>
         <Video
@@ -87,7 +105,7 @@ const FeedDetail = ({ navigation, route }) => {
           posterResizeMode={"center"}
         />
         <View style={styles.hotBottomText}>
-          <Text style={styles.newHashTag}>{hashTags}</Text>
+          <Text style={styles.newHashTag}>{ data.tags.map(item => `#${item} `) }</Text>
           <TouchableOpacity onPress={onPressLike} style={styles.heartBox}>
             <Text style={styles.heartText}>좋아요 {likeCount}개 </Text>
             <Icon 

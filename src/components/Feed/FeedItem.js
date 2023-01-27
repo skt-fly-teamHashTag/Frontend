@@ -8,10 +8,10 @@ import { getURL, URL } from "../../api";
 const FeedItem = ({ item, showToast }) => {
   const navigation = useNavigation();
   const [isLiked, setLiked] = useState(false);
-  const [likeCount, setLikeCount] = useState(item.heart);
+  const [likeCount, setLikeCount] = useState(item.likeCount);
   const height = Dimensions.get('window').height;
-
-  const onPressFeed = async () => {
+  
+  const onPressFeed = () => {
     const baseURL = getURL + '/api/v1/video';
     const id = '63c7e9af8f429307d2f874c8.mp4';
     try {
@@ -25,7 +25,7 @@ const FeedItem = ({ item, showToast }) => {
       // });
       // console.log(response.data._data.name)
       // console.log(response.config.env);
-      navigation.navigate('FeedDetail', {...item, videoUri: `${baseURL}/${id}`});
+      navigation.navigate('FeedDetail', item);
     } catch(error) {
       console.log("ERROR>>", error); //fighting!!
     }
@@ -44,24 +44,43 @@ const FeedItem = ({ item, showToast }) => {
     }
 
     setLiked(!isLiked);
-    setLikeCount(isLiked ? item.heart : item.heart + 1);
+    setLikeCount(isLiked ? item.likeCount : item.likeCount + 1);
     showToast(isLiked);
   };
+
+
+  const getUploadedAt = () => {
+    const milliSeconds = item.uploadedAt;
+    const seconds = milliSeconds / 1000;
+    if (seconds < 60) return `방금 전`;
+    const minutes = seconds / 60;
+    if (minutes < 60) return `${Math.floor(minutes)}분 전`;
+    const hours = minutes / 60;
+    if (hours < 24) return `${Math.floor(hours)}시간 전`;
+    const days = hours / 24;
+    if (days < 7) return `${Math.floor(days)}일 전`;
+    const weeks = days / 7;
+    if (weeks < 5) return `${Math.floor(weeks)}주 전`;
+    const months = days / 30;
+    if (months < 12) return `${Math.floor(months)}개월 전`;
+    const years = days / 365;
+    return `${Math.floor(years)}년 전`;
+  }
 
   return (
     <View style={styles.newBox}>
       <View style={styles.userInfo}>
         <Image source={require('../../assets/userPhoto.png')} style={styles.userImage}></Image>
         <View>
-          <Text style={styles.contentTitle}>{ item.userName }</Text>
-          <Text style={styles.userUploadTime}>{ item.uploadTime }</Text>
+          <Text style={styles.contentTitle}>{ item.nickName }</Text>
+          <Text style={styles.userUploadTime}>{ getUploadedAt() }</Text>
         </View>
       </View>
       <TouchableOpacity activeOpacity={0.8} onPress={onPressFeed}>
-        <Image style={styles.video} source={{ uri: item.thumbnail }} />
+        <Image style={styles.video} source={{ uri: 'https://test-videodot-bucket.s3.ap-northeast-2.amazonaws.com/images/' + item.imagePaths }} />
       </TouchableOpacity>
       <View style={styles.hotBottomText}>
-        <Text style={styles.newHashTag}>{ item.tags }</Text>
+        <Text style={styles.newHashTag}>{ item.tags.map((item) => `#${item} `) }</Text>
         <TouchableOpacity onPress={onPressLike} style={styles.heartBox}>
           <Icon 
             name={isLiked ? 'heart': 'heart-o'} 
