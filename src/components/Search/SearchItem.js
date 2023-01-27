@@ -3,6 +3,7 @@ import { StyleSheet, TouchableOpacity, View, Image, Text, Dimensions } from "rea
 import { Icon } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
+import { URL } from "../../api";
 
 const { width, height } = Dimensions.get('window');
 
@@ -15,7 +16,18 @@ const SearchItem = ({ item, showToast }) => {
     navigation.navigate('FeedDetail', item);
   }
 
-  const onPressLike = () => {
+  const onPressLike = async() => {
+    const putData = {
+      videoId: '1120',
+      userId: '1123',
+    };
+
+    try {
+      const response = await axios.put(URL.putLike, putData);
+    } catch(error) {
+      console.log(error);
+    }
+
     setLiked(!isLiked);
     setLikeCount(isLiked ? item.heart : item.heart + 1);
     showToast(isLiked);

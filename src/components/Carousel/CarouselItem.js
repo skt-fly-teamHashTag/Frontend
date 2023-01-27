@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import { View, StyleSheet, Text, Image, Dimensions, TouchableOpacity } from 'react-native'
 import { Icon } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
+import axios from "axios";
+import { URL } from "../../api";
 
 const { width, height } = Dimensions.get('window')
 
@@ -11,7 +13,18 @@ const CarouselItem = ({ item, index, showToast }) => {
   const [isLiked, setLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(item.heart);
 
-  const onPressLike = () => {
+  const onPressLike = async() => {
+    const putData = {
+      videoId: '1120',
+      userId: '1123',
+    };
+
+    try {
+      const response = await axios.put(URL.putLike, putData);
+    } catch(error) {
+      console.log(error);
+    }
+
     setLiked(!isLiked);
     setLikeCount(isLiked ? item.heart : item.heart + 1);
     showToast(isLiked);

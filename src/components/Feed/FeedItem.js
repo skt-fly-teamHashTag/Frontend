@@ -3,7 +3,7 @@ import { StyleSheet, TouchableOpacity, View, Image, Text, Dimensions } from "rea
 import { Icon } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
-import { getURL } from "../../api";
+import { getURL, URL } from "../../api";
 
 const FeedItem = ({ item, showToast }) => {
   const navigation = useNavigation();
@@ -31,7 +31,18 @@ const FeedItem = ({ item, showToast }) => {
     }
   }
 
-  const onPressLike = () => {
+  const onPressLike = async() => {
+    const putData = {
+      videoId: '1120',
+      userId: '1123',
+    };
+
+    try {
+      const response = await axios.put(URL.putLike, putData);
+    } catch(error) {
+      console.log(error);
+    }
+
     setLiked(!isLiked);
     setLikeCount(isLiked ? item.heart : item.heart + 1);
     showToast(isLiked);

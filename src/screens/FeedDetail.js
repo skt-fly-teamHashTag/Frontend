@@ -5,6 +5,8 @@ import Video from "react-native-video";
 import Toast from 'react-native-toast-message';
 import { useSelector } from "react-redux";
 import SummaryText from "../components/Text/SummaryText";
+import axios from "axios";
+import { URL } from "../api";
 
 const { StatusBarManager } = NativeModules;
 
@@ -42,7 +44,18 @@ const FeedDetail = ({ navigation, route }) => {
     })
   }
 
-  const onPressLike = () => {
+  const onPressLike = async() => {
+    const putData = {
+      videoId: '1120',
+      userId: '1123',
+    };
+
+    try {
+      const response = await axios.put(URL.putLike, putData);
+    } catch(error) {
+      console.log(error);
+    }
+    
     setLiked(!isLiked);
     setLikeCount(isLiked ? data.heart : data.heart + 1);
     showToast(isLiked);
