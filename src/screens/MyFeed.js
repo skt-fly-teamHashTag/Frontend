@@ -1,13 +1,21 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { View, StyleSheet, Image, Text, ScrollView, TouchableOpacity } from "react-native";
 import Video from "react-native-video";
 import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
-import { dummyData } from '../datas/Data';
 import { useSelector } from "react-redux";
 import SummaryText from "../components/Text/SummaryText";
+import axios from "axios";
+import { URL } from "../api";
 
 const MyFeed = ({ navigation }) => {
   const summarizing = useSelector((state) => state.summary.summary);
+  const [myFeeds, setMyFeeds] = useState([]);
+  
+  useEffect(() => {
+    axios.get(URL.getMyFeeds)
+    .then(response => setMyFeeds(response.data.body.imagePaths))
+    .catch(error => console.log(error))
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -16,10 +24,10 @@ const MyFeed = ({ navigation }) => {
       <Text style={styles.userName}>해시태그닷</Text>
       <ScrollView style={styles.feedScroll} bounces={false}>
         <View style={styles.userVideoBox}>
-        { dummyData.map((item, index) => 
+        { myFeeds.map((item, index) => 
           <Image 
             key={'key' + index} 
-            source={{ uri: item.thumbnail }}
+            source={{ uri: item }}
             style={styles.userThumbNail} />)
         }
         </View>
