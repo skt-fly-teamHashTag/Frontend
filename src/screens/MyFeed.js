@@ -21,6 +21,7 @@ const MyFeed = ({ navigation, route }) => {
 
   const onPressDetail = () => {
     const detailData = {
+      videoId: 1,
       nickName: '와니',
       title: '운동 브이로그',
       tags: ['태와니', '운동하는남자', '체육관'],
@@ -39,9 +40,8 @@ const MyFeed = ({ navigation, route }) => {
       <ScrollView style={styles.feedScroll} bounces={false}>
         <View style={styles.userVideoBox}>
         { myFeeds.map((item, index) => 
-          <TouchableOpacity onPress={onPressDetail}>
+          <TouchableOpacity onPress={onPressDetail} key={'key' + index} >
             <Image 
-              key={'key' + index} 
               source={{ uri: 'https://test-videodot-bucket.s3.ap-northeast-2.amazonaws.com/images/' + item }}
               style={styles.userThumbNail} />
           </TouchableOpacity>)}
