@@ -3,33 +3,13 @@ import { StyleSheet, TouchableOpacity, View, Image, Text, Dimensions } from "rea
 import { Icon } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
-import { getURL, URL } from "../../api";
+import { URL } from "../../api";
 
 const FeedItem = ({ item, showToast }) => {
   const navigation = useNavigation();
   const [isLiked, setLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(item.likeCount);
   const height = Dimensions.get('window').height;
-  
-  const onPressFeed = () => {
-    const baseURL = getURL + '/api/v1/video';
-    const id = '63c7e9af8f429307d2f874c8.mp4';
-    try {
-      // const response = await axios.get(`${baseURL}/${id}`, {
-      //   responseType: 'blob'
-      // });
-      //console.log(response)
-      // const blob = new Blob([response.data])
-      // const blob = new Blob([response.data._data], {
-      //   type: 'video/mp4'
-      // });
-      // console.log(response.data._data.name)
-      // console.log(response.config.env);
-      navigation.navigate('FeedDetail', item);
-    } catch(error) {
-      console.log("ERROR>>", error); //fighting!!
-    }
-  }
 
   const onPressLike = async() => {
     const putData = {
@@ -76,7 +56,7 @@ const FeedItem = ({ item, showToast }) => {
           <Text style={styles.userUploadTime}>{ getUploadedAt() }</Text>
         </View>
       </View>
-      <TouchableOpacity activeOpacity={0.8} onPress={onPressFeed}>
+      <TouchableOpacity activeOpacity={0.8} onPress={()=>navigation.navigate('FeedDetail', item)}>
         <Image style={styles.video} source={{ uri: 'https://test-videodot-bucket.s3.ap-northeast-2.amazonaws.com/images/' + item.imagePaths }} />
       </TouchableOpacity>
       <View style={styles.hotBottomText}>

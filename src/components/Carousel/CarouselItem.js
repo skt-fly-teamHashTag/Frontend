@@ -33,7 +33,7 @@ const CarouselItem = ({ item, index, showToast }) => {
   return (
     <View style={styles.cardView}>
       <Text style={styles.contentTitle}>인기 급상승 영상 Top { index + 1 }</Text>
-      <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.navigate('FeedDetail', item)}>
+      <TouchableOpacity activeOpacity={0.8} onPress={()=>navigation.navigate('FeedDetail', item)}>
         <Image style={styles.image} source={{ uri: 'https://test-videodot-bucket.s3.ap-northeast-2.amazonaws.com/images/' + item.imagePaths }} />
       </TouchableOpacity>
       <View style={styles.hotBottomText}>

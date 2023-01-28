@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-import { View, StyleSheet, Image, Text, ScrollView, TouchableOpacity } from "react-native";
+import { View, StyleSheet, Image, Text, ScrollView, TouchableOpacity, Dimensions } from "react-native";
 import Video from "react-native-video";
 import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
 import { useSelector } from "react-redux";
 import SummaryText from "../components/Text/SummaryText";
 import { URL } from "../api";
 import axios from "axios";
+
+const width = Dimensions.get('window').width;
 
 const MyFeed = ({ navigation, route }) => {
   const summarizing = useSelector((state) => state.summary.summary);
@@ -17,6 +19,18 @@ const MyFeed = ({ navigation, route }) => {
     .catch(error => console.log(error));
   };
 
+  const onPressDetail = () => {
+    const detailData = {
+      nickName: '와니',
+      title: '운동 브이로그',
+      tags: ['태와니', '운동하는남자', '체육관'],
+      likeCount: 23,
+      uploadedAt: 3022222,
+      videoPaths: 'KakaoTalk_20230111_204722145-1674897152855.mp4'
+    }
+    navigation.navigate('FeedDetail', detailData)
+  };
+
   return (
     <View style={styles.container}>
       { summarizing && <SummaryText />}
@@ -25,11 +39,12 @@ const MyFeed = ({ navigation, route }) => {
       <ScrollView style={styles.feedScroll} bounces={false}>
         <View style={styles.userVideoBox}>
         { myFeeds.map((item, index) => 
-          <Image 
-            key={'key' + index} 
-            source={{ uri: 'https://test-videodot-bucket.s3.ap-northeast-2.amazonaws.com/images/' + item }}
-            style={styles.userThumbNail} />)
-        }
+          <TouchableOpacity onPress={onPressDetail}>
+            <Image 
+              key={'key' + index} 
+              source={{ uri: 'https://test-videodot-bucket.s3.ap-northeast-2.amazonaws.com/images/' + item }}
+              style={styles.userThumbNail} />
+          </TouchableOpacity>)}
         </View>
       </ScrollView>
       <View style={styles.feedBox}>
@@ -72,8 +87,8 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
   },
   userThumbNail: {
-    width: '33%',
-    height: wp('30%'),
+    width: width * 0.33,
+    height: width * 0.33,
     backgroundColor: '#F4F6F9',
     margin: 0.5
   },

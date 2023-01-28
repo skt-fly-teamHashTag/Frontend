@@ -13,14 +13,12 @@ const { StatusBarManager } = NativeModules;
 const FeedDetail = ({ navigation, route }) => {
   const data = route.params
   const loadingUri = "https://media.tenor.com/On7kvXhzml4AAAAj/loading-gif.gif";
-  const videoUri = "https://test-videodot-bucket.s3.ap-northeast-2.amazonaws.com/videos/KakaoTalk_20230111_204722145-1674573573598.mp4";
   const [isLiked, setLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(data.likeCount);
   const [statusBarHeight, setStatusBarHeight] = useState(0);
   const summarizing = useSelector((state) => state.summary.summary);
 
   useEffect(()=>{
-    console.log('FeedDetail>>', videoUri);
     Platform.OS == 'ios' ? StatusBarManager.getHeight((statusBarFrameData) => {
         setStatusBarHeight(statusBarFrameData.height)
       }) : null
@@ -59,7 +57,6 @@ const FeedDetail = ({ navigation, route }) => {
     setLikeCount(isLiked ? data.likeCount : data.likeCount + 1);
     showToast(isLiked);
   };
-  console.log(data)
 
   const getUploadedAt = () => {
     const milliSeconds = data.uploadedAt;
@@ -97,7 +94,7 @@ const FeedDetail = ({ navigation, route }) => {
           </View>
         </View>
         <Video
-          source={{ uri: videoUri }}
+          source={{ uri: 'https://test-videodot-bucket.s3.ap-northeast-2.amazonaws.com/videos/'+data.videoPaths }}
           style={styles.video}
           controls={true}
           audioOnly={false} 
@@ -117,7 +114,7 @@ const FeedDetail = ({ navigation, route }) => {
             />
           </TouchableOpacity>
         </View>
-        <Text style={styles.videoTitle}>목적없이 떠나는 드라이브 VLOG</Text>
+        <Text style={styles.videoTitle}>{data.title}</Text>
         <View style={styles.line}></View>
         <Text style={styles.commentCount}>댓글 3개</Text>
         <View style={styles.commentBox}>
