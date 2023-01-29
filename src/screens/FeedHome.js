@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { StyleSheet, View, Text, ScrollView, TouchableOpacity, Image } from "react-native";
+import { StyleSheet, View, Text, TouchableOpacity, Image, FlatList } from "react-native";
 import { Icon } from "@rneui/themed";
 import Carousel from '../components/Carousel/Carousel';
-import Feed from '../components/Feed/Feed';
+import FeedItem from "../components/Feed/FeedItem";
 import Toast from 'react-native-toast-message';
 import { URL } from '../api';
 import { useSelector } from "react-redux";
@@ -33,23 +33,30 @@ const FeedHome = ({ navigation, route }) => {
   return (  
     <>
       { summarizing && <SummaryText /> }
-      <ScrollView
-        showsVerticalScrollIndicator = {false}
-        bounces = {false}
-        style={styles.verticalScrollView}>
-        <View style={styles.topBox}>
-          <View style={styles.myVlogText}>
-            <Text style={styles.screenTitle}>나만의 Vlog</Text>
-            <Icon name='play-circle' type='font-awesome' size={24} color='#FE6788'></Icon>
+      <FlatList
+        style={styles.verticalScrollView}
+        bounces={false}
+        showsVerticalScrollIndicator={false}
+        data={data.recent}
+        keyExtractor={(item)=>item.videoId}
+        ListHeaderComponent={<>
+          <View style={styles.hotContainer}>
+            <View style={styles.topBox}>
+              <View style={styles.myVlogText}>  
+                <Text style={styles.screenTitle}>나만의 Vlog</Text>
+                <Icon name='play-circle' type='font-awesome' size={24} color='#FE6788'></Icon>
+              </View>
+              <TouchableOpacity activeOpacity={0.8} onPress={()=>navigation.navigate('Search')}>
+                <Icon name='search' type='feather' size={24} style={{justifyContent:'flex-end'}}></Icon>
+              </TouchableOpacity>
+            </View>
+            <Text style={styles.hotText}>이번주 Hot 랭킹을 확인해보세요!!</Text>
+            <Carousel data={data.hot} showToast={showToast} />
           </View>
-          <TouchableOpacity activeOpacity={0.8} onPress={()=>navigation.navigate('Search')}>
-            <Icon name='search' type='feather' size={24} style={{justifyContent:'flex-end'}}></Icon>
-          </TouchableOpacity>
-        </View>
-        <Text style={styles.hotText}>이번주 Hot 랭킹을 확인해보세요!!</Text>
-        <Carousel data={data.hot} showToast={showToast} />
-        <Feed data={data.recent} showToast={showToast} />
-      </ScrollView>
+          <Text style={styles.newText}>최신 영상을 확인해보세요!</Text>
+        </>}
+        renderItem={({item}) => <FeedItem item={item} showToast={showToast} />}
+       />
       <Toast config={toastConfig} />
     </>
   );
@@ -57,11 +64,14 @@ const FeedHome = ({ navigation, route }) => {
 
 const styles = StyleSheet.create({
   verticalScrollView: {
-    backgroundColor: '#FFFBFD',
+    backgroundColor: '#E5F0FF',
   },
   myVlogText:{
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  hotContainer: {
+    backgroundColor: '#FFFBFD',
   },
   topBox: {
     margin: 10,
@@ -80,6 +90,16 @@ const styles = StyleSheet.create({
     marginLeft: 30,
     fontSize: 20,
     color: '#111'
+  },
+  newFeed: {
+    alignItems: 'center'
+  },
+  newText: {
+    fontWeight: 'bold',
+    fontSize: 20,
+    color: '#3A4563',
+    margin: 20,
+    marginBottom: 15,
   },
   toastBox: { 
     height: 45, 

@@ -80,8 +80,9 @@ const styles = StyleSheet.create({
   newBox: {
     borderRadius: 10,
     backgroundColor: '#FFFBFD',
+    marginHorizontal: 20,
     marginBottom: 20,
-    padding: 5
+    padding: 5,
   },
   newText: {
     fontWeight: 'bold',
@@ -99,7 +100,6 @@ const styles = StyleSheet.create({
   },
   userInfo: {
     flexDirection: 'row',
-    alignItems: 'center',
     margin: 5,
     marginBottom: 0
   },
