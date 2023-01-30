@@ -8,10 +8,12 @@ import { aws } from "../Keys";
 import { useDispatch, useSelector } from "react-redux";
 import SummaryText from "../components/Text/SummaryText";
 import { setSummary } from "../slices/summarySlice";
+import { setHotData, setRecentData } from "../slices/feedSlice";
 
 const Main = ({ navigation }) => {
   const dispatch = useDispatch();
   const summarizing = useSelector((state) => state.summary.summary);
+  const data = useSelector((state) => state.feed.data);
 
   const showCameraRoll = async() => {
     const pickVideo = await launchImageLibrary({ mediaType: 'video' });
@@ -61,7 +63,11 @@ const Main = ({ navigation }) => {
 
   const onPressFeedHome = () => {
     axios.get(URL.getAllFeeds)
-    .then(response => navigation.navigate('FeedHome', response.data.body))
+    .then(response => {
+      dispatch(setHotData([...response.data.body.hot]))
+      dispatch(setRecentData([...response.data.body.recent]))
+      navigation.navigate('FeedHome', response.data.body)
+    })
     .catch(error => console.log(error));
   };
 

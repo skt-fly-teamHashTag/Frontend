@@ -55,7 +55,7 @@ const FeedHome = ({ navigation, route }) => {
           </View>
           <Text style={styles.newText}>최신 영상을 확인해보세요!</Text>
         </>}
-        renderItem={({item}) => <FeedItem item={item} showToast={showToast} />}
+        renderItem={({item, index}) => <FeedItem item={item} index={index} showToast={showToast} />}
        />
       <Toast config={toastConfig} />
     </>

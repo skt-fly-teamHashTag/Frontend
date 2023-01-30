@@ -4,16 +4,20 @@ import { Icon } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import { URL } from "../../api";
+import { useDispatch, useSelector } from "react-redux";
+import { subLikeLists, addLikeLists } from "../../slices/feedSlice";
 
-const FeedItem = ({ item, showToast }) => {
+const FeedItem = ({ item, index, showToast }) => {
+  const dispatch = useDispatch();
   const navigation = useNavigation();
-  const [isLiked, setLiked] = useState(false);
+  const likeLists = useSelector(state => state.feed.likeLists);
+  const [isLiked, setLiked] = useState(likeLists.includes(item.videoId));
   const [likeCount, setLikeCount] = useState(item.likeCount);
   const height = Dimensions.get('window').height;
-
+  
   const onPressLike = async() => {
     const putData = {
-      videoId: '1120',
+      videoId: item.videoId,
       userId: '1123',
     };
 
@@ -22,9 +26,15 @@ const FeedItem = ({ item, showToast }) => {
     } catch(error) {
       console.log(error);
     }
+    if (isLiked) {
+      dispatch(subLikeLists(item.videoId));
+      setLikeCount(likeCount-1);
+    } else {
+      dispatch(addLikeLists(item.videoId));
+      setLikeCount(likeCount+1);
+    }
 
     setLiked(!isLiked);
-    setLikeCount(isLiked ? item.likeCount : item.likeCount + 1);
     showToast(isLiked);
   };
 
@@ -56,7 +66,7 @@ const FeedItem = ({ item, showToast }) => {
           <Text style={styles.userUploadTime}>{ getUploadedAt() }</Text>
         </View>
       </View>
-      <TouchableOpacity activeOpacity={0.8} onPress={()=>navigation.navigate('FeedDetail', item)}>
+      <TouchableOpacity activeOpacity={0.8} onPress={()=>navigation.navigate('FeedDetail', {...item, likeCount: likeCount})}>
         <Image style={styles.video} source={{ uri: 'https://test-videodot-bucket.s3.ap-northeast-2.amazonaws.com/images/' + item.imagePaths }} />
       </TouchableOpacity>
       <View style={styles.hotBottomText}>

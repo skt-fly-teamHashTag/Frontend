@@ -3,18 +3,21 @@ import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView, TextInput,
 import { Icon } from "@rneui/themed";
 import Video from "react-native-video";
 import Toast from 'react-native-toast-message';
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import SummaryText from "../components/Text/SummaryText";
 import axios from "axios";
 import { URL } from "../api";
+import { addLikeLists, subLikeLists } from "../slices/feedSlice";
 
 const { StatusBarManager } = NativeModules;
 
 const FeedDetail = ({ navigation, route }) => {
-  const data = route.params
+  const dispatch = useDispatch();
+  const item = route.params;
   const loadingUri = "https://media.tenor.com/On7kvXhzml4AAAAj/loading-gif.gif";
-  const [isLiked, setLiked] = useState(false);
-  const [likeCount, setLikeCount] = useState(data.likeCount);
+  const likeLists = useSelector(state => state.feed.likeLists);
+  const [isLiked, setLiked] = useState(likeLists.includes(item.videoId));
+  const [likeCount, setLikeCount] = useState(item.likeCount);
   const [statusBarHeight, setStatusBarHeight] = useState(0);
   const summarizing = useSelector((state) => state.summary.summary);
 
@@ -52,14 +55,21 @@ const FeedDetail = ({ navigation, route }) => {
     } catch(error) {
       console.log(error);
     }
+
+    if (isLiked) {
+      dispatch(subLikeLists(item.videoId));
+      setLikeCount(likeCount-1);
+    } else {
+      dispatch(addLikeLists(item.videoId));
+      setLikeCount(likeCount+1);
+    }
     
     setLiked(!isLiked);
-    setLikeCount(isLiked ? data.likeCount : data.likeCount + 1);
     showToast(isLiked);
   };
 
   const getUploadedAt = () => {
-    const milliSeconds = data.uploadedAt;
+    const milliSeconds = item.uploadedAt;
     const seconds = milliSeconds / 1000;
     if (seconds < 60) return `방금 전`;
     const minutes = seconds / 60;
@@ -82,19 +92,19 @@ const FeedDetail = ({ navigation, route }) => {
         <TouchableOpacity onPress={()=>navigation.goBack()} style={styles.back}>
           <Icon name='arrow-back-ios' type='material-icons' size={20}></Icon>
         </TouchableOpacity>
-        <Text style={styles.headerText}>{ data.nickName }님의 영상</Text>
+        <Text style={styles.headerText}>{ item.nickName }님의 영상</Text>
       </View>
       { summarizing && <SummaryText /> }
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.userInfo}>
           <Image source={require('../assets/userPhoto.png')} style={styles.userImage}></Image>
           <View>
-            <Text style={styles.contentTitle}>{ data.nickName }</Text>
+            <Text style={styles.contentTitle}>{ item.nickName }</Text>
             <Text style={styles.userUploadTime}>{ getUploadedAt() }</Text>
           </View>
         </View>
         <Video
-          source={{ uri: 'https://test-videodot-bucket.s3.ap-northeast-2.amazonaws.com/videos/'+data.videoPaths }}
+          source={{ uri: 'https://test-videodot-bucket.s3.ap-northeast-2.amazonaws.com/videos/'+item.videoPaths }}
           style={styles.video}
           controls={true}
           audioOnly={false} 
@@ -102,7 +112,7 @@ const FeedDetail = ({ navigation, route }) => {
           posterResizeMode={"center"}
         />
         <View style={styles.hotBottomText}>
-          <Text style={styles.newHashTag}>{ data.tags.map(item => `#${item} `) }</Text>
+          <Text style={styles.newHashTag}>{ item.tags.map(tag => `#${tag} `) }</Text>
           <TouchableOpacity onPress={onPressLike} style={styles.heartBox}>
             <Text style={styles.heartText}>좋아요 {likeCount}개 </Text>
             <Icon 
@@ -114,7 +124,7 @@ const FeedDetail = ({ navigation, route }) => {
             />
           </TouchableOpacity>
         </View>
-        <Text style={styles.videoTitle}>{data.title}</Text>
+        <Text style={styles.videoTitle}>{item.title}</Text>
         <View style={styles.line}></View>
         <Text style={styles.commentCount}>댓글 3개</Text>
         <View style={styles.commentBox}>
