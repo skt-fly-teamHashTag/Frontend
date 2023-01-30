@@ -46,7 +46,7 @@ const SearchItem = ({ item, showToast }) => {
         <Image style={styles.video} source={{ uri: item.thumbnail }} />
       </TouchableOpacity>
       <View style={styles.hotBottomText}>
-        <Text style={styles.newHashTag}>{ item.tags }</Text>
+        <Text style={styles.newHashTag}>{ item.tags.map((tag)=>`#${tag} `) }</Text>
         <TouchableOpacity onPress={onPressLike} style={styles.heartBox}>
           <Icon 
             name={isLiked ? 'heart': 'heart-o'} 

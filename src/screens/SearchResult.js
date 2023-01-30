@@ -10,8 +10,9 @@ import SummaryText from "../components/Text/SummaryText";
 import { URL } from "../api";
 import axios from "axios";
 
-const SearchResult = ({ navigation }) => {
+const SearchResult = ({ navigation, route }) => {
   const dispatch = useDispatch();
+  const data = route.params
   const search = useSelector((state) => state.search);
   const summarizing = useSelector((state) => state.summary.summary);
 
@@ -39,6 +40,11 @@ const SearchResult = ({ navigation }) => {
     .catch(error => console.log(error));
   };
 
+  const onSubmit = async() => {
+    const response = await axios.get('http://localhost:8083/api/v1/search/video', {params: { keyword: search.inputText }})
+    navigation.navigate('SearchResult', response.data);
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -56,7 +62,7 @@ const SearchResult = ({ navigation }) => {
             style={styles.searchInput} 
             onChangeText={(text) => dispatch(setSearch({inputText: text}))} 
             value={search.inputText}
-            onSubmitEditing={()=>navigation.navigate('SearchResult')}
+            onSubmitEditing={onSubmit}
             returnKeyType="search" />
           <TouchableOpacity onPress={() => dispatch(setSearch({inputText: ''}))}>
             <Icon 
@@ -73,7 +79,7 @@ const SearchResult = ({ navigation }) => {
         style={styles.resultContainer}
         showsVerticalScrollIndicator = {false}
         bounces={false}>
-        {dummyData.map((item, index) => <SearchItem key={'key' + index} item={item} showToast={showToast} />)}
+        {data.map((item, index) => <SearchItem key={'key' + index} item={item} showToast={showToast} />)}
       </ScrollView>
       <Toast config={toastConfig} />
     </View>

@@ -4,11 +4,17 @@ import { Icon } from "@rneui/themed";
 import { useDispatch, useSelector } from "react-redux";
 import { setSearch } from '../slices/searchSlice';
 import SummaryText from "../components/Text/SummaryText";
+import axios from "axios";
 
 const Search = ({ navigation }) => {
   const dispatch = useDispatch();
   const search = useSelector((state) => state.search);
   const summarizing = useSelector((state) => state.summary.summary);
+
+  const onSubmit = async() => {
+    const response = await axios.get('http://localhost:8083/api/v1/search/video', {params: { keyword: search.inputText }});
+    navigation.navigate('SearchResult', response.data);
+  }
 
   return (
     <View style={styles.container}>
@@ -24,7 +30,7 @@ const Search = ({ navigation }) => {
             style={styles.searchInput} 
             onChangeText={(text) => dispatch(setSearch({inputText: text}))} 
             value={search.inputText}
-            onSubmitEditing={()=>navigation.navigate('SearchResult')}
+            onSubmitEditing={onSubmit}
             returnKeyType="search" />
           <TouchableOpacity onPress={() => dispatch(setSearch({inputText: ''}))}>
             <Icon 
