@@ -4,13 +4,17 @@ import { Icon } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import { URL } from "../../api";
+import { useDispatch, useSelector } from 'react-redux';
+import { subLikeLists, addLikeLists } from "../../slices/feedSlice";
 
 const { width, height } = Dimensions.get('window')
 
 
 const CarouselItem = ({ item, index, showToast }) => {
+  const dispatch = useDispatch();
   const navigation = useNavigation();
-  const [isLiked, setLiked] = useState(false);
+  const likeLists = useSelector(state => state.feed.likeLists);
+  const [isLiked, setLiked] = useState(likeLists.includes(item.videoId));
   const [likeCount, setLikeCount] = useState(item.likeCount);
   
   const onPressLike = async() => {
@@ -25,15 +29,22 @@ const CarouselItem = ({ item, index, showToast }) => {
       console.log(error);
     }
 
+    if (isLiked) {
+      dispatch(subLikeLists(item.videoId));
+      setLikeCount(likeCount-1);
+    } else {
+      dispatch(addLikeLists(item.videoId));
+      setLikeCount(likeCount+1);
+    }
+
     setLiked(!isLiked);
-    setLikeCount(isLiked ? item.likeCount : item.likeCount + 1);
     showToast(isLiked);
   };
 
   return (
     <View style={styles.cardView}>
       <Text style={styles.contentTitle}>인기 급상승 영상 Top { index + 1 }</Text>
-      <TouchableOpacity activeOpacity={0.8} onPress={()=>navigation.navigate('FeedDetail', item)}>
+      <TouchableOpacity activeOpacity={0.8} onPress={()=>navigation.navigate('FeedDetail', {...item, likeCount: likeCount})}>
         <Image style={styles.image} source={{ uri: 'https://test-videodot-bucket.s3.ap-northeast-2.amazonaws.com/images/' + item.imagePaths }} />
       </TouchableOpacity>
       <View style={styles.hotBottomText}>
