@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View, TextInput, TouchableOpacity, Text, Image, FlatList } from "react-native";
+import { StyleSheet, View, TextInput, TouchableOpacity, Text, Image, FlatList, Alert } from "react-native";
 import { Icon } from "@rneui/themed";
 import { useDispatch, useSelector } from "react-redux";
 import { setSearch } from '../slices/searchSlice';
@@ -15,6 +15,8 @@ const SearchResult = ({ navigation, route }) => {
   const data = route.params
   const search = useSelector((state) => state.search);
   const summarizing = useSelector((state) => state.summary.summary);
+  const correct = /[가-힣a-zA-Z]{2,}/.test(search.inputText);
+  console.log(search)
 
   const toastConfig = {
     likeToast: ({ text1, props }) => (
@@ -41,8 +43,16 @@ const SearchResult = ({ navigation, route }) => {
   };
 
   const onSubmit = async() => {
-    const response = await axios.get('http://localhost:8083/api/v1/search/video', {params: { keyword: search.inputText }})
-    navigation.navigate('SearchResult', response.data);
+    if (correct) {
+      const response = await axios.get('http://localhost:8083/api/v1/search/video', {params: { keyword: search.inputText }});
+      navigation.navigate('SearchResult', response.data);
+    } else {
+      Alert.alert(
+        "검색 실패",
+        "검색어를 확인해주세요.",
+        [{text: "확인"}]
+      );
+    }
   }
 
   return (
@@ -74,15 +84,20 @@ const SearchResult = ({ navigation, route }) => {
           </TouchableOpacity>
         </View>
       </View>
-
-      <FlatList 
-        style={styles.resultContainer}
-        showsVerticalScrollIndicator = {false}
-        bounces={false}
-        data={data}
-        keyExtractor={(item)=>item._id}
-        renderItem={({item}) => <SearchItem item={item} showToast={showToast} />}
-      />
+      
+      { data.length !== 0
+        ? <FlatList 
+          style={styles.resultContainer}
+          showsVerticalScrollIndicator = {false}
+          bounces={false}
+          data={data}
+          keyExtractor={(item)=>item._id}
+          renderItem={({item}) => <SearchItem item={item} showToast={showToast} />}
+        />
+        : <View style={styles.result}>
+            <Text style={styles.emptyResult}>검색 결과가 없습니다.</Text>
+        </View>
+      }
       <Toast config={toastConfig} />
     </View>
   );
@@ -131,10 +146,19 @@ const styles = StyleSheet.create({
   hidden: {
     display: 'none'
   },
+  result: {
+    backgroundColor: '#F4F6F9',
+    height: '100%'
+  },
   resultContainer: {
-    backgroundColor: '#FFFBFD',
+    backgroundColor: '#F4F6F9',
     height: '80%',
     marginBottom: 10
+  },
+  emptyResult: {
+    textAlign: 'center',
+    fontSize: 15,
+    paddingTop: 10
   },
   toastBox: { 
     height: 45, 

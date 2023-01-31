@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { View, StyleSheet, TouchableOpacity, TextInput } from "react-native";
+import { View, StyleSheet, TouchableOpacity, TextInput, Alert } from "react-native";
 import { Icon } from "@rneui/themed";
 import { useDispatch, useSelector } from "react-redux";
 import { setSearch } from '../slices/searchSlice';
@@ -12,8 +12,17 @@ const Search = ({ navigation }) => {
   const summarizing = useSelector((state) => state.summary.summary);
 
   const onSubmit = async() => {
-    const response = await axios.get('http://localhost:8083/api/v1/search/video', {params: { keyword: search.inputText }});
-    navigation.navigate('SearchResult', response.data);
+    const correct = /[가-힣a-zA-Z]{2,}/.test(search.inputText);
+    if (correct) {
+      const response = await axios.get('http://localhost:8083/api/v1/search/video', {params: { keyword: search.inputText }});
+      navigation.navigate('SearchResult', response.data);
+    } else {
+      Alert.alert(
+        "검색 실패",
+        "검색어를 확인해주세요.",
+        [{text: "확인"}]
+      );
+    }
   }
 
   return (
