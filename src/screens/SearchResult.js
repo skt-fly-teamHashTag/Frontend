@@ -1,5 +1,5 @@
 import React from "react";
-import { ScrollView, StyleSheet, View, TextInput, TouchableOpacity, Text, Image } from "react-native";
+import { StyleSheet, View, TextInput, TouchableOpacity, Text, Image, FlatList } from "react-native";
 import { Icon } from "@rneui/themed";
 import { useDispatch, useSelector } from "react-redux";
 import { setSearch } from '../slices/searchSlice';
@@ -75,12 +75,14 @@ const SearchResult = ({ navigation, route }) => {
         </View>
       </View>
 
-      <ScrollView 
+      <FlatList 
         style={styles.resultContainer}
         showsVerticalScrollIndicator = {false}
-        bounces={false}>
-        {data.map((item, index) => <SearchItem key={'key' + index} item={item} showToast={showToast} />)}
-      </ScrollView>
+        bounces={false}
+        data={data}
+        keyExtractor={(item)=>item._id}
+        renderItem={({item}) => <SearchItem item={item} showToast={showToast} />}
+      />
       <Toast config={toastConfig} />
     </View>
   );
