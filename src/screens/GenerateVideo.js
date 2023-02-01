@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setTitle } from '../slices/videoSlice';
 import RNFS from 'react-native-fs';
 import axios from "axios";
-import { postURL, URL } from '../api';
+import { URL } from '../api';
 import CameraRoll from '@react-native-community/cameraroll';
 import Toast from 'react-native-toast-message';
 import ProgressBar from 'react-native-progress/Bar';
@@ -85,7 +85,7 @@ const GenerateVideo = ({ navigation }) => {
       };
 
       try { 
-        const response = await axios.post(postURL + '/api/v1/auth/video', formData, {headers: header});
+        const response = await axios.post(URL.postVideo, formData, {headers: header});
         axios.get(URL.getAllFeeds)
         .then(response => navigation.navigate('FeedHome', response.data.body))
         .catch(error => console.log(error));

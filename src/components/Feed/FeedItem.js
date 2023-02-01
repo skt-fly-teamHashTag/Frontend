@@ -14,6 +14,7 @@ const FeedItem = ({ item, index, showToast }) => {
   const [isLiked, setLiked] = useState(likeLists.includes(item.videoId));
   const [likeCount, setLikeCount] = useState(item.likeCount);
   const height = Dimensions.get('window').height;
+  console.log(item)
   
   const onPressLike = async() => {
     const putData = {
