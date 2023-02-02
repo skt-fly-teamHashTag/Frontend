@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setSearch } from '../slices/searchSlice';
 import SummaryText from "../components/Text/SummaryText";
 import axios from "axios";
+import { URL } from "../api";
 
 const Search = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -14,7 +15,7 @@ const Search = ({ navigation }) => {
   const onSubmit = async() => {
     const correct = /[가-힣a-zA-Z]{2,}/.test(search.inputText);
     if (correct) {
-      const response = await axios.get('http://localhost:8083/api/v1/search/video', {params: { keyword: search.inputText }});
+      const response = await axios.get(URL.getSearchFeeds, {params: { keyword: search.inputText }});
       navigation.navigate('SearchResult', response.data);
     } else {
       Alert.alert(
@@ -36,6 +37,7 @@ const Search = ({ navigation }) => {
           <Icon name='search' type='feather' size={20} style={styles.searchIcon}></Icon>
           <TextInput 
             placeholder="검색어를 입력해주세요." 
+            placeholderTextColor='#C8CACD'
             style={styles.searchInput} 
             onChangeText={(text) => dispatch(setSearch({inputText: text}))} 
             value={search.inputText}

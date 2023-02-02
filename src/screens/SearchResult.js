@@ -16,7 +16,6 @@ const SearchResult = ({ navigation, route }) => {
   const search = useSelector((state) => state.search);
   const summarizing = useSelector((state) => state.summary.summary);
   const correct = /[가-힣a-zA-Z]{2,}/.test(search.inputText);
-  console.log(search)
 
   const toastConfig = {
     likeToast: ({ text1, props }) => (
@@ -44,7 +43,7 @@ const SearchResult = ({ navigation, route }) => {
 
   const onSubmit = async() => {
     if (correct) {
-      const response = await axios.get('http://localhost:8083/api/v1/search/video', {params: { keyword: search.inputText }});
+      const response = await axios.get(URL.getSearchFeeds, {params: { keyword: search.inputText }});
       navigation.navigate('SearchResult', response.data);
     } else {
       Alert.alert(
@@ -69,6 +68,7 @@ const SearchResult = ({ navigation, route }) => {
           <Icon name='search' type='feather' size={20} style={styles.searchIcon}></Icon>
           <TextInput 
             placeholder="검색어를 입력해주세요." 
+            placeholderTextColor='#C8CACD'
             style={styles.searchInput} 
             onChangeText={(text) => dispatch(setSearch({inputText: text}))} 
             value={search.inputText}
