@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 export const userSlice = createSlice({
   name: "user",
   initialState: {
+    userId: '',
     nickName: '',
     phoneNumber: ''
   },
@@ -10,9 +11,12 @@ export const userSlice = createSlice({
     setUser(state, action) {
       state.nickName = action.payload.nickName;
       state.phoneNumber = action.payload.phoneNumber;
+    },
+    setUserId(state, action) {
+      state.userId = action.payload
     }
   },
 });
 
-export const { setUser } = userSlice.actions;
+export const { setUser, setUserId } = userSlice.actions;
 export default userSlice.reducer;

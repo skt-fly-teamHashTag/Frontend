@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { useDispatch, useSelector } from "react-redux";
-import { setUser } from '../../slices/userSlice';
+import { setUser, setUserId } from '../../slices/userSlice';
 import { StyleSheet, KeyboardAvoidingView, Alert, View } from 'react-native';
 import LoginInput from '../Input/LoginInput';
 import SubmitButton from '../Button/SubmitButton';
@@ -34,8 +34,8 @@ const LoginForm = ({ navigation }) => {
   const onPress = async() => {
     try {
       const response = await axios.post(URL.postLogin, user);
-      if (fillAll() && response.data === "로그인 성공") {
-        console.log("POST >>", user);
+      if (fillAll() && response.data.statusCode === 201) {
+        dispatch(setUserId(response.data.body.user.id));
         navigation.navigate("Home");
       } else {
         showFailAlert();
