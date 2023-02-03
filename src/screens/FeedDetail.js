@@ -136,7 +136,6 @@ const FeedDetail = ({ navigation, route }) => {
                 <Text style={styles.userUploadTime}>1분 전</Text>
               </View>
             </View>
-            <Icon name='more-vertical' type='feather' size={20} color='gray'></Icon>
           </View>
           <Text style={styles.comment}>너무 재미있어요~!</Text>
         </View>
@@ -149,7 +148,6 @@ const FeedDetail = ({ navigation, route }) => {
                 <Text style={styles.userUploadTime}>1분 전</Text>
               </View>
             </View>
-            <Icon name='more-vertical' type='feather' size={20} color='gray'></Icon>
           </View>
           <Text style={styles.comment}>떠나요~ 둘이서~ 모든 걸 훌훌 버리고~</Text>
         </View>
@@ -162,7 +160,6 @@ const FeedDetail = ({ navigation, route }) => {
                 <Text style={styles.userUploadTime}>1분 전</Text>
               </View>
             </View>
-            <Icon name='more-vertical' type='feather' size={20} color='gray'></Icon>
           </View>
           <Text style={styles.comment}>{`완전 멋져 >_<`}</Text>
         </View>
