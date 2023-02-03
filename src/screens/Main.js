@@ -47,7 +47,6 @@ const Main = ({ navigation }) => {
         dispatch(setSummary({summary: false})); 
       } else {
         RNS3.put(videoData, options).then(response => {
-          console.log(response);
           // [axios.post] location 정보를 백엔드에 전달하는 코드
           navigation.navigate('Loading');
         });
