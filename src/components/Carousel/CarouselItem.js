@@ -59,7 +59,9 @@ const CarouselItem = ({ item, index, showToast }) => {
           <Text style={styles.heartText}>{ likeCount }</Text>
         </TouchableOpacity>
       </View>
-      <Text style={styles.hotTitle}>{ item.title }</Text>
+      <TouchableOpacity activeOpacity={0.8} onPress={()=>navigation.navigate('FeedDetail', {...item, likeCount: likeCount})}>
+        <Text style={styles.hotTitle}>{ item.title }</Text>
+      </TouchableOpacity>
     </View>
   )
 }

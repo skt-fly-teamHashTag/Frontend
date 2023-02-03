@@ -82,7 +82,9 @@ const FeedItem = ({ item, index, showToast }) => {
           <Text style={styles.heartText}>{ likeCount }</Text>
         </TouchableOpacity>
       </View>
-      <Text style={styles.videoTitle}>{ item.title }</Text>
+      <TouchableOpacity activeOpacity={0.8} onPress={()=>navigation.navigate('FeedDetail', {...item, likeCount: likeCount})}>
+        <Text style={styles.videoTitle}>{ item.title }</Text>
+      </TouchableOpacity>
     </View>
   )
 }
