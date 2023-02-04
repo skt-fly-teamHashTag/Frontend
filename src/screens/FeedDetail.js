@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView, TextInput, KeyboardAvoidingView, NativeModules } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView, TextInput, KeyboardAvoidingView, NativeModules, Platform } from "react-native";
 import { Icon } from "@rneui/themed";
 import Video from "react-native-video";
 import Toast from 'react-native-toast-message';
@@ -167,7 +167,8 @@ const FeedDetail = ({ navigation, route }) => {
         <View style={{height: 50}}></View>
       </ScrollView>
       <KeyboardAvoidingView 
-        behavior="padding" style={styles.commentWriteBox}
+        behavior={Platform.OS === 'ios'? "padding": "height"}
+        style={styles.commentWriteBox}
         keyboardVerticalOffset={statusBarHeight+44}>
         <TextInput style={styles.commentInput} placeholder='댓글 달기...' placeholderTextColor='#C8CACD' />
         <TouchableOpacity opacity='0.9' style={styles.commentSend}>
@@ -302,7 +303,7 @@ const styles = StyleSheet.create({
   commentInput: {
     backgroundColor: '#F4F6F9',
     width: '80%',
-    paddingVertical: 15,
+    paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 50,
     marginVertical: 5,
@@ -312,7 +313,7 @@ const styles = StyleSheet.create({
   }, 
   bottomEmpty: {
     backgroundColor: '#FFFBFD',
-    height: 20
+    paddingBottom: Platform.OS === 'ios'? 20 : 5
   },
   toastBox: { 
     height: 45, 
