@@ -8,6 +8,7 @@ import SummaryText from "../components/Text/SummaryText";
 import axios from "axios";
 import { URL } from "../api";
 import { addLikeLists, subLikeLists } from "../slices/feedSlice";
+import VideoPlayer from 'react-native-video-controls';
 
 const { StatusBarManager } = NativeModules;
 
@@ -103,13 +104,13 @@ const FeedDetail = ({ navigation, route }) => {
             <Text style={styles.userUploadTime}>{ getUploadedAt() }</Text>
           </View>
         </View>
-        <Video
+        <VideoPlayer
           source={{ uri: 'https://test-videodot-bucket.s3.ap-northeast-2.amazonaws.com/videos/'+item.videoPaths }}
           style={styles.video}
-          controls={true}
-          audioOnly={false} 
-          poster={loadingUri}
-          posterResizeMode={"center"}
+          toggleResizeModeOnFullscreen={false}
+          onExitFullscreen={()=>navigation.navigate('VideoFullscreen', item.videoPaths)}
+          onEnterFullscreen={()=>navigation.navigate('VideoFullscreen', item.videoPaths)}
+          disableBack
         />
         <View style={styles.hotBottomText}>
           <Text style={styles.newHashTag}>{ item.tags.map(tag => `#${tag} `) }</Text>
@@ -228,7 +229,7 @@ const styles = StyleSheet.create({
   video: {
     width: '100%',
     height: 250,
-    backgroundColor: '#F1F4F9',
+    backgroundColor: 'black',
     marginBottom: 10,
   },
   hotBottomText: {

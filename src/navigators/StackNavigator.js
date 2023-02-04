@@ -8,6 +8,7 @@ import Search from '../screens/Search';
 import SearchResult from '../screens/SearchResult';
 import MyFeed from '../screens/MyFeed';
 import LeftIconButton from "../components/Header/LeftIconButton";
+import VideoFullscreen from "../screens/VideoFullscreen";
 import { TouchableOpacity } from 'react-native';
 import { Icon } from '@rneui/themed';
 import { useDispatch } from "react-redux";
@@ -49,7 +50,10 @@ const StackNavigator = () => {
     headerShadowVisible: false,
   });
 
-
+  const fullscreenHeader = () => ({
+    headerShown: false,
+    headerShadowVisible: false,
+  })
   
   return (
     <Stack.Navigator initialRouteName="Main">
@@ -81,6 +85,10 @@ const StackNavigator = () => {
         name="MyFeed" 
         component={MyFeed} 
         options={videoHeader}/>
+      <Stack.Screen 
+        name='VideoFullscreen'
+        component={VideoFullscreen}
+        options={fullscreenHeader} />
     </Stack.Navigator>
   );
 }
