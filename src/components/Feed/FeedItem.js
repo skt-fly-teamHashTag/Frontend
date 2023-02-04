@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFBFD',
     marginHorizontal: 20,
     marginBottom: 20,
-    padding: 5,
+    padding: 15,
   },
   newText: {
     fontWeight: 'bold',
@@ -112,8 +112,7 @@ const styles = StyleSheet.create({
   },
   userInfo: {
     flexDirection: 'row',
-    margin: 5,
-    marginBottom: 0
+    marginBottom: 5
   },
   userImage: {
     width: 50,
@@ -126,30 +125,27 @@ const styles = StyleSheet.create({
     fontSize: 12
   },
   video: {
-    width: 300,
+    width: '100%',
     height: 180,
     backgroundColor: '#F1F4F9',
     borderRadius: 10,
     borderWidth: 1.5,
     borderColor: '#F1F4F9',
-    margin: 10
   },
   newHashTag: {
     color: '#384BF5',
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   videoTitle: {
     fontSize: 18,
     fontWeight: 'bold',
-    marginHorizontal: 15,
-    marginBottom: 10,
-    color: '#111'
+    color: '#111',
+    marginLeft: 5,
   },
   hotBottomText: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingHorizontal: 15,
-    paddingBottom: 5,
+    padding: 5,
     alignItems: 'center'
   },
   heartBox: {
