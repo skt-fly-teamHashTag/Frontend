@@ -12,6 +12,7 @@ const width = Dimensions.get('window').width;
 const MyFeed = ({ navigation, route }) => {
   const summarizing = useSelector((state) => state.summary.summary);
   const [myFeeds, setMyFeeds] = useState([...route.params]);
+  const user = useSelector((state) => state.user);
 
   const onPressFeedHome = () => {
     axios.get(URL.getAllFeeds)
@@ -19,30 +20,23 @@ const MyFeed = ({ navigation, route }) => {
     .catch(error => console.log(error));
   };
 
-  const onPressDetail = () => {
-    const detailData = {
-      videoId: 1,
-      nickName: '와니',
-      title: '운동 브이로그',
-      tags: ['태와니', '운동하는남자', '체육관'],
-      likeCount: 23,
-      uploadedAt: 3022222,
-      videoPaths: 'KakaoTalk_20230111_204722145-1674897152855.mp4'
-    }
-    navigation.navigate('FeedDetail', detailData)
+  const onPressVideo = async(item) => {
+    await axios.get(URL.getDetailFeed+item._id)
+    .then((response) => navigation.navigate('FeedDetail', response.data.body.detail))
+    .catch((error) => console.log(error))
   };
 
   return (
     <View style={styles.container}>
       { summarizing && <SummaryText />}
       <Image source={require('../assets/userPhoto.png')} style={styles.userImage} />
-      <Text style={styles.userName}>해시태그닷</Text>
+      <Text style={styles.userName}>{ user.nickName }</Text>
       <ScrollView style={styles.feedScroll} bounces={false}>
         <View style={styles.userVideoBox}>
         { myFeeds.map((item, index) => 
-          <TouchableOpacity onPress={onPressDetail} key={'key' + index} >
+          <TouchableOpacity onPress={()=>onPressVideo(item)} key={'key' + index} >
             <Image 
-              source={{ uri: 'https://test-videodot-bucket.s3.ap-northeast-2.amazonaws.com/images/' + item }}
+              source={{ uri: item.thumbNailPath }}
               style={styles.userThumbNail} />
           </TouchableOpacity>)}
         </View>

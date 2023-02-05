@@ -44,7 +44,8 @@ const SearchResult = ({ navigation, route }) => {
   const onSubmit = async() => {
     if (correct) {
       const response = await axios.get(URL.getSearchFeeds, {params: { keyword: search.inputText }});
-      navigation.navigate('SearchResult', response.data);
+      dispatch(setSearch({inputText: ''}));
+      navigation.navigate('SearchResult', response.data.body.data);
     } else {
       Alert.alert(
         "검색 실패",

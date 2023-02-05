@@ -3,11 +3,11 @@ import { View } from "react-native"
 import VideoPlayer from "react-native-video-controls";
 
 const VideoFullscreen = ({ navigation, route }) => {
-  const videoPaths = route.params;
+  const videoPath = route.params;
   return (
     <View style={{ width:'100%', height: '100%' }}>
       <VideoPlayer
-        source={{ uri: 'https://test-videodot-bucket.s3.ap-northeast-2.amazonaws.com/videos/'+videoPaths }}
+        source={{ uri: videoPath }}
         onBack={navigation.goBack}
       />
     </View>

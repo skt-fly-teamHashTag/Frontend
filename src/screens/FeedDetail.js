@@ -17,11 +17,12 @@ const FeedDetail = ({ navigation, route }) => {
   const item = route.params;
   const loadingUri = "https://media.tenor.com/On7kvXhzml4AAAAj/loading-gif.gif";
   const likeLists = useSelector(state => state.feed.likeLists);
-  const [isLiked, setLiked] = useState(likeLists.includes(item.videoId));
+  const [isLiked, setLiked] = useState(likeLists.includes(item._id));
   const [likeCount, setLikeCount] = useState(item.likeCount);
   const [statusBarHeight, setStatusBarHeight] = useState(0);
   const summarizing = useSelector((state) => state.summary.summary);
   const [paused, setPaused] = useState(false);
+  const user = useSelector((state) => state.user);
 
   useEffect(()=>{
     Platform.OS == 'ios' ? StatusBarManager.getHeight((statusBarFrameData) => {
@@ -48,8 +49,8 @@ const FeedDetail = ({ navigation, route }) => {
 
   const onPressLike = async() => {
     const putData = {
-      videoId: '1120',
-      userId: '1123',
+      videoId: item._id,
+      userId: user.userId,
     };
 
     try {
@@ -59,10 +60,10 @@ const FeedDetail = ({ navigation, route }) => {
     }
 
     if (isLiked) {
-      dispatch(subLikeLists(item.videoId));
+      dispatch(subLikeLists(item._id));
       setLikeCount(likeCount-1);
     } else {
-      dispatch(addLikeLists(item.videoId));
+      dispatch(addLikeLists(item._id));
       setLikeCount(likeCount+1);
     }
     
@@ -90,13 +91,13 @@ const FeedDetail = ({ navigation, route }) => {
 
   const onPressFullscreen = () => {
     setPaused(!paused);
-    navigation.navigate('VideoFullscreen', item.videoPaths);
+    navigation.navigate('VideoFullscreen', item.videoPath);
   };
 
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity onPress={()=>navigation.goBack()} style={styles.back}>
+        <TouchableOpacity onPress={navigation.goBack} style={styles.back}>
           <Icon name='arrow-back-ios' type='material-icons' size={20}></Icon>
         </TouchableOpacity>
         <Text style={styles.headerText}>{ item.nickName }님의 영상</Text>
@@ -111,7 +112,7 @@ const FeedDetail = ({ navigation, route }) => {
           </View>
         </View>
         <VideoPlayer
-          source={{ uri: 'https://test-videodot-bucket.s3.ap-northeast-2.amazonaws.com/videos/'+item.videoPaths }}
+          source={{ uri: item.videoPath }}
           style={styles.video}
           paused={paused}
           toggleResizeModeOnFullscreen={false}

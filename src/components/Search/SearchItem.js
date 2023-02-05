@@ -4,22 +4,29 @@ import { Icon } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import { URL } from "../../api";
+import { useDispatch, useSelector } from "react-redux";
+import { subLikeLists, addLikeLists } from "../../slices/feedSlice";
 
 const { width, height } = Dimensions.get('window');
 
 const SearchItem = ({ item, showToast }) => {
+  const dispatch = useDispatch();
   const navigation = useNavigation();
   const [isLiked, setLiked] = useState(false);
-  const [likeCount, setLikeCount] = useState(item.heart);
+  const [likeCount, setLikeCount] = useState(item.likeCount);
+  const user = useSelector((state) => state.user);
 
-  const onPressFeed = () => {
-    navigation.navigate('FeedDetail', item);
-  }
+  const onPressVideo = async() => {
+    await axios.get(URL.getDetailFeed+item._id)
+    .then((response) => navigation.navigate('FeedDetail', 
+      {...response.data.body.detail, likeCount: likeCount}))
+    .catch((error) => console.log(error))
+  };
 
   const onPressLike = async() => {
     const putData = {
-      videoId: '1120',
-      userId: '1123',
+      videoId: item._id,
+      userId: user.userId,
     };
 
     try {
@@ -27,9 +34,15 @@ const SearchItem = ({ item, showToast }) => {
     } catch(error) {
       console.log(error);
     }
+    if (isLiked) {
+      dispatch(subLikeLists(item._id));
+      setLikeCount(likeCount-1);
+    } else {
+      dispatch(addLikeLists(item._id));
+      setLikeCount(likeCount+1);
+    }
 
     setLiked(!isLiked);
-    setLikeCount(isLiked ? item.heart : item.heart + 1);
     showToast(isLiked);
   };
 
@@ -38,12 +51,12 @@ const SearchItem = ({ item, showToast }) => {
       <View style={styles.userInfo}>
         <Image source={require('../../assets/userPhoto.png')} style={styles.userImage}></Image>
         <View>
-          <Text style={styles.contentTitle}>{ item.userName }</Text>
+          <Text style={styles.contentTitle}>{ item.nickName }</Text>
           <Text style={styles.userUploadTime}>{ item.uploadTime }</Text>
         </View>
       </View>
-      <TouchableOpacity activeOpacity={0.8} onPress={onPressFeed}>
-        <Image style={styles.video} source={{ uri: item.thumbnail }} />
+      <TouchableOpacity activeOpacity={0.8} onPress={onPressVideo}>
+        <Image style={styles.video} source={{ uri: item.thumbNailPath }} />
       </TouchableOpacity>
       <View style={styles.hotBottomText}>
         <Text style={styles.newHashTag}>{ item.tags.map((tag)=>`#${tag} `) }</Text>
@@ -57,7 +70,7 @@ const SearchItem = ({ item, showToast }) => {
           <Text style={styles.heartText}>{ likeCount }</Text>
         </TouchableOpacity>
       </View>
-      <TouchableOpacity activeOpacity={0.8} onPress={onPressFeed}>
+      <TouchableOpacity activeOpacity={0.8} onPress={onPressVideo}>
         <Text style={styles.videoTitle}>{ item.title }</Text>
       </TouchableOpacity>
     </View>

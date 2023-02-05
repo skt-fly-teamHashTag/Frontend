@@ -1,20 +1,30 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { StyleSheet, Text, Image, View, TouchableOpacity } from 'react-native';
 import { useDispatch } from "react-redux";
 import { setSummary } from "../slices/summarySlice";
 import { URL } from "../api";
 import axios from "axios";
 
-const Loading = ({ navigation }) => {
+const Loading = ({ navigation, route }) => {
   const dispatch = useDispatch();
-
-  const onPressHome = () => {
+  const postData = route.params;
+  
+  useEffect(() => {
     dispatch(setSummary({summary: true}));
+    // Socket 코드 작성 부분
+    // axios.post(URL.postVideo, postData)
+    // .then((response) => {
+    //   console.log(response);
+    //   dispatch(setSummary({summary: false}));
+    // })
+    // .catch((error) => console.log(error))
+  }, []);
+  
+  const onPressHome = () => {
     navigation.navigate('Main');
   }
 
   const onPressFeed = () => {
-    dispatch(setSummary({summary: true}));
     axios.get(URL.getAllFeeds)
     .then(response => navigation.navigate('FeedHome', response.data.body))
     .catch(error => console.log(error));

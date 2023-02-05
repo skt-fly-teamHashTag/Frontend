@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { StyleSheet, View, Text, TouchableOpacity, Image, FlatList } from "react-native";
 import { Icon } from "@rneui/themed";
@@ -12,6 +12,12 @@ import SummaryText from "../components/Text/SummaryText";
 const FeedHome = ({ navigation, route }) => {
   const [data, setData] = useState({...route.params});
   const summarizing = useSelector((state) => state.summary.summary);
+
+  useEffect(() => {
+    navigation.addListener('focus', () => {
+      console.log('render');
+    });
+  }, [navigation]);
   
   const toastConfig = {
     likeToast: ({ text1, props }) => (
@@ -38,7 +44,7 @@ const FeedHome = ({ navigation, route }) => {
         bounces={false}
         showsVerticalScrollIndicator={false}
         data={data.recent}
-        keyExtractor={(item)=>item.videoId}
+        keyExtractor={(item)=>item._id}
         ListHeaderComponent={<>
           <View style={styles.hotContainer}>
             <View style={styles.topBox}>

@@ -12,11 +12,18 @@ const Search = ({ navigation }) => {
   const search = useSelector((state) => state.search);
   const summarizing = useSelector((state) => state.summary.summary);
 
+  const onPressBack = () => {
+    dispatch(setSearch({inputText: ''}));
+    axios.get(URL.getAllFeeds)
+    .then(response => navigation.navigate('FeedHome', response.data.body))
+    .catch(error => console.log(error));
+  };
+
   const onSubmit = async() => {
     const correct = /[가-힣a-zA-Z]{2,}/.test(search.inputText);
     if (correct) {
       const response = await axios.get(URL.getSearchFeeds, {params: { keyword: search.inputText }});
-      navigation.navigate('SearchResult', response.data);
+      navigation.navigate('SearchResult', response.data.body.data);
     } else {
       Alert.alert(
         "검색 실패",
@@ -30,7 +37,7 @@ const Search = ({ navigation }) => {
     <View style={styles.container}>
       { summarizing && <SummaryText /> }
       <View style={styles.searchHeader}>
-        <TouchableOpacity onPress={() => {navigation.goBack()}}>
+        <TouchableOpacity onPress={onPressBack}>
           <Icon name='arrow-back-ios' type='material-icons' size={20}></Icon>
         </TouchableOpacity>
         <View style={styles.inputBox}>

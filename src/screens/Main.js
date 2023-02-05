@@ -14,6 +14,7 @@ const Main = ({ navigation }) => {
   const dispatch = useDispatch();
   const summarizing = useSelector((state) => state.summary.summary);
   const data = useSelector((state) => state.feed.data);
+  const user = useSelector((state) => state.user);
 
   const showCameraRoll = async() => {
     const pickVideo = await launchImageLibrary({ mediaType: 'video' });
@@ -43,20 +44,26 @@ const Main = ({ navigation }) => {
           "이미 다른 비디오를 요약중입니다.",
           [{text: "확인"}]
         );
-        // 요약 완료 후 코드
-        dispatch(setSummary({summary: false})); 
+        dispatch(setSummary({summary: false}));
       } else {
-        RNS3.put(videoData, options).then(response => {
+        RNS3.put(videoData, options)
+        .then(response => {
           // [axios.post] location 정보를 백엔드에 전달하는 코드
-          navigation.navigate('Loading');
+          const postData = {
+            userId: user.userId,
+            videoPath: response.body.postResponse.location
+          }
+          navigation.navigate('Loading', postData)
         });
       }
     }
   };
 
   const onPressMyFeed = () => {
-    axios.get(URL.getMyFeeds)
-    .then(response => navigation.navigate('MyFeed', response.data.body.imagePaths))
+    // const testUserId = '11eda4a58479b04084867de2fcf4dfa9'
+    // axios.get(URL.getMyFeeds + testUserId)
+    axios.get(URL.getMyFeeds + user.userId)
+    .then(response => navigation.navigate('MyFeed', response.data.body.data))
     .catch(error => console.log(error));
   };
 

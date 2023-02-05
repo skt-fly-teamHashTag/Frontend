@@ -6,10 +6,16 @@ import { StyleSheet, KeyboardAvoidingView, Alert, View } from 'react-native';
 import LoginInput from '../Input/LoginInput';
 import SubmitButton from '../Button/SubmitButton';
 import { URL } from '../../api';
+import { setLikeLists } from '../../slices/feedSlice';
 
 const LoginForm = ({ navigation }) => {
-  const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
+  const feedData = useSelector((state) => state.feed);
+  const userData = {
+    nickName: user.nickName,
+    phoneNumber: user.phoneNumber
+  };
   
   const fillAll = () => {
     return user.nickName !== "" && user.phoneNumber !== "";
@@ -33,9 +39,10 @@ const LoginForm = ({ navigation }) => {
 
   const onPress = async() => {
     try {
-      const response = await axios.post(URL.postLogin, user);
-      if (fillAll() && response.data.statusCode === 201) {
+      const response = await axios.post(URL.postLogin, userData);
+      if (fillAll() && response.data.statusCode === 200) {
         dispatch(setUserId(response.data.body.user.id));
+        dispatch(setLikeLists(response.data.body.user.likeList))
         navigation.navigate("Home");
       } else {
         showFailAlert();

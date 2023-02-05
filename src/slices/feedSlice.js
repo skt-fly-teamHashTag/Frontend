@@ -3,11 +3,14 @@ import { createSlice } from "@reduxjs/toolkit";
 export const feedSlice = createSlice({
   name: "feed",
   initialState: {
-    likeLists: [1, 3, 4, 5],
+    likeLists: [],
     hot: [],
     recent: []
   },
   reducers: {
+    setLikeLists(state, action) {
+      state.likeLists = action.payload;
+    },
     subLikeLists(state, action) {
       state.likeLists = [...state.likeLists.filter((videoId)=>videoId !== action.payload)];
     },
@@ -24,6 +27,7 @@ export const feedSlice = createSlice({
 });
 
 export const { 
+  setLikeLists,
   subLikeLists, 
   addLikeLists,
   setHotData, 

@@ -14,7 +14,7 @@ const width = Dimensions.get('window').width;
 
 const GenerateVideo = ({ navigation }) => {
   const [rate, setRate] = useState(0);
-  const { nickName } = useSelector((state) => state.user);
+  const { userId, nickName } = useSelector((state) => state.user);
   const { title } = useSelector((state) => state.video);
   const dispatch = useDispatch();
 
@@ -71,25 +71,13 @@ const GenerateVideo = ({ navigation }) => {
       ) 
     } else {
       const uploadData = {
-        name: 'uploadData',
+        userId: userId,
         title: title,
-        tags: hashTags,
-        uri: videoUri,
       };
 
-      const formData = new FormData();
-      formData.append('video', uploadData);
-
-      const header = {
-        'Context-Type': 'multipart/form-data',
-      };
-
-      try { 
-        const response = await axios.post(URL.postVideo, formData, {headers: header});
-        axios.get(URL.getAllFeeds)
-        .then(response => navigation.navigate('FeedHome', response.data.body))
-        .catch(error => console.log(error));
-      } catch (error) {
+      await axios.post(URL.postVideoTitle, uploadData)
+      .then((response) => navigation.navigate('FeedHome', response.data.body))
+      .catch((error) => {
         console.log(error)
         if (error.name === 'AxiosError') {
           Alert.alert(
@@ -98,7 +86,7 @@ const GenerateVideo = ({ navigation }) => {
             [{text: "확인"}]
           );
         }
-      }
+      })
     }
   };
 

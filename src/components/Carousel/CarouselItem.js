@@ -14,13 +14,14 @@ const CarouselItem = ({ item, index, showToast }) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const likeLists = useSelector(state => state.feed.likeLists);
-  const [isLiked, setLiked] = useState(likeLists.includes(item.videoId));
+  const [isLiked, setLiked] = useState(likeLists.includes(item._id));
   const [likeCount, setLikeCount] = useState(item.likeCount);
+  const user = useSelector((state) => state.user);
   
   const onPressLike = async() => {
     const putData = {
-      videoId: '1120',
-      userId: '1123',
+      videoId: item._id,
+      userId: user.userId,
     };
 
     try {
@@ -30,10 +31,10 @@ const CarouselItem = ({ item, index, showToast }) => {
     }
 
     if (isLiked) {
-      dispatch(subLikeLists(item.videoId));
+      dispatch(subLikeLists(item._id));
       setLikeCount(likeCount-1);
     } else {
-      dispatch(addLikeLists(item.videoId));
+      dispatch(addLikeLists(item._id));
       setLikeCount(likeCount+1);
     }
 
@@ -41,11 +42,18 @@ const CarouselItem = ({ item, index, showToast }) => {
     showToast(isLiked);
   };
 
+  const onPressVideo = async() => {
+    await axios.get(URL.getDetailFeed+item._id)
+    .then((response) => navigation.navigate('FeedDetail', 
+      {...response.data.body.detail, likeCount: likeCount}))
+    .catch((error) => console.log(error))
+  };
+
   return (
     <View style={styles.cardView}>
       <Text style={styles.contentTitle}>인기 급상승 영상 Top { index + 1 }</Text>
-      <TouchableOpacity activeOpacity={0.8} onPress={()=>navigation.navigate('FeedDetail', {...item, likeCount: likeCount})}>
-        <Image style={styles.image} source={{ uri: 'https://test-videodot-bucket.s3.ap-northeast-2.amazonaws.com/images/' + item.imagePaths }} />
+      <TouchableOpacity activeOpacity={0.8} onPress={onPressVideo}>
+        <Image style={styles.image} source={{ uri: item.thumbNailPath }} />
       </TouchableOpacity>
       <View style={styles.hotBottomText}>
         <Text style={styles.hashTag}>{ item.tags.map((item) => `#${item} `) }</Text>
@@ -59,7 +67,7 @@ const CarouselItem = ({ item, index, showToast }) => {
           <Text style={styles.heartText}>{ likeCount }</Text>
         </TouchableOpacity>
       </View>
-      <TouchableOpacity activeOpacity={0.8} onPress={()=>navigation.navigate('FeedDetail', {...item, likeCount: likeCount})}>
+      <TouchableOpacity activeOpacity={0.8} onPress={onPressVideo}>
         <Text style={styles.hotTitle}>{ item.title }</Text>
       </TouchableOpacity>
     </View>
