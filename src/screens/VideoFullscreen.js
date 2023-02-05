@@ -8,9 +8,6 @@ const VideoFullscreen = ({ navigation, route }) => {
     <View style={{ width:'100%', height: '100%' }}>
       <VideoPlayer
         source={{ uri: 'https://test-videodot-bucket.s3.ap-northeast-2.amazonaws.com/videos/'+videoPaths }}
-        toggleResizeModeOnFullscreen={false}
-        onEnterFullscreen={navigation.goBack}
-        onExitFullscreen={navigation.goBack}
         onBack={navigation.goBack}
       />
     </View>

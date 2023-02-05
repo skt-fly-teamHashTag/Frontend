@@ -21,6 +21,7 @@ const FeedDetail = ({ navigation, route }) => {
   const [likeCount, setLikeCount] = useState(item.likeCount);
   const [statusBarHeight, setStatusBarHeight] = useState(0);
   const summarizing = useSelector((state) => state.summary.summary);
+  const [paused, setPaused] = useState(false);
 
   useEffect(()=>{
     Platform.OS == 'ios' ? StatusBarManager.getHeight((statusBarFrameData) => {
@@ -87,6 +88,11 @@ const FeedDetail = ({ navigation, route }) => {
     return `${Math.floor(years)}년 전`;
   }
 
+  const onPressFullscreen = () => {
+    setPaused(!paused);
+    navigation.navigate('VideoFullscreen', item.videoPaths);
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -107,9 +113,10 @@ const FeedDetail = ({ navigation, route }) => {
         <VideoPlayer
           source={{ uri: 'https://test-videodot-bucket.s3.ap-northeast-2.amazonaws.com/videos/'+item.videoPaths }}
           style={styles.video}
+          paused={paused}
           toggleResizeModeOnFullscreen={false}
-          onExitFullscreen={()=>navigation.navigate('VideoFullscreen', item.videoPaths)}
-          onEnterFullscreen={()=>navigation.navigate('VideoFullscreen', item.videoPaths)}
+          onExitFullscreen={onPressFullscreen}
+          onEnterFullscreen={onPressFullscreen}
           disableBack
         />
         <View style={styles.hotBottomText}>
