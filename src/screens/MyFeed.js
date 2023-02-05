@@ -33,7 +33,11 @@ const MyFeed = ({ navigation, route }) => {
       <Text style={styles.userName}>{ user.nickName }</Text>
       <ScrollView style={styles.feedScroll} bounces={false}>
         <View style={styles.userVideoBox}>
-        { myFeeds.map((item, index) => 
+        { myFeeds.length === 0
+        ? <View style={styles.userVideoEmpty}>
+            <Text style={{ fontSize: 16 }}>아직 업로드한 영상이 없습니다.</Text>
+          </View>
+        : myFeeds.map((item, index) => 
           <TouchableOpacity onPress={()=>onPressVideo(item)} key={'key' + index} >
             <Image 
               source={{ uri: item.thumbNailPath }}
@@ -79,6 +83,13 @@ const styles = StyleSheet.create({
   userVideoBox: {
     flexDirection: 'row',
     flexWrap: 'wrap',
+  },
+  userVideoEmpty: {
+    width: '100%',
+    alignItems: 'center',
+    borderTopColor: '#F4F6F9',
+    borderTopWidth: 2,
+    paddingVertical: 150,
   },
   userThumbNail: {
     width: width * 0.33,
