@@ -40,7 +40,8 @@ const DrawerNavigator = () => {
       drawerPosition='left'
       drawerContent={(props) => <Menu {...props} />}
       screenOptions={{
-        drawerStyle: {width: '100%'}
+        drawerStyle: {width: '100%'},
+        swipeEnabled: false
       }}>
       <Drawer.Screen 
         name='Login'
