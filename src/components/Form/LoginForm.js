@@ -17,14 +17,26 @@ const LoginForm = ({ navigation }) => {
     phoneNumber: user.phoneNumber
   };
   
-  const fillAll = () => {
-    return user.nickName !== "" && user.phoneNumber !== "";
+  const notFillAll = () => {
+    return user.nickName === "" || user.phoneNumber === "";
   };
 
-  const showFailAlert = () => {
+  const notPhoneNumber = () => {
+    return ![10, 11].includes(user.phoneNumber.length);
+  };
+
+  const showNotFillAlert = () => {
     Alert.alert(
       "로그인 실패",
-      "로그인 정보를 다시 확인해주세요.",
+      "닉네임과 전화번호를 모두 입력해주세요.",
+      [{text: "확인"}]
+    );
+  };
+
+  const showWrongPhoneAlert = () => {
+    Alert.alert(
+      "로그인 실패",
+      "전화번호를 정확히 입력해주세요.",
       [{text: "확인"}]
     );
   };
@@ -38,18 +50,18 @@ const LoginForm = ({ navigation }) => {
   };
 
   const onPress = async() => {
-    try {
-      const response = await axios.post(URL.postLogin, userData);
-      if (fillAll() && response.data.statusCode === 200) {
+    if (notFillAll()) showNotFillAlert();
+    else if (notPhoneNumber()) showWrongPhoneAlert();
+    else {
+      try {
+        const response = await axios.post(URL.postLogin, userData);
         dispatch(setUserId(response.data.body.user.id));
         dispatch(setLikeLists(response.data.body.user.likeList))
         navigation.navigate("Home");
-      } else {
-        showFailAlert();
+      } catch(error) {
+        console.log("ERROR>>", error);
+        showNetworkAlert();
       }
-    } catch(error) {
-      console.log("ERROR>>", error);
-      showNetworkAlert();
     }
   };
   
