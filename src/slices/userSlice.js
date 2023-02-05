@@ -9,6 +9,7 @@ export const userSlice = createSlice({
   },
   reducers: {
     setUser(state, action) {
+      state.userId = action.payload.userId,
       state.nickName = action.payload.nickName;
       state.phoneNumber = action.payload.phoneNumber;
     },
