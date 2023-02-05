@@ -90,6 +90,7 @@ const styles = StyleSheet.create({
     borderTopColor: '#F4F6F9',
     borderTopWidth: 2,
     paddingVertical: 150,
+    color: 'gray'
   },
   userThumbNail: {
     width: width * 0.33,
