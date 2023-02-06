@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView, TextInput, KeyboardAvoidingView, NativeModules, Platform } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView, TextInput, KeyboardAvoidingView, NativeModules, Platform, Dimensions } from "react-native";
 import { Icon } from "@rneui/themed";
 import Video from "react-native-video";
 import Toast from 'react-native-toast-message';
@@ -11,6 +11,7 @@ import { addLikeLists, subLikeLists } from "../slices/feedSlice";
 import VideoPlayer from 'react-native-video-controls';
 
 const { StatusBarManager } = NativeModules;
+const { width } = Dimensions.get('window');
 
 const FeedDetail = ({ navigation, route }) => {
   const dispatch = useDispatch();
@@ -236,8 +237,8 @@ const styles = StyleSheet.create({
     fontSize: 12
   },
   video: {
-    width: '100%',
-    height: 250,
+    width: width,
+    height: width * 0.56,
     backgroundColor: 'black',
     marginBottom: 10,
   },
