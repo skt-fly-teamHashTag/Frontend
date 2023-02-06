@@ -60,8 +60,7 @@ const FeedItem = ({ item, index, showToast }) => {
 
   const onPressVideo = async() => {
     await axios.get(URL.getDetailFeed+item._id)
-    .then((response) => navigation.navigate('FeedDetail', 
-      {...response.data.body.detail, likeCount: likeCount}))
+    .then((response) => navigation.navigate('FeedDetail', response.data.body.detail))
     .catch((error) => console.log(error))
   };
 
