@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, TouchableOpacity, View, Image, Text, Dimensions } from "react-native";
 import { Icon } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
@@ -15,6 +15,10 @@ const FeedItem = ({ item, index, showToast }) => {
   const [likeCount, setLikeCount] = useState(item.likeCount);
   const height = Dimensions.get('window').height;
   const user = useSelector((state) => state.user);
+
+  useEffect(() => {
+    setLiked(likeLists.includes(item._id));
+  }, [likeLists]);
   
   const onPressLike = async() => {
     const putData = {

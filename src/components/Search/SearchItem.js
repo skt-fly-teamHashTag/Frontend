@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, TouchableOpacity, View, Image, Text, Dimensions } from "react-native";
 import { Icon } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
@@ -15,6 +15,11 @@ const SearchItem = ({ item, showToast }) => {
   const [isLiked, setLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(item.likeCount);
   const user = useSelector((state) => state.user);
+  const likeLists = useSelector(state => state.feed.likeLists);
+
+  useEffect(() => {
+    setLiked(likeLists.includes(item._id));
+  }, [likeLists]);
 
   const onPressVideo = async() => {
     await axios.get(URL.getDetailFeed+item._id)

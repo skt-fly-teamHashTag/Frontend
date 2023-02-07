@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { StyleSheet, View, Text, TouchableOpacity, Image, FlatList } from "react-native";
 import { Icon } from "@rneui/themed";
@@ -12,12 +12,8 @@ import SummaryText from "../components/Text/SummaryText";
 const FeedHome = ({ navigation, route }) => {
   const [data, setData] = useState({...route.params});
   const summarizing = useSelector((state) => state.summary.summary);
-
-  useEffect(() => {
-    navigation.addListener('focus', () => {
-      console.log('render');
-    });
-  }, [navigation]);
+  const likeLists = useSelector((state) => state.feed.likeLists);
+  const updateData = useSelector((state) => state.feed);
   
   const toastConfig = {
     likeToast: ({ text1, props }) => (

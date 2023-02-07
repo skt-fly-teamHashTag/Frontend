@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { View, StyleSheet, Text, Image, Dimensions, TouchableOpacity } from 'react-native'
 import { Icon } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
@@ -9,7 +9,6 @@ import { subLikeLists, addLikeLists } from "../../slices/feedSlice";
 
 const { width, height } = Dimensions.get('window')
 
-
 const CarouselItem = ({ item, index, showToast }) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
@@ -17,6 +16,10 @@ const CarouselItem = ({ item, index, showToast }) => {
   const [isLiked, setLiked] = useState(likeLists.includes(item._id));
   const [likeCount, setLikeCount] = useState(item.likeCount);
   const user = useSelector((state) => state.user);
+
+  useEffect(() => {
+    setLiked(likeLists.includes(item._id));
+  }, [likeLists]);
   
   const onPressLike = async() => {
     const putData = {
