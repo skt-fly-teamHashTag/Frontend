@@ -23,6 +23,10 @@ export const feedSlice = createSlice({
     setRecentData(state, action) {
       state.recent = action.payload;
     },
+    setFeedData(state, action) {
+      state.hot = action.payload.hot;
+      state.recent = action.payload.recent;
+    }
   },
 });
 
@@ -32,5 +36,6 @@ export const {
   addLikeLists,
   setHotData, 
   setRecentData,
+  setFeedData
 } = feedSlice.actions;
 export default feedSlice.reducer;

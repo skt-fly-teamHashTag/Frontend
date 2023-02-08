@@ -1,5 +1,5 @@
 import axios from "axios";
-import React from "react";
+import React, { useEffect } from "react";
 import { StyleSheet, View, Text, Image, TouchableOpacity, Alert } from "react-native";
 import { launchImageLibrary } from 'react-native-image-picker';
 import { URL } from '../api';
@@ -8,13 +8,47 @@ import { aws } from "../Keys";
 import { useDispatch, useSelector } from "react-redux";
 import SummaryText from "../components/Text/SummaryText";
 import { setSummary } from "../slices/summarySlice";
-import { setHotData, setRecentData } from "../slices/feedSlice";
+import { setFeedData } from "../slices/feedSlice";
+import EventSource from "react-native-sse";
 
 const Main = ({ navigation }) => {
   const dispatch = useDispatch();
   const summarizing = useSelector((state) => state.summary.summary);
   const data = useSelector((state) => state.feed.data);
   const user = useSelector((state) => state.user);
+  const es = new EventSource(URL.eventSource);
+
+
+  useEffect(() => {
+    es.addEventListener("open", (event) => {
+      console.log("Open SSE connection.");
+    });
+    
+    es.addEventListener("complete", (event) => {
+      console.log("New complete event:", event.data);
+      dispatch(setSummary({summary: false}));
+      Alert.alert(
+        "비디오 요약 완료",
+        "비디오 요약이 완료되었습니다.",
+        [{text: "확인", onPress: () => navigation.navigate('GenerateVideo')}]
+      );
+      es.close();
+    });
+    
+    es.addEventListener("error", (event) => {
+      if (event.type === "error") {
+        console.error("Connection error:", event.message);
+      } else if (event.type === "exception") {
+        console.error("Error:", event.message, event.error);
+      }
+      es.close();
+    });
+
+    es.addEventListener("close", (event) => {
+      console.log("Close SSE connection.");
+    });
+
+  }, [navigation]);
 
   const showCameraRoll = async() => {
     const pickVideo = await launchImageLibrary({ mediaType: 'video' });
@@ -46,22 +80,20 @@ const Main = ({ navigation }) => {
         );
         dispatch(setSummary({summary: false}));
       } else {
-        RNS3.put(videoData, options)
-        .then(response => {
-          // [axios.post] location 정보를 백엔드에 전달하는 코드
-          const postData = {
-            userId: user.userId,
-            videoPath: response.body.postResponse.location
-          }
-          navigation.navigate('Loading', postData)
-        });
+        const responseS3 = await RNS3.put(videoData, options);
+        const postData = {
+          userId: user.userId,
+          videoPath: responseS3.body.postResponse.location
+        }
+        // [axios.post] location 정보를 백엔드에 전달하는 코드
+        const responsePOST = await axios.post(URL.postVideo, postData);
+        console.log('success video POST!!');
+        navigation.navigate('Loading');
       }
     }
   };
 
   const onPressMyFeed = () => {
-    // const testUserId = '11eda4a58479b04084867de2fcf4dfa9'
-    // axios.get(URL.getMyFeeds + testUserId)
     axios.get(URL.getMyFeeds + user.userId)
     .then(response => navigation.navigate('MyFeed', response.data.body.data))
     .catch(error => console.log(error));
@@ -70,8 +102,7 @@ const Main = ({ navigation }) => {
   const onPressFeedHome = () => {
     axios.get(URL.getAllFeeds)
     .then(response => {
-      dispatch(setHotData([...response.data.body.hot]))
-      dispatch(setRecentData([...response.data.body.recent]))
+      dispatch(setFeedData({...response.data.body}))
       navigation.navigate('FeedHome', response.data.body)
     })
     .catch(error => console.log(error));
