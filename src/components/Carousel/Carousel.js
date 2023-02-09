@@ -50,6 +50,8 @@ const Carousel = ({ data, showToast }) => {
           </View>
         </View>
       )
+    } else {
+      return (<></>)
     }
 }
 
