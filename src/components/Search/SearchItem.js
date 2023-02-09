@@ -5,7 +5,7 @@ import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import { URL } from "../../api";
 import { useDispatch, useSelector } from "react-redux";
-import { subLikeLists, addLikeLists } from "../../slices/feedSlice";
+import { subLikeLists, addLikeLists, subLikeCount, addLikeCount } from "../../slices/feedSlice";
 
 const { width, height } = Dimensions.get('window');
 
@@ -19,7 +19,8 @@ const SearchItem = ({ item, showToast }) => {
 
   useEffect(() => {
     setLiked(likeLists.includes(item._id));
-  }, [likeLists]);
+    setLikeCount(item.likeCount);
+  }, [likeLists, item]);
 
   const onPressVideo = async() => {
     await axios.get(URL.getDetailFeed+item._id)
@@ -40,9 +41,11 @@ const SearchItem = ({ item, showToast }) => {
     }
     if (isLiked) {
       dispatch(subLikeLists(item._id));
+      dispatch(subLikeCount(item._id));
       setLikeCount(likeCount-1);
     } else {
       dispatch(addLikeLists(item._id));
+      dispatch(addLikeCount(item._id));
       setLikeCount(likeCount+1);
     }
 

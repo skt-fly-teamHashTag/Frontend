@@ -26,6 +26,27 @@ export const feedSlice = createSlice({
     setFeedData(state, action) {
       state.hot = action.payload.hot;
       state.recent = action.payload.recent;
+    },
+    addLikeCount(state, action) {
+      // action.payload: video ID
+      let idxHot = -1;
+      let idxRecent = -1;
+
+      state.hot.map((item, idx) => {if(item._id === action.payload) idxHot = idx});
+      state.recent.map((item, idx) => {if(item._id === action.payload) idxRecent = idx});
+
+      if(idxHot > -1) state.hot[idxHot].likeCount += 1;
+      if(idxRecent > -1) state.recent[idxRecent].likeCount += 1;
+    },
+    subLikeCount(state, action) {
+      let idxHot = -1;
+      let idxRecent = -1;
+
+      state.hot.map((item, idx) => {if(item._id === action.payload) idxHot = idx});
+      state.recent.map((item, idx) => {if(item._id === action.payload) idxRecent = idx});
+
+      if(idxHot > -1) state.hot[idxHot].likeCount -= 1;
+      if(idxRecent > -1) state.recent[idxRecent].likeCount -= 1;
     }
   },
 });
@@ -36,6 +57,8 @@ export const {
   addLikeLists,
   setHotData, 
   setRecentData,
-  setFeedData
+  setFeedData,
+  addLikeCount,
+  subLikeCount
 } = feedSlice.actions;
 export default feedSlice.reducer;

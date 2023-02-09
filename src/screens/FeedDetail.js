@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import SummaryText from "../components/Text/SummaryText";
 import axios from "axios";
 import { URL } from "../api";
-import { addLikeLists, subLikeLists } from "../slices/feedSlice";
+import { addLikeLists, subLikeLists, addLikeCount, subLikeCount } from "../slices/feedSlice";
 import VideoPlayer from 'react-native-video-controls';
 
 const { StatusBarManager } = NativeModules;
@@ -25,7 +25,7 @@ const FeedDetail = ({ navigation, route }) => {
   const [paused, setPaused] = useState(false);
   const user = useSelector((state) => state.user);
 
-  useEffect(()=>{
+  useEffect(()=>{ // componentDidMount: 컴포넌트가 화면에 나타날 때
     Platform.OS == 'ios' ? StatusBarManager.getHeight((statusBarFrameData) => {
         setStatusBarHeight(statusBarFrameData.height)
       }) : null
@@ -62,9 +62,11 @@ const FeedDetail = ({ navigation, route }) => {
 
     if (isLiked) {
       dispatch(subLikeLists(item._id));
+      dispatch(subLikeCount(item._id));
       setLikeCount(likeCount-1);
     } else {
       dispatch(addLikeLists(item._id));
+      dispatch(addLikeCount(item._id));
       setLikeCount(likeCount+1);
     }
     
