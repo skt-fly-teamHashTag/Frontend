@@ -1,10 +1,51 @@
-import React from "react";
-import { StyleSheet, Text, Image, View, TouchableOpacity } from 'react-native';
+import React, { useEffect } from "react";
+import { StyleSheet, Text, Image, View, TouchableOpacity, Alert } from 'react-native';
 import { URL } from "../api";
 import axios from "axios";
+import EventSource from "react-native-sse";
+import { useDispatch } from "react-redux";
+import { setSummary } from "../slices/summarySlice";
 
 const Loading = ({ navigation, route }) => {
   const postData = route.params;
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const es = new EventSource(URL.eventSource);
+    dispatch(setSummary({summary: true}));
+
+    es.addEventListener("open", (event) => {
+      console.log("Open SSE connection.");
+    });
+    
+    es.addEventListener("message", (event) => {
+      console.log("New complete event:", event.data);
+      Alert.alert(
+        "비디오 요약 완료",
+        "비디오 요약이 완료되었습니다.",
+        [{text: "확인", onPress: () => {
+          dispatch(setSummary({summary: false}));
+          navigation.navigate('GenerateVideo');}}]
+      );
+
+      es.removeAllEventListeners();
+      es.close();
+    });
+    
+    es.addEventListener("error", (event) => {
+      if (event.type === "error") {
+        console.error("Connection error:", event.message);
+      } else if (event.type === "exception") {
+        console.error("Error:", event.message, event.error);
+      }
+      es.close();
+    });
+
+    es.addEventListener("close", (event) => { 
+      console.log("Close SSE connection.");
+    });
+
+  }, []);
   
   const onPressHome = () => {
     navigation.navigate('Main');

@@ -9,46 +9,12 @@ import { useDispatch, useSelector } from "react-redux";
 import SummaryText from "../components/Text/SummaryText";
 import { setSummary } from "../slices/summarySlice";
 import { setFeedData } from "../slices/feedSlice";
-import EventSource from "react-native-sse";
 
 const Main = ({ navigation }) => {
   const dispatch = useDispatch();
   const summarizing = useSelector((state) => state.summary.summary);
   const data = useSelector((state) => state.feed.data);
   const user = useSelector((state) => state.user);
-  const es = new EventSource(URL.eventSource);
-
-
-  useEffect(() => {
-    es.addEventListener("open", (event) => {
-      console.log("Open SSE connection.");
-    });
-    
-    es.addEventListener("complete", (event) => {
-      console.log("New complete event:", event.data);
-      dispatch(setSummary({summary: false}));
-      Alert.alert(
-        "비디오 요약 완료",
-        "비디오 요약이 완료되었습니다.",
-        [{text: "확인", onPress: () => navigation.navigate('GenerateVideo')}]
-      );
-      es.close();
-    });
-    
-    es.addEventListener("error", (event) => {
-      if (event.type === "error") {
-        console.error("Connection error:", event.message);
-      } else if (event.type === "exception") {
-        console.error("Error:", event.message, event.error);
-      }
-      es.close();
-    });
-
-    es.addEventListener("close", (event) => {
-      console.log("Close SSE connection.");
-    });
-
-  }, [navigation]);
 
   const showCameraRoll = async() => {
     const pickVideo = await launchImageLibrary({ mediaType: 'video' });
@@ -87,7 +53,6 @@ const Main = ({ navigation }) => {
         }
         // [axios.post] location 정보를 백엔드에 전달하는 코드
         const responsePOST = await axios.post(URL.postVideo, postData);
-        console.log('success video POST!!');
         navigation.navigate('Loading');
       }
     }

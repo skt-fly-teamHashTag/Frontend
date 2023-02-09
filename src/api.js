@@ -9,5 +9,5 @@ export const URL = {
   getAllFeeds: `http://${address}:8000/api/v1/video/list`,
   getDetailFeed: `http://${address}:8000/api/v1/video/detail/`,
   getSearchFeeds: `http://${address}:8000/api/v1/search/video`,
-  eventSource: `http://${address}:8000/api/v1/video/path2`,
+  eventSource: `http://${address}:8000/api/v1/sse`,
 }
