@@ -4,7 +4,6 @@ import Login from "../screens/Login";
 import Home from "../screens/Home";
 import Menu from '../screens/Menu';
 import Main from "../screens/Main";
-import Loading from "../screens/Loading";
 import LeftIconButton from "../components/Header/LeftIconButton";
 import RightTwoIcon from "../components/Header/RightTwoImage";
 import MenuHeader from "../components/Header/MenuHeader";
@@ -54,13 +53,6 @@ const DrawerNavigator = () => {
       <Drawer.Screen 
         name='MainStack'
         component={StackNavigator}
-        options={{
-          headerShown: false,
-          headerShadowVisible: false,
-        }} />
-      <Drawer.Screen 
-        name='Loading'
-        component={Loading}
         options={{
           headerShown: false,
           headerShadowVisible: false,

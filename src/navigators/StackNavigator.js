@@ -9,6 +9,7 @@ import SearchResult from '../screens/SearchResult';
 import MyFeed from '../screens/MyFeed';
 import LeftIconButton from "../components/Header/LeftIconButton";
 import VideoFullscreen from "../screens/VideoFullscreen";
+import Loading from "../screens/Loading";
 import { TouchableOpacity } from 'react-native';
 import { Icon } from '@rneui/themed';
 import { useDispatch } from "react-redux";
@@ -88,6 +89,10 @@ const StackNavigator = () => {
       <Stack.Screen 
         name='VideoFullscreen'
         component={VideoFullscreen}
+        options={fullscreenHeader} />
+      <Stack.Screen 
+        name='Loading'
+        component={Loading}
         options={fullscreenHeader} />
     </Stack.Navigator>
   );
