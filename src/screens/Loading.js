@@ -3,15 +3,21 @@ import { StyleSheet, Text, Image, View, TouchableOpacity, Alert } from 'react-na
 import { URL } from "../api";
 import axios from "axios";
 import EventSource from "react-native-sse";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setSummary } from "../slices/summarySlice";
 
 const Loading = ({ navigation, route }) => {
   const postData = route.params;
   const dispatch = useDispatch();
+  const userId = useSelector((state) => state.user.userId);
 
   useEffect(() => {
-    const es = new EventSource(URL.eventSource);
+    const esOptions = {
+      headers: { 'Content-Type': 'application/json' },
+      method: 'POST',
+      body: JSON.stringify({userId})
+    }
+    const es = new EventSource(URL.eventSource, esOptions);
     dispatch(setSummary({summary: true}));
 
     es.addEventListener("open", (event) => {
@@ -39,6 +45,7 @@ const Loading = ({ navigation, route }) => {
       } else if (event.type === "exception") {
         console.error("Error:", event.message, event.error);
       }
+      es.removeAllEventListeners();
       es.close();
     });
 
