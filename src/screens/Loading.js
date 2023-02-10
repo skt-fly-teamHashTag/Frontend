@@ -31,8 +31,7 @@ const Loading = ({ navigation, route }) => {
         "비디오 요약이 완료되었습니다.",
         [{text: "확인", onPress: () => {
           dispatch(setSummary({summary: false}));
-          navigation.pop();
-          navigation.navigate('GenerateVideo');}}]
+          navigation.replace('GenerateVideo', event.data);}}]
       );
 
       es.removeAllEventListeners();
