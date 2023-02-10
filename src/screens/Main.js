@@ -41,7 +41,7 @@ const Main = ({ navigation }) => {
       if (summarizing) {
         Alert.alert(
           "비디오 요약 실패",
-          "이미 다른 비디오를 요약중입니다.",
+          "지금은 다른 비디오를 요약중입니다.",
           [{text: "확인"}]
         );
         dispatch(setSummary({summary: false}));
