@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect } from "react";
+import React from "react";
 import { StyleSheet, View, Text, Image, TouchableOpacity, Alert } from "react-native";
 import { launchImageLibrary } from 'react-native-image-picker';
 import { URL } from '../api';
@@ -46,6 +46,7 @@ const Main = ({ navigation }) => {
         );
         dispatch(setSummary({summary: false}));
       } else {
+        navigation.navigate('Loading');
         const responseS3 = await RNS3.put(videoData, options);
         const postData = {
           userId: user.userId,
@@ -53,7 +54,6 @@ const Main = ({ navigation }) => {
         }
         // [axios.post] location 정보를 백엔드에 전달하는 코드
         const responsePOST = await axios.post(URL.postVideo, postData);
-        navigation.navigate('Loading');
       }
     }
   };
