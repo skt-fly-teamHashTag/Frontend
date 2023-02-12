@@ -24,7 +24,6 @@ import VideoPlayer from 'react-native-video-controls';
 const width = Dimensions.get('window').width;
 
 const GenerateVideo = ({navigation, route}) => {
-  // 비디오 요약 완료된 정보로 화면 띄우기
   const item = JSON.parse(route.params);
   const [rate, setRate] = useState(0);
   const {userId, nickName} = useSelector(state => state.user);
@@ -32,6 +31,7 @@ const GenerateVideo = ({navigation, route}) => {
   const dispatch = useDispatch();
   const [paused, setPaused] = useState(false);
   const [isThumbNail, setIsThumbNail] = useState(true);
+  const [saved, setSaved] = useState(false);
 
   const toastConfig = {
     saveToast: ({text1, props}) => (
@@ -64,8 +64,9 @@ const GenerateVideo = ({navigation, route}) => {
   };
 
   const onPressSave = () => {
+    setSaved(true);
     RNFS.downloadFile({
-      fromUrl: videoUri,
+      fromUrl: item.videoPath,
       toFile: LOCAL_PATH_TO_VIDEO,
       begin: res => {},
       progress: res => setRate(res.bytesWritten / res.contentLength),
@@ -121,15 +122,16 @@ const GenerateVideo = ({navigation, route}) => {
         ?<TouchableOpacity onPress={()=>setIsThumbNail(false)}>
           <Image source={{uri: item.thumbNailPath}} style={styles.thumbNail} />
         </TouchableOpacity>
-        :<VideoPlayer
-          source={{uri: item.videoPath}}
-          style={styles.video}
-          paused={paused}
-          toggleResizeModeOnFullscreen={false}
-          onExitFullscreen={onPressFullscreen}
-          onEnterFullscreen={onPressFullscreen}
-          disableBack
-        />
+        :<View style={styles.video}>
+          <VideoPlayer
+            source={{uri: item.videoPath}}
+            paused={paused}
+            toggleResizeModeOnFullscreen={false}
+            onExitFullscreen={onPressFullscreen}
+            onEnterFullscreen={onPressFullscreen}
+            disableBack
+          />
+        </View>
       }
       <Text style={styles.tags}>
         {item.tags.map(tag => `#${tag} `)}
@@ -139,10 +141,16 @@ const GenerateVideo = ({navigation, route}) => {
         placeholder="제목을 입력해주세요."
         placeholderTextColor="#C8CACD"
         onChangeText={text => dispatch(setTitle({title: text}))}></TextInput>
-      <TouchableOpacity style={styles.inputButton} onPress={onPressUpload}>
+      <TouchableOpacity 
+        activeOpacity={0.8}
+        style={styles.inputButton} 
+        onPress={onPressUpload}>
         <Text style={styles.whiteText}>내 피드에 업로드</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.inputButton} onPress={onPressSave}>
+      <TouchableOpacity 
+        activeOpacity={saved? 1: 0.8}
+        style={saved? styles.disableButton: styles.inputButton} 
+        onPress={() => {!saved && onPressSave()}}>
         <Text style={styles.whiteText}>내 기기에 저장하기</Text>
       </TouchableOpacity>
       {rate !== 0 && Progress()}
@@ -166,10 +174,12 @@ const styles = StyleSheet.create({
   },
   thumbNail: {
     width: width, 
-    height: width * 0.56
+    height: width * 0.56,
+    backgroundColor: '#F1F4F9'
   },
   video: {
     width: width,
+    height: width * 0.56,
     backgroundColor: 'black',
   },
   tags: {
@@ -190,11 +200,20 @@ const styles = StyleSheet.create({
   },
   inputButton: {
     width: width * 0.9,
-    color: 'white',
     backgroundColor: '#384BF5',
     borderWidth: 1,
     borderRadius: 10,
     borderColor: '#384BF5',
+    padding: 16,
+    marginTop: 20,
+    alignItems: 'center',
+  },
+  disableButton: {
+    width: width * 0.9,
+    backgroundColor: 'lightgray',
+    borderWidth: 1,
+    borderRadius: 10,
+    borderColor: 'lightgray',
     padding: 16,
     marginTop: 20,
     alignItems: 'center',
@@ -220,7 +239,7 @@ const styles = StyleSheet.create({
   },
   progressBox: {
     flexDirection: 'row',
-    width: width * 0.9,
+    width: width,
     justifyContent: 'space-evenly',
     alignItems: 'center',
     marginTop: 20,
