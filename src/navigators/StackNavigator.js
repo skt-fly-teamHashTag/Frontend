@@ -12,13 +12,16 @@ import VideoFullscreen from "../screens/VideoFullscreen";
 import Loading from "../screens/Loading";
 import { TouchableOpacity } from 'react-native';
 import { Icon } from '@rneui/themed';
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setSearch } from '../slices/searchSlice';
+import axios from 'axios';
+import { URL } from '../api';
 
 
 const StackNavigator = () => {
   const Stack = createNativeStackNavigator();
   const dispatch = useDispatch();
+  const userId = useSelector((state) => state.user.userId);
 
   const mainHeader = ({ navigation }) => ({
     title: 'A. Video',
@@ -33,9 +36,10 @@ const StackNavigator = () => {
     headerShadowVisible: false,
   });
 
-  const onPressClose = (navigation) => {
+  const onPressVideoClose = (navigation) => {
     dispatch(setSearch({inputText: ''}));
     navigation.navigate('Main');
+    axios.put(URL.putUserId, {userId});
   };
 
   const videoHeader = ({ navigation }) => ({
@@ -43,8 +47,26 @@ const StackNavigator = () => {
     headerTitleAlign: 'center',
     headerLeft: () => (<></>),
     headerRight: () => (
+      <TouchableOpacity onPress={() => onPressVideoClose(navigation)}>
+        <Icon  name='close' type='ant-design' size={24} style={{ marginRight: 5 }} />
+      </TouchableOpacity>
+    ),
+    headerStyle: {backgroundColor: '#FFFBFD'},
+    headerShadowVisible: false,
+  });
+
+  const onPressClose = (navigation) => {
+    dispatch(setSearch({inputText: ''}));
+    navigation.navigate('Main');
+  };
+
+  const defaultHeader = ({ navigation }) => ({
+    title: 'A. Video',
+    headerTitleAlign: 'center',
+    headerLeft: () => (<></>),
+    headerRight: () => (
       <TouchableOpacity onPress={() => onPressClose(navigation)}>
-        <Icon  name='close' type='ant-design' size={24} style={{ marginRight: 5,  }} />
+        <Icon  name='close' type='ant-design' size={24} style={{ marginRight: 5 }} />
       </TouchableOpacity>
     ),
     headerStyle: {backgroundColor: '#FFFBFD'},
@@ -73,19 +95,19 @@ const StackNavigator = () => {
       <Stack.Screen 
         name="FeedDetail" 
         component={FeedDetail} 
-        options={videoHeader}/>
+        options={defaultHeader}/>
       <Stack.Screen 
         name="Search" 
         component={Search} 
-        options={videoHeader}/>
+        options={defaultHeader}/>
       <Stack.Screen 
         name="SearchResult" 
         component={SearchResult} 
-        options={videoHeader}/>
+        options={defaultHeader}/>
       <Stack.Screen 
         name="MyFeed" 
         component={MyFeed} 
-        options={videoHeader}/>
+        options={defaultHeader}/>
       <Stack.Screen 
         name='VideoFullscreen'
         component={VideoFullscreen}
