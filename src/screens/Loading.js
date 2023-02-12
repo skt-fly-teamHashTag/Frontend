@@ -18,21 +18,30 @@ const Loading = ({ navigation, route }) => {
       body: JSON.stringify({userId})
     }
     const es = new EventSource(URL.eventSource, esOptions);
-    dispatch(setSummary({summary: true}));
 
     es.addEventListener("open", (event) => {
+      dispatch(setSummary({summary: true}));
       console.log("Open SSE connection.");
     });
     
     es.addEventListener("message", (event) => {
-      console.log("New complete event:", event.data);
-      Alert.alert(
-        "비디오 요약 완료",
-        "비디오 요약이 완료되었습니다.",
-        [{text: "확인", onPress: () => {
-          dispatch(setSummary({summary: false}));
-          navigation.replace('GenerateVideo', event.data);}}]
-      );
+      console.log(`message event: ${event.data}`);
+      dispatch(setSummary({summary: false}));
+      if (event.data === '"SERVER_ERROR"') {
+        Alert.alert(
+          "비디오 요약 실패",
+          "비디오 요약에 실패하였습니다.\n다시 영상을 선택해주세요.",
+          [{text: "확인", onPress: () => {
+            navigation.replace('Main');}}]
+        );
+      } else {
+        Alert.alert(
+          "비디오 요약 완료",
+          "비디오 요약이 완료되었습니다.",
+          [{text: "확인", onPress: () => {
+            navigation.replace('GenerateVideo', event.data);}}]
+        );
+      }
 
       es.removeAllEventListeners();
       es.close();
