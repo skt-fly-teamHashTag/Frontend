@@ -16,7 +16,6 @@ const { width } = Dimensions.get('window');
 const FeedDetail = ({ navigation, route }) => {
   const dispatch = useDispatch();
   const item = route.params;
-  const loadingUri = "https://media.tenor.com/On7kvXhzml4AAAAj/loading-gif.gif";
   const likeLists = useSelector(state => state.feed.likeLists);
   const [isLiked, setLiked] = useState(likeLists.includes(item._id));
   const [likeCount, setLikeCount] = useState(item.likeCount);
