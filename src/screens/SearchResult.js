@@ -89,6 +89,7 @@ const SearchResult = ({ navigation, route }) => {
       { data.length !== 0
         ? <FlatList 
           style={styles.resultContainer}
+          ListFooterComponent={<View style={styles.footer} />}
           showsVerticalScrollIndicator = {false}
           bounces={false}
           data={data}
@@ -106,7 +107,8 @@ const SearchResult = ({ navigation, route }) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#FFFBFD'
+    backgroundColor: '#FFFBFD',
+    height: '100%',
   },
   header: {
     flexDirection: 'row',
@@ -153,8 +155,10 @@ const styles = StyleSheet.create({
   },
   resultContainer: {
     backgroundColor: '#F4F6F9',
-    height: '80%',
-    marginBottom: 10
+  },
+  footer: {
+    backgroundColor: '#FFFBFD',
+    padding: 10
   },
   emptyResult: {
     textAlign: 'center',
