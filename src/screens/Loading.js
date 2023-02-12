@@ -48,8 +48,15 @@ const Loading = ({ navigation, route }) => {
     });
     
     es.addEventListener("error", (event) => {
+      Alert.alert(
+        "비디오 요약 실패",
+        "비디오 요약에 실패하였습니다.\n다시 영상을 선택해주세요.",
+        [{text: "확인", onPress: () => {
+          navigation.replace('Main');}}]
+      );
       if (event.type === "error") {
         console.error("Connection error:", event.message);
+        
       } else if (event.type === "exception") {
         console.error("Error:", event.message, event.error);
       }
