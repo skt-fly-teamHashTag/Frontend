@@ -91,7 +91,7 @@ const StackNavigator = () => {
       <Stack.Screen 
         name="FeedHome" 
         component={FeedHome} 
-        options={videoHeader}/>
+        options={defaultHeader}/>
       <Stack.Screen 
         name="FeedDetail" 
         component={FeedDetail} 
