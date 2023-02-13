@@ -48,6 +48,7 @@ const Loading = ({ navigation, route }) => {
     });
     
     es.addEventListener("error", (event) => {
+      dispatch(setSummary({summary: false}));
       Alert.alert(
         "비디오 요약 실패",
         "비디오 요약에 실패하였습니다.\n다시 영상을 선택해주세요.",
