@@ -24,7 +24,7 @@ const Main = ({ navigation }) => {
       console.log('ImagePicker Error: ', pickVideo.errorCode);
     } else if (pickVideo) {
       const videoData = {
-        name: pickVideo.assets[0].fileName,
+        name: `${Date.now()}_${user.userId}.mp4`,
         type: pickVideo.assets[0].type,
         uri: pickVideo.assets[0].uri
       };
@@ -50,6 +50,7 @@ const Main = ({ navigation }) => {
         const responseS3 = await RNS3.put(videoData, options);
         const postData = {
           userId: user.userId,
+          nickName: user.nickName,
           videoPath: responseS3.body.postResponse.location
         }
         // [axios.post] location 정보를 백엔드에 전달하는 코드
