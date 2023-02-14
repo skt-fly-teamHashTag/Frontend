@@ -33,6 +33,9 @@ const GenerateVideo = ({navigation, route}) => {
   const [isThumbNail, setIsThumbNail] = useState(true);
   const [saved, setSaved] = useState(false);
 
+  const splitURL = item.videoPath.split('/');
+  const videoName = splitURL[splitURL.length - 1];
+
   const toastConfig = {
     saveToast: ({text1, props}) => (
       <View style={styles.toastBox}>
@@ -55,11 +58,11 @@ const GenerateVideo = ({navigation, route}) => {
   const path = RNFetchBlob.DownloadDir;
   const LOCAL_PATH_TO_VIDEO =
     Platform.OS === 'ios'
-      ? `${RNFS.DocumentDirectoryPath}/videoDot`
-      : `${path}/$videoDot`;
+      ? `${RNFS.DocumentDirectoryPath}/${videoName}`
+      : `${path}/${videoName}`;
 
   const save = () => {
-    CameraRoll.save(LOCAL_PATH_TO_VIDEO, 'videoDot');
+    CameraRoll.save(LOCAL_PATH_TO_VIDEO, videoName);
     showToast();
   };
 
@@ -126,6 +129,8 @@ const GenerateVideo = ({navigation, route}) => {
           <VideoPlayer
             source={{uri: item.videoPath}}
             paused={paused}
+            repeat={true}
+            onEnd={() => setIsThumbNail(true)}
             toggleResizeModeOnFullscreen={false}
             onExitFullscreen={onPressFullscreen}
             onEnterFullscreen={onPressFullscreen}
