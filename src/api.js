@@ -4,6 +4,7 @@ export const URL = {
   postLogin: `http://${address}:8000/api/v1/auth/login`,
   postVideo: `http://${address}:8000/api/v1/video/path`,
   postVideoTitle: `http://${address}:8000/api/v1/video`,
+  postComment: `http://${address}:8000/api/v1/video/comment`,
   putUserId: `http://${address}:8000/api/v1/video`,
   putLike: `http://${address}:8000/api/v1/like`,
   getMyFeeds: `http://${address}:8000/api/v1/user/feed/`,

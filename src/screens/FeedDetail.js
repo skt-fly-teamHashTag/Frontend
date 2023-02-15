@@ -23,6 +23,8 @@ const FeedDetail = ({ navigation, route }) => {
   const summarizing = useSelector((state) => state.summary.summary);
   const [paused, setPaused] = useState(false);
   const user = useSelector((state) => state.user);
+  const [comments, setComments] = useState([...item.comments]);
+  const [commentValue, setCommentValue] = useState('');
 
   useEffect(()=>{ // componentDidMount: 컴포넌트가 화면에 나타날 때
     Platform.OS == 'ios' ? StatusBarManager.getHeight((statusBarFrameData) => {
@@ -73,8 +75,8 @@ const FeedDetail = ({ navigation, route }) => {
     showToast(isLiked);
   };
 
-  const getUploadedAt = () => {
-    const milliSeconds = item.uploadedAt;
+  const getUploadedAt = (uploadedAt) => {
+    const milliSeconds = uploadedAt;
     const seconds = milliSeconds / 1000;
     if (seconds < 60) return `방금 전`;
     const minutes = seconds / 60;
@@ -96,6 +98,42 @@ const FeedDetail = ({ navigation, route }) => {
     navigation.navigate('VideoFullscreen', item.videoPath);
   };
 
+
+  const onPressSend = async() => {
+    const commentData = {
+      videoId: item._id,
+      userId: user.userId,
+      nickName: user.nickName,
+      content: commentValue
+    }
+    
+    await axios.post(URL.postComment, commentData);
+
+    setComments([{
+      nickName: user.nickName,
+      uploadedAt: '0',
+      content: commentValue
+    }, ...comments])
+    setCommentValue('');
+  };
+
+  const CommentBox = ({ comment }) => {
+    return (
+      <View style={styles.commentBox}>
+        <View style={styles.userBox}>
+          <View style={styles.commentUser}>
+            <Image source={require('../assets/userPhoto.png')} style={styles.userImage}></Image>
+            <View>
+              <Text style={styles.contentTitle}>{comment.nickName}</Text>
+              <Text style={styles.userUploadTime}>{getUploadedAt(comment.uploadedAt)}</Text>
+            </View>
+          </View>
+        </View>
+        <Text style={styles.comment}>{comment.content}</Text>
+      </View>
+    )
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -110,7 +148,7 @@ const FeedDetail = ({ navigation, route }) => {
           <Image source={require('../assets/userPhoto.png')} style={styles.userImage}></Image>
           <View>
             <Text style={styles.contentTitle}>{ item.nickName }</Text>
-            <Text style={styles.userUploadTime}>{ getUploadedAt() }</Text>
+            <Text style={styles.userUploadTime}>{ getUploadedAt(item.uploadedAt) }</Text>
           </View>
         </View>
         <VideoPlayer
@@ -137,51 +175,20 @@ const FeedDetail = ({ navigation, route }) => {
         </View>
         <Text style={styles.videoTitle}>{item.title}</Text>
         <View style={styles.line}></View>
-        <Text style={styles.commentCount}>댓글 3개</Text>
-        <View style={styles.commentBox}>
-          <View style={styles.userBox}>
-            <View style={styles.commentUser}>
-              <Image source={require('../assets/userPhoto.png')} style={styles.userImage}></Image>
-              <View>
-                <Text style={styles.contentTitle}>해시태그닷</Text>
-                <Text style={styles.userUploadTime}>1분 전</Text>
-              </View>
-            </View>
-          </View>
-          <Text style={styles.comment}>너무 재미있어요~!</Text>
-        </View>
-        <View style={styles.commentBox}>
-          <View style={styles.userBox}>
-            <View style={styles.commentUser}>
-              <Image source={require('../assets/userPhoto.png')} style={styles.userImage}></Image>
-              <View>
-                <Text style={styles.contentTitle}>플라이닷</Text>
-                <Text style={styles.userUploadTime}>1분 전</Text>
-              </View>
-            </View>
-          </View>
-          <Text style={styles.comment}>떠나요~ 둘이서~ 모든 걸 훌훌 버리고~</Text>
-        </View>
-        <View style={styles.commentBox}>
-          <View style={styles.userBox}>
-            <View style={styles.commentUser}>
-              <Image source={require('../assets/userPhoto.png')} style={styles.userImage}></Image>
-              <View>
-                <Text style={styles.contentTitle}>쿠크닷스</Text>
-                <Text style={styles.userUploadTime}>1분 전</Text>
-              </View>
-            </View>
-          </View>
-          <Text style={styles.comment}>{`완전 멋져 >_<`}</Text>
-        </View>
-        <View style={{height: 50}}></View>
+        <Text style={styles.commentCount}>댓글 {comments.length}개</Text>
+        {comments.length !== 0 && comments.map((comment, idx) => <CommentBox comment={comment} key={idx} />)}
       </ScrollView>
       <KeyboardAvoidingView 
         behavior={Platform.OS === 'ios'? "padding": "height"}
         style={styles.commentWriteBox}
         keyboardVerticalOffset={statusBarHeight+44}>
-        <TextInput style={styles.commentInput} placeholder='댓글 달기...' placeholderTextColor='#C8CACD' />
-        <TouchableOpacity opacity='0.9' style={styles.commentSend}>
+        <TextInput 
+          style={styles.commentInput} 
+          placeholder='댓글 달기...' 
+          placeholderTextColor='#C8CACD'
+          onChangeText={(value) => setCommentValue(value)}
+          value={commentValue} />
+        <TouchableOpacity opacity='0.9' style={styles.commentSend} onPress={onPressSend}>
           <Icon name='send' type='feather' color='#384BF5' />
         </TouchableOpacity>
       </KeyboardAvoidingView>
