@@ -188,7 +188,10 @@ const FeedDetail = ({ navigation, route }) => {
           placeholderTextColor='#C8CACD'
           onChangeText={(value) => setCommentValue(value)}
           value={commentValue} />
-        <TouchableOpacity opacity='0.9' style={styles.commentSend} onPress={onPressSend}>
+        <TouchableOpacity 
+          opacity='0.9' 
+          style={styles.commentSend} 
+          onPress={() => commentValue.trim() !== "" && onPressSend()}>
           <Icon name='send' type='feather' color='#384BF5' />
         </TouchableOpacity>
       </KeyboardAvoidingView>
