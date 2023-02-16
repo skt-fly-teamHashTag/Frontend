@@ -25,8 +25,7 @@ import { setFeedData } from "../slices/feedSlice";
 const width = Dimensions.get('window').width;
 
 const GenerateVideo = ({navigation, route}) => {
-  const item = route.params; // 지우기
-  // const item = JSON.parse(route.params);
+  const item = JSON.parse(route.params);
   const [rate, setRate] = useState(0);
   const {userId, nickName} = useSelector(state => state.user);
   const {title} = useSelector(state => state.video);
