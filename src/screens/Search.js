@@ -6,6 +6,7 @@ import { setSearch } from '../slices/searchSlice';
 import SummaryText from "../components/Text/SummaryText";
 import axios from "axios";
 import { URL } from "../api";
+import { setFeedData } from "../slices/feedSlice";
 
 const Search = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -15,7 +16,10 @@ const Search = ({ navigation }) => {
   const onPressBack = () => {
     dispatch(setSearch({inputText: ''}));
     axios.get(URL.getAllFeeds)
-    .then(response => navigation.navigate('FeedHome', response.data.body))
+    .then(response => {
+      dispatch(setFeedData({...response.data.body}));
+      navigation.navigate('FeedHome', response.data.body);
+    })
     .catch(error => console.log(error));
   };
 

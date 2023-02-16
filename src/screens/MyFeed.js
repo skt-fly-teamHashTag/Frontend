@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import { View, StyleSheet, Image, Text, ScrollView, TouchableOpacity, Dimensions } from "react-native";
 import Video from "react-native-video";
 import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import SummaryText from "../components/Text/SummaryText";
 import { URL } from "../api";
 import axios from "axios";
+import { setFeedData } from "../slices/feedSlice";
 
 const width = Dimensions.get('window').width;
 
@@ -13,10 +14,14 @@ const MyFeed = ({ navigation, route }) => {
   const summarizing = useSelector((state) => state.summary.summary);
   const [myFeeds, setMyFeeds] = useState([...route.params]);
   const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
 
   const onPressFeedHome = () => {
     axios.get(URL.getAllFeeds)
-    .then(response => navigation.navigate('FeedHome', response.data.body))
+    .then(response => {
+      dispatch(setFeedData({...response.data.body}));
+      navigation.navigate('FeedHome', response.data.body);
+    })
     .catch(error => console.log(error));
   };
 

@@ -5,6 +5,7 @@ import axios from "axios";
 import EventSource from "react-native-sse";
 import { useDispatch, useSelector } from "react-redux";
 import { setSummary } from "../slices/summarySlice";
+import { setFeedData } from "../slices/feedSlice";
 
 const Loading = ({ navigation, route }) => {
   const postData = route.params;
@@ -77,7 +78,10 @@ const Loading = ({ navigation, route }) => {
 
   const onPressFeed = () => {
     axios.get(URL.getAllFeeds)
-    .then(response => navigation.navigate('FeedHome', response.data.body))
+    .then(response => {
+      dispatch(setFeedData({...response.data.body}));
+      navigation.navigate('FeedHome', response.data.body);
+    })
     .catch(error => console.log(error));
   }
 

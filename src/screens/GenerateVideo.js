@@ -20,11 +20,13 @@ import CameraRoll from '@react-native-community/cameraroll';
 import Toast from 'react-native-toast-message';
 import ProgressBar from 'react-native-progress/Bar';
 import VideoPlayer from 'react-native-video-controls';
+import { setFeedData } from "../slices/feedSlice";
 
 const width = Dimensions.get('window').width;
 
 const GenerateVideo = ({navigation, route}) => {
-  const item = JSON.parse(route.params);
+  const item = route.params; // 지우기
+  // const item = JSON.parse(route.params);
   const [rate, setRate] = useState(0);
   const {userId, nickName} = useSelector(state => state.user);
   const {title} = useSelector(state => state.video);
@@ -83,17 +85,20 @@ const GenerateVideo = ({navigation, route}) => {
       Alert.alert('업로드 실패', '제목을 입력해주세요.', [{text: '확인'}]);
     } else {
       const uploadData = {userId, title};
-      await axios
-        .post(URL.postVideoTitle, uploadData)
-        .then(response => navigation.navigate('FeedHome', response.data.body))
-        .catch(error => {
-          console.log(error);
-          if (error.name === 'AxiosError') {
-            Alert.alert('네트워크 오류', '인터넷 연결을 확인해주세요.', [
-              {text: '확인'},
-            ]);
-          }
-        });
+      await axios.post(URL.postVideoTitle, uploadData);
+      await axios.get(URL.getAllFeeds)
+      .then(response => {
+        dispatch(setFeedData({...response.data.body}));
+        navigation.navigate('FeedHome', response.data.body);
+      })
+      .catch(error => {
+        console.log(error);
+        if (error.name === 'AxiosError') {
+          Alert.alert('네트워크 오류', '인터넷 연결을 확인해주세요.', [
+            {text: '확인'},
+          ]);
+        }
+      });
     }
   };
 
@@ -167,7 +172,7 @@ const GenerateVideo = ({navigation, route}) => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#FFFBFD',
-    height: '80%',
+    height: '100%',
     width: '100%',
     alignItems: 'center',
   },
