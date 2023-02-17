@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { StyleSheet, Text, Image, View, TouchableOpacity, Alert } from 'react-native';
 import { URL } from "../api";
 import axios from "axios";
@@ -11,66 +11,6 @@ const Loading = ({ navigation, route }) => {
   const postData = route.params;
   const dispatch = useDispatch();
   const userId = useSelector((state) => state.user.userId);
-
-  useEffect(() => {
-    const esOptions = {
-      headers: { 'Content-Type': 'application/json' },
-      method: 'POST',
-      body: JSON.stringify({userId})
-    }
-    const es = new EventSource(URL.eventSource, esOptions);
-
-    es.addEventListener("open", (event) => {
-      dispatch(setSummary({summary: true}));
-      console.log("Open SSE connection.");
-    });
-    
-    es.addEventListener("message", (event) => {
-      console.log(`message event: ${event.data}`);
-      dispatch(setSummary({summary: false}));
-      if (event.data === '"SERVER_ERROR"') {
-        Alert.alert(
-          "비디오 요약 실패",
-          "비디오 요약에 실패하였습니다.\n다시 영상을 선택해주세요.",
-          [{text: "확인", onPress: () => {
-            navigation.replace('Main');}}]
-        );
-      } else {
-        Alert.alert(
-          "비디오 요약 완료",
-          "비디오 요약이 완료되었습니다.",
-          [{text: "확인", onPress: () => {
-            navigation.replace('GenerateVideo', event.data);}}]
-        );
-      }
-
-      es.removeAllEventListeners();
-      es.close();
-    });
-    
-    es.addEventListener("error", (event) => {
-      dispatch(setSummary({summary: false}));
-      Alert.alert(
-        "비디오 요약 실패",
-        "비디오 요약에 실패하였습니다.\n다시 영상을 선택해주세요.",
-        [{text: "확인", onPress: () => {
-          navigation.replace('Main');}}]
-      );
-      if (event.type === "error") {
-        console.error("Connection error:", event.message);
-        
-      } else if (event.type === "exception") {
-        console.error("Error:", event.message, event.error);
-      }
-      es.removeAllEventListeners();
-      es.close();
-    });
-
-    es.addEventListener("close", (event) => { 
-      console.log("Close SSE connection.");
-    });
-
-  }, []);
   
   const onPressHome = () => {
     navigation.navigate('Main');
