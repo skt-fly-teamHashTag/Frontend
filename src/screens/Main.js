@@ -198,7 +198,7 @@ const Main = ({ navigation }) => {
           </TouchableOpacity>
         </View>
       </View>
-      <OptionModal visibility={true} />
+      <OptionModal visibility={visibility} />
     </>
   );
 };
