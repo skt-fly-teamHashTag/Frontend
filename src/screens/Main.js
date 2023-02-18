@@ -17,8 +17,8 @@ const Main = ({ navigation }) => {
   const data = useSelector((state) => state.feed.data);
   const user = useSelector((state) => state.user);
   const [visibility, setVideoSelected] = useState(false);
-  const category = ['식음료', '가족', '연애/결혼', '반려동물', '스포츠/레저', '여행'];
-  const [selectedIdx, setSelectedIdx] = useState(-1);
+  const category = ['가족', '친구', '연인', '음식', '레저', '동물', '풍경'];
+  const [selectedIdx, setSelectedIdx] = useState([]);
 
   const showCameraRoll = async() => {
     const pickVideo = await launchImageLibrary({ 
@@ -67,7 +67,7 @@ const Main = ({ navigation }) => {
           'https://test-videodot-bucket.s3.ap-northeast-2.amazonaws.com/videos/video1.mp4', 
           'https://test-videodot-bucket.s3.ap-northeast-2.amazonaws.com/videos/video2.mp4',
           'https://test-videodot-bucket.s3.ap-northeast-2.amazonaws.com/videos/video3.mp4'], // 여러개 선택한 비디오 경로
-        category: category[selectedIdx]
+        category: selectedIdx.map(idx=>category[idx])
       };
       await axios.post(URL.postTestVideo, postData)
       .then((response)=>console.log(response.data))
@@ -139,10 +139,14 @@ const Main = ({ navigation }) => {
   const ModalItem = ({ text, idx }) => {
     return (
       <TouchableOpacity 
-        style={selectedIdx === idx? styles.selectedItem: styles.modalItem}
-        onPress={()=>setSelectedIdx(idx)}>
+        style={selectedIdx.includes(idx)? styles.selectedItem: styles.modalItem}
+        onPress={()=>{
+          selectedIdx.includes(idx)
+            ? setSelectedIdx(selectedIdx.filter(selected=>selected !== idx))
+            : selectedIdx.length < 2 && setSelectedIdx([...selectedIdx, idx])
+          }}>
         <Text 
-          style={selectedIdx === idx? styles.selectedText:styles.modalItemText}>
+          style={selectedIdx.includes(idx)? styles.selectedText:styles.modalItemText}>
           {text}
         </Text>
       </TouchableOpacity>
@@ -156,13 +160,13 @@ const Main = ({ navigation }) => {
         transparent={true}>
         <View style={styles.modalBack}>
           <View style={styles.modalBox}>
-            <Text style={styles.modalTitle}>영상의 카테고리를 선택해 주세요.</Text>
+            <Text style={styles.modalTitle}>영상의 카테고리를 선택해 주세요 ({selectedIdx.length}/2)</Text>
             <View style={styles.modalItemList}>
               {category.map((item, idx) => <ModalItem text={item} key={idx} idx={idx} />)}
             </View>
             <TouchableOpacity
               activeOpacity={0.9}
-              onPress={()=>{selectedIdx > -1 && onPressVideoGenerate()}}
+              onPress={()=>{selectedIdx.length > 0 && onPressVideoGenerate()}}
               style={styles.modalButton}>
               <Text style={styles.modalButtonText}>특별한 일상 기록하러 가기 👉</Text>
             </TouchableOpacity>
@@ -194,7 +198,7 @@ const Main = ({ navigation }) => {
           </TouchableOpacity>
         </View>
       </View>
-      <OptionModal visibility={visibility} />
+      <OptionModal visibility={true} />
     </>
   );
 };
