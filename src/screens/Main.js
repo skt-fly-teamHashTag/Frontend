@@ -17,7 +17,7 @@ const Main = ({ navigation }) => {
   const data = useSelector((state) => state.feed.data);
   const user = useSelector((state) => state.user);
   const [visibility, setVideoSelected] = useState(false);
-  const category = ['가족', '친구', '연인', '음식', '레저', '동물', '풍경'];
+  const category = ['문화생활', '가족', '음식', '스터디', '직장인', '반려동물', '연애/결혼', '운동/스포츠', '여행', '뷰티'];
   const [selectedIdx, setSelectedIdx] = useState([]);
 
   const showCameraRoll = async() => {
