@@ -12,7 +12,7 @@ const MenuScrollView = () => {
   return (
     <ScrollView style={styles.menu} showsVerticalScrollIndicator = {false}>
       <View style={styles.menuContents}>
-        <Image source={require("../../assets/profile.jpeg")} style={styles.profile} />
+        <Image source={require("../../assets/profile.png")} style={styles.profile} />
         <HelloText userName={nickName} />
         <ThreeSquareButton />
         <MenuBox />
