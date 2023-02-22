@@ -160,7 +160,7 @@ const Main = ({ navigation }) => {
         transparent={true}>
         <View style={styles.modalBack}>
           <View style={styles.modalBox}>
-            <Text style={styles.modalTitle}>영상의 카테고리를 선택해 주세요 ({selectedIdx.length}/2)</Text>
+            <Text style={styles.modalTitle}>원하는 핵심 주제를 선택해주세요 ({selectedIdx.length}/2)</Text>
             <View style={styles.modalItemList}>
               {category.map((item, idx) => <ModalItem text={item} key={idx} idx={idx} />)}
             </View>
@@ -182,7 +182,7 @@ const Main = ({ navigation }) => {
       <View style={styles.main}>
         <View style={styles.noticeBox}>
           <Text style={styles.noticeText}>
-            {`편집하고 싶은 \n영상을 앨범에서 \n선택해줘!`}</Text>
+            {`요약하고 싶은 \n영상을 앨범에서 \n선택해주세요.`}</Text>
           <Image source={require('../assets/videoGif.gif')} style={styles.noticeGif} />
         </View>
         <TouchableOpacity style={styles.gallery} onPress={showCameraRoll}>
@@ -211,17 +211,17 @@ const styles = StyleSheet.create({
   },
   noticeBox: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'space-around',
     alignItems: 'center',
   },
   noticeText: {
-    fontSize: 26,
+    fontSize: 24,
     fontWeight: 'bold',
     marginLeft: 30,
     color: '#111'
   },
   noticeGif: {
-    width: 160,
+    width: 190,
     height: 220,
   },
   gallery: {

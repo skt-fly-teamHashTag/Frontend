@@ -48,17 +48,18 @@ const FeedHome = ({ navigation, route }) => {
           <View style={styles.hotContainer}>
             <View style={styles.topBox}>
               <View style={styles.myVlogText}>  
-                <Text style={styles.screenTitle}>나만의 Vlog</Text>
+                <Text style={styles.screenTitle}>한뼘 사이 소셜 피드</Text>
                 <Icon name='play-circle' type='font-awesome' size={24} color='#FE6788'></Icon>
               </View>
               <TouchableOpacity activeOpacity={0.8} onPress={()=>navigation.navigate('Search')}>
                 <Icon name='search' type='feather' size={24} style={{justifyContent:'flex-end'}}></Icon>
               </TouchableOpacity>
             </View>
-            <Text style={styles.hotText}>이번주 Hot 랭킹을 확인해보세요!!</Text>
+            <View style={styles.line}></View>
+            <Text style={styles.hotText}>많은 친구들이 좋아하고 있어요</Text>
             <Carousel data={data.hot} showToast={showToast} />
           </View>
-          <Text style={styles.newText}>최신 영상을 확인해보세요!</Text>
+          <Text style={styles.newText}>친구들의 특별한 영상을 즐겨보세요!</Text>
         </>}
         renderItem={({item, index}) => <FeedItem item={item} index={index} showToast={showToast} />}
        />
@@ -79,8 +80,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFBFD',
   },
   topBox: {
-    margin: 10,
-    marginHorizontal: 30,
+    marginTop: 15,
+    marginBottom: 5,
+    marginHorizontal: 25,
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -91,17 +93,24 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginRight: 5
   },
+  line: {
+    backgroundColor: '#F1F4F9',
+    height: 10,
+    marginTop: 5,
+    marginBottom: 15
+  },
   hotText: {
-    marginLeft: 30,
+    marginLeft: 25,
     fontSize: 20,
-    color: '#111'
+    fontWeight: 'bold',
+    color: '#111',
   },
   newFeed: {
     alignItems: 'center'
   },
   newText: {
     fontWeight: 'bold',
-    fontSize: 20,
+    fontSize: 18,
     color: '#3A4563',
     margin: 20,
     marginBottom: 15,

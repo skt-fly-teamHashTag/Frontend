@@ -56,20 +56,19 @@ const CarouselItem = ({ item, index, showToast }) => {
 
   return (
     <View style={styles.cardView}>
-      <Text style={styles.contentTitle}>인기 급상승 영상 Top { index + 1 }</Text>
       <TouchableOpacity activeOpacity={0.8} onPress={onPressVideo}>
         <Image style={styles.image} source={{ uri: item.thumbNailPath }} />
       </TouchableOpacity>
       <View style={styles.hotBottomText}>
         <Text style={styles.hashTag}>{ item.tags.map((item) => `#${item} `) }</Text>
         <TouchableOpacity onPress={onPressLike} style={styles.heartBox}>
+          <Text style={styles.heartText}>{ likeCount }</Text>
           <Icon 
             name={isLiked ? 'heart': 'heart-o'} 
             type='font-awesome' 
             color='#FE646F' 
             size={16}
           />
-          <Text style={styles.heartText}>{ likeCount }</Text>
         </TouchableOpacity>
       </View>
       <TouchableOpacity activeOpacity={0.8} onPress={onPressVideo}>
@@ -96,8 +95,8 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   image: {
-    width: 300,
-    height: 180,
+    width: width - 75,
+    height: (width - 75) * 0.56,
     backgroundColor: '#F1F4F9',
     borderRadius: 10,
     borderWidth: 1.5,
@@ -105,7 +104,7 @@ const styles = StyleSheet.create({
     margin: 10
   },
   contentTitle: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: 'bold',
     margin: 10,
     marginBottom: 0,
@@ -127,7 +126,7 @@ const styles = StyleSheet.create({
   },
   heartText: {
     color: '#FE646F',
-    marginLeft: 5
+    marginRight: 5
   },
   hotTitle: {
     fontSize: 18,
