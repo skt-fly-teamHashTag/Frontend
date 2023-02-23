@@ -21,12 +21,12 @@ const styles = StyleSheet.create({
     opacity: 0.9
   },
   summaryText: {
-    fontSize: 14,
-    color: 'white'
+    fontSize: 16,
+    color: 'white',
   },
   summaryGif: {
-    width: 14,
-    height: 14,
+    width: 16,
+    height: 16,
     marginLeft: 5
   }
 })
