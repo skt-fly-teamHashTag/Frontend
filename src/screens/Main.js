@@ -64,9 +64,8 @@ const Main = ({ navigation }) => {
         userId: user.userId,
         nickName: user.nickName,
         videoPath: [
-          'https://test-videodot-bucket.s3.ap-northeast-2.amazonaws.com/videos/video1.mp4', 
-          'https://test-videodot-bucket.s3.ap-northeast-2.amazonaws.com/videos/video2.mp4',
-          'https://test-videodot-bucket.s3.ap-northeast-2.amazonaws.com/videos/video3.mp4'], // 여러개 선택한 비디오 경로
+          'https://test-videodot-bucket.s3.ap-northeast-2.amazonaws.com/videos/test_1.mp4', 
+          'https://test-videodot-bucket.s3.ap-northeast-2.amazonaws.com/videos/test_2.mp4'], // 여러개 선택한 비디오 경로
         category: selectedIdx.map(idx=>category[idx])
       };
       await axios.post(URL.postTestVideo, postData)
@@ -160,7 +159,10 @@ const Main = ({ navigation }) => {
         transparent={true}>
         <View style={styles.modalBack}>
           <View style={styles.modalBox}>
-            <Text style={styles.modalTitle}>원하는 핵심 주제를 선택해주세요 ({selectedIdx.length}/2)</Text>
+            <View style={styles.modalTitle}>
+              <Text style={styles.modalMainTitle}>원하는 핵심 주제를 선택해주세요 </Text>
+              <Text style={styles.modalSubTitle}>(최대 2개)</Text>
+            </View>
             <View style={styles.modalItemList}>
               {category.map((item, idx) => <ModalItem text={item} key={idx} idx={idx} />)}
             </View>
@@ -271,6 +273,10 @@ const styles = StyleSheet.create({
     paddingVertical: 20
   },
   modalTitle: {
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  modalMainTitle: {
     fontSize: 18,
     fontWeight: 'bold',
     marginVertical: 10
