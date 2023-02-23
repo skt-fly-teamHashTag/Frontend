@@ -22,6 +22,7 @@ const Carousel = ({ data, showToast }) => {
             scrollEnabled
             snapToAlignment="center"
             decelerationRate={"fast"}
+            disableVirtualization={false} //비정상적인 스크롤 동작 방지
             showsHorizontalScrollIndicator={false}
             renderItem={({ item, index }) => {
                 return <CarouselItem item={item} index={index} showToast={showToast} />

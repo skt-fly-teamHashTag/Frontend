@@ -42,6 +42,7 @@ const FeedHome = ({ navigation, route }) => {
         style={styles.verticalScrollView}
         bounces={false}
         showsVerticalScrollIndicator={false}
+        disableVirtualization={false} //비정상적인 스크롤 동작 방지
         data={data.recent}
         keyExtractor={(item)=>item._id}
         ListHeaderComponent={<>

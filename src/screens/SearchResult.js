@@ -95,6 +95,7 @@ const SearchResult = ({ navigation, route }) => {
           style={styles.resultContainer}
           ListFooterComponent={<View style={styles.footer} />}
           showsVerticalScrollIndicator = {false}
+          disableVirtualization={false} //비정상적인 스크롤 동작 방지
           bounces={false}
           data={data}
           keyExtractor={(item)=>item._id}
