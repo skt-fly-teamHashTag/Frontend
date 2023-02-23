@@ -36,9 +36,9 @@ const Main = ({ navigation }) => {
           "지금은 다른 비디오를 요약중입니다.",
           [{text: "확인"}]
         );
-        dispatch(setSummary({summary: false}));
       } else {
         setVideoSelected(true);
+        dispatch(setSummary({summary: false}));
       }
     }
   };
