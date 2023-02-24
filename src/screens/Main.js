@@ -24,7 +24,7 @@ const Main = ({ navigation }) => {
     const pickVideo = await launchImageLibrary({ 
       mediaType: 'video',
       selectionLimit: 10
-    });
+   });
     if (pickVideo.didCancel) {
       console.log('User cancelled video picker');
     } else if (pickVideo.errorCode) {
@@ -44,7 +44,7 @@ const Main = ({ navigation }) => {
   };
 
   const onPressVideoGenerate = async() => {
-    setSelectedIdx(-1);
+    setSelectedIdx([]);
     setVideoSelected(false);
     navigation.navigate('Loading');
     
