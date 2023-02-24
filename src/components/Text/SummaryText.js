@@ -23,10 +23,11 @@ const styles = StyleSheet.create({
   summaryText: {
     fontSize: 16,
     color: 'white',
+    fontWeight: 'bold'
   },
   summaryGif: {
-    width: 16,
-    height: 16,
+    width: 18,
+    height: 18,
     marginLeft: 5
   }
 })
