@@ -82,8 +82,6 @@ const styles = StyleSheet.create({
     color: '#111'
   },
   feedScroll: {
-    height: '80%',
-    width: '100%',
     borderTopWidth: 2,
     borderColor: '#F1F4F9'
   },
@@ -106,10 +104,9 @@ const styles = StyleSheet.create({
     margin: 0.5
   },
   feedBox: {
-    position: 'absolute',
-    bottom: 100,
     flexDirection: 'row',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    marginBottom: 100
   },
   feedButton: {
     height: 40,
