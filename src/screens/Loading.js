@@ -27,7 +27,7 @@ const Loading = ({ navigation, route }) => {
 
   return (
     <View style={styles.loadingBox}>
-      <Text style={styles.headerTitle}>A. Video</Text>
+      <Text style={styles.headerTitle}>VideoDot</Text>
       <Text style={styles.loadingTitle}>{`내가 나타날 때까지 \n 잠시만 기다려줘!`}</Text>
       <Image source={require('../assets/loadingGif.gif')} style={styles.loadingGif} />
       <Text style={styles.loadingText}>비디오 요약중</Text>

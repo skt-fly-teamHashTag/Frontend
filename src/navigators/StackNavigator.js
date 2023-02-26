@@ -24,7 +24,7 @@ const StackNavigator = () => {
   const userId = useSelector((state) => state.user.userId);
 
   const mainHeader = ({ navigation }) => ({
-    title: 'A. Video',
+    title: 'VideoDot',
     headerTitleAlign: 'center',
     headerLeft: () => (
       <LeftIconButton 
@@ -43,7 +43,7 @@ const StackNavigator = () => {
   };
 
   const videoHeader = ({ navigation }) => ({
-    title: 'A. Video',
+    title: 'VideoDot',
     headerTitleAlign: 'center',
     headerLeft: () => (<></>),
     headerRight: () => (
@@ -61,7 +61,7 @@ const StackNavigator = () => {
   };
 
   const defaultHeader = ({ navigation }) => ({
-    title: 'A. Video',
+    title: 'VideoDot',
     headerTitleAlign: 'center',
     headerLeft: () => (<></>),
     headerRight: () => (
