@@ -83,11 +83,12 @@ const styles = StyleSheet.create({
   },
   feedScroll: {
     borderTopWidth: 2,
-    borderColor: '#F1F4F9'
+    borderColor: '#F1F4F9',
   },
   userVideoBox: {
     flexDirection: 'row',
     flexWrap: 'wrap',
+    width: width
   },
   userVideoEmpty: {
     width: '100%',
