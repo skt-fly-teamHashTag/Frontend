@@ -86,13 +86,13 @@ const FeedItem = ({ item, index, showToast }) => {
       <View style={styles.hotBottomText}>
         <Text style={styles.newHashTag}>{ item.tags.map((item) => `#${item} `) }</Text>
         <TouchableOpacity onPress={onPressLike} style={styles.heartBox}>
+          <Text style={styles.heartText}>{ likeCount }</Text>
           <Icon 
             name={isLiked ? 'heart': 'heart-o'} 
             type='font-awesome' 
             color='#FE646F' 
             size={16}
           />
-          <Text style={styles.heartText}>{ likeCount }</Text>
         </TouchableOpacity>
       </View>
       <TouchableOpacity activeOpacity={0.8} onPress={onPressVideo}>
@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
   },
   video: {
     width: '100%',
-    height: 180,
+    height: 170,
     backgroundColor: '#F1F4F9',
     borderRadius: 10,
     borderWidth: 1.5,
@@ -168,7 +168,7 @@ const styles = StyleSheet.create({
   },
   heartText: {
     color: '#FE646F',
-    marginLeft: 5
+    marginRight: 5
   },
 });
 
