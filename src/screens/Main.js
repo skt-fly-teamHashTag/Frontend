@@ -64,8 +64,10 @@ const Main = ({ navigation }) => {
         userId: user.userId,
         nickName: user.nickName,
         videoPath: [
-          'https://test-videodot-bucket.s3.ap-northeast-2.amazonaws.com/videos/test_1.mp4', 
-          'https://test-videodot-bucket.s3.ap-northeast-2.amazonaws.com/videos/test_2.mp4'], // 여러개 선택한 비디오 경로
+          'https://test-videodot-bucket.s3.ap-northeast-2.amazonaws.com/videos/test1.mp4', 
+          'https://test-videodot-bucket.s3.ap-northeast-2.amazonaws.com/videos/test2.mp4', 
+          'https://test-videodot-bucket.s3.ap-northeast-2.amazonaws.com/videos/test3.mp4', 
+          'https://test-videodot-bucket.s3.ap-northeast-2.amazonaws.com/videos/test4.mp4'], // 여러개 선택한 비디오 경로
         category: selectedIdx.map(idx=>category[idx])
       };
       await axios.post(URL.postTestVideo, postData)
