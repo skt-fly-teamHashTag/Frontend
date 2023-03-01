@@ -311,7 +311,8 @@ const styles = StyleSheet.create({
   comment: {
     marginLeft: 70,
     fontSize: 15,
-    color: '#111'
+    color: '#111',
+    paddingRight: 20
   },
   commentWriteBox: {
     flexDirection: 'row',
